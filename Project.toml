@@ -1,0 +1,14 @@
+name = "FinSetsForCAP"
+uuid = "0a079e9b-4bc2-44fe-a89b-7607e4464786"
+authors = [
+	"Mohamed Barakat <mohamed.barakat@uni-siegen.de>",
+	"Julia Mickisch <julia.mickisch@student.uni-siegen.de>",
+	"Fabian Zickgraf <fabian.zickgraf@uni-siegen.de>",
+]
+version = "0.1.0"
+
+[deps]
+CAP = "d64df2ee-d2bb-46f4-8cbc-f03bb858f8cb"
+
+[compat]
+julia = "1.8"
