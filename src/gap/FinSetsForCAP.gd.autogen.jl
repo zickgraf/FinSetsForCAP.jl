@@ -15,21 +15,21 @@ DeclareGlobalFunction( "INSTALL_FUNCTIONS_FOR_FIN_SETS" );
 #! The GAP category of categories
 #! of finite sets.
 #! @Arguments object
-DeclareCategory( "IsCategoryOfFinSets",
+@DeclareFilter( "IsCategoryOfFinSets",
                   IsCapCategory );
 
 #! @Description
 #! The GAP category of objects ⥉ the category
 #! of finite sets.
 #! @Arguments object
-DeclareCategory( "IsFiniteSet",
+@DeclareFilter( "IsFiniteSet",
                  IsCapCategoryObject );
 
 #! @Description
 #! The GAP category of morphisms ⥉ the category
 #! of finite sets.
 #! @Arguments object
-DeclareCategory( "IsFiniteSetMap",
+@DeclareFilter( "IsFiniteSetMap",
                  IsCapCategoryMorphism );
 
 #! @Section Attributes
@@ -39,7 +39,7 @@ DeclareCategory( "IsFiniteSetMap",
 #!  <C>AsList( FinSet( <A>L</A> ) ) == Set( <A>L</A> )</C>.
 #! @Arguments M
 #! @Returns a &GAP; set
-DeclareAttribute( "AsList",
+@DeclareAttribute( "AsList",
         IsFiniteSet );
 
 #! @Description
@@ -47,7 +47,7 @@ DeclareAttribute( "AsList",
 #!  <C>Length( FinSet( <A>L</A> ) ) == Length( Set( <A>L</A> ) )</C>.
 #! @Arguments M
 #! @Returns an integer
-DeclareAttribute( "Length",
+@DeclareAttribute( "Length",
         IsFiniteSet );
 
 #! @Description
@@ -55,7 +55,7 @@ DeclareAttribute( "Length",
 #!  i.e., <C>AsList( MapOfFinSets( S, <A>G</A>, T ) ) == <A>G</A></C>.
 #! @Arguments f
 #! @Returns a list
-DeclareAttribute( "AsList",
+@DeclareAttribute( "AsList",
         IsFiniteSetMap );
 
 #! @Section Constructors

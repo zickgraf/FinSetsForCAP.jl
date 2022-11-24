@@ -12,21 +12,21 @@
 #! The GAP category of categories
 #! of skeletal finite sets.
 #! @Arguments object
-DeclareCategory( "IsCategoryOfSkeletalFinSets",
+@DeclareFilter( "IsCategoryOfSkeletalFinSets",
                   IsCapCategory );
 
 #! @Description
 #! The GAP category of objects ⥉ the category
 #! of skeletal finite sets.
 #! @Arguments object
-DeclareCategory( "IsSkeletalFiniteSet",
+@DeclareFilter( "IsSkeletalFiniteSet",
                  IsCapCategoryObject );
 
 #! @Description
 #! The GAP category of morphisms ⥉ the category
 #! of skeletal finite sets.
 #! @Arguments object
-DeclareCategory( "IsSkeletalFiniteSetMap",
+@DeclareFilter( "IsSkeletalFiniteSetMap",
                  IsCapCategoryMorphism );
 
 #! @Section Skeletal Attributes
@@ -36,7 +36,7 @@ DeclareCategory( "IsSkeletalFiniteSetMap",
 #!  <C>Length( FinSet( n ) ) == n</C>.
 #! @Arguments M
 #! @Returns an integer
-DeclareAttribute( "Length",
+@DeclareAttribute( "Length",
         IsSkeletalFiniteSet );
 CapJitAddTypeSignature( "Length", [ IsSkeletalFiniteSet ], IsInt );
 
@@ -45,7 +45,7 @@ CapJitAddTypeSignature( "Length", [ IsSkeletalFiniteSet ], IsInt );
 #!  <C>AsList( FinSet( n ) ) == (0):(n - 1)</C>.
 #! @Arguments M
 #! @Returns a list
-DeclareAttribute( "AsList",
+@DeclareAttribute( "AsList",
         IsSkeletalFiniteSet );
 CapJitAddTypeSignature( "AsList", [ IsSkeletalFiniteSet ], rec( filter = IsList, element_type = rec( filter = IsInt ) ) );
 
@@ -53,7 +53,7 @@ CapJitAddTypeSignature( "AsList", [ IsSkeletalFiniteSet ], rec( filter = IsList,
 #!  The graph defining the skeletal finite set morphism <A>phi</A>, see <Ref Oper="MapOfFinSets" Label="for IsSkeletalFiniteSet, IsList, IsSkeletalFiniteSet" />.
 #! @Arguments phi
 #! @Returns a list
-DeclareAttribute( "AsList",
+@DeclareAttribute( "AsList",
         IsSkeletalFiniteSetMap );
 CapJitAddTypeSignature( "AsList", [ IsSkeletalFiniteSetMap ], rec( filter = IsList, element_type = rec( filter = IsInt ) ) );
 
