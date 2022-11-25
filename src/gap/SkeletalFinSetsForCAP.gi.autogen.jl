@@ -5,7 +5,7 @@
 #
 
 ##
-InstallMethod( CategoryOfSkeletalFinSets,
+InstallMethod( @__MODULE__,  CategoryOfSkeletalFinSets,
                [ ],
                
   function ( )
@@ -54,7 +54,7 @@ InstallMethod( CategoryOfSkeletalFinSets,
 end );
 
 ##
-InstallMethodForCompilerForCAP( FinSetOp,
+InstallMethod( @__MODULE__,  FinSetOp,
         [ IsCategoryOfSkeletalFinSets, IsInt ],
         
   function ( cat, n )
@@ -70,7 +70,7 @@ InstallMethodForCompilerForCAP( FinSetOp,
 end );
 
 ##
-InstallMethod( AsList,
+InstallMethod( @__MODULE__,  AsList,
         "for a CAP skeletal finite set",
         [ IsSkeletalFiniteSet ],
         
@@ -81,7 +81,7 @@ InstallMethod( AsList,
 end );
 
 ##
-InstallMethod( ListOp,
+InstallMethod( @__MODULE__,  ListOp,
         "for a CAP skeletal finite set && a function",
         [ IsSkeletalFiniteSet, IsFunction ],
         
@@ -94,7 +94,7 @@ end );
 ## Morphisms
 
 ##
-InstallMethod( MapOfFinSets,
+InstallMethod( @__MODULE__,  MapOfFinSets,
         "for two CAP skeletal finite sets && a list",
         [ IsSkeletalFiniteSet, IsList, IsSkeletalFiniteSet ],
         
@@ -125,7 +125,7 @@ InstallOtherMethodForCompilerForCAP( MapOfFinSets,
 end );
 
 ##
-InstallMethod( EmbeddingOfFinSets,
+InstallMethod( @__MODULE__,  EmbeddingOfFinSets,
         "for two CAP skeletal finite sets",
         [ IsSkeletalFiniteSet, IsSkeletalFiniteSet ],
         
@@ -142,7 +142,7 @@ InstallMethod( EmbeddingOfFinSets,
 end );
 
 ##
-InstallMethod( Preimage,
+InstallMethod( @__MODULE__,  Preimage,
         "for a CAP map of skeletal finite sets && a CAP skeletal finite set",
         [ IsSkeletalFiniteSetMap, IsList ],
         
@@ -158,7 +158,7 @@ InstallMethod( Preimage,
 end );
 
 ##
-InstallMethod( ImageObject,
+InstallMethod( @__MODULE__,  ImageObject,
      "for a CAP map of skeletal finite sets && a CAP skeletal finite set",
      [ IsSkeletalFiniteSetMap, IsSkeletalFiniteSet ],
       function ( phi, s_ )
@@ -168,7 +168,7 @@ InstallMethod( ImageObject,
 end );
 
 ##
-InstallMethod( CallFuncList,
+InstallMethod( @__MODULE__,  CallFuncList,
         "for a CAP map of skeletal finite sets && a list",
     [ IsSkeletalFiniteSetMap, IsList ],
         
@@ -182,7 +182,7 @@ InstallMethod( CallFuncList,
 end );
 
 ##
-InstallGlobalFunction( SKELETAL_FIN_SETS_ExplicitCoequalizer,
+@InstallGlobalFunction( SKELETAL_FIN_SETS_ExplicitCoequalizer,
   function ( s, D )
     local T, Cq, t, L, i;
     
@@ -223,7 +223,7 @@ InstallGlobalFunction( SKELETAL_FIN_SETS_ExplicitCoequalizer,
 end );
 
 ##
-InstallGlobalFunction( SKELETAL_FIN_SETS_IsEpimorphism,
+@InstallGlobalFunction( SKELETAL_FIN_SETS_IsEpimorphism,
   function ( imgs, t )
     local testList, img;
     
@@ -238,7 +238,7 @@ InstallGlobalFunction( SKELETAL_FIN_SETS_IsEpimorphism,
 end );
 
 ##
-InstallGlobalFunction( SKELETAL_FIN_SETS_IsMonomorphism,
+@InstallGlobalFunction( SKELETAL_FIN_SETS_IsMonomorphism,
   function ( imgs, t )
     local testList, img;
     
@@ -256,7 +256,7 @@ InstallGlobalFunction( SKELETAL_FIN_SETS_IsMonomorphism,
 end );
 
 ##
-InstallGlobalFunction( INSTALL_FUNCTIONS_FOR_SKELETAL_FIN_SETS,
+@InstallGlobalFunction( INSTALL_FUNCTIONS_FOR_SKELETAL_FIN_SETS,
   function ( SkeletalFinSets )
     
 ##
@@ -711,7 +711,7 @@ end );
 ##
 AddInjectionOfCofactorOfCoproductWithGivenCoproduct( SkeletalFinSets,
   function ( cat, L, i, coproduct )
-    local s, O, sum, cmp;
+    local O, sum, s;
     
     O = L[(1):(i - 1)];
     
@@ -719,20 +719,18 @@ AddInjectionOfCofactorOfCoproductWithGivenCoproduct( SkeletalFinSets,
     
     s = L[i];
     
-    cmp = (sum):(sum + Length( s ) - 1);
-    
-    return MapOfFinSets( cat, s, cmp, coproduct );
+    return MapOfFinSets( cat, s, (sum):(sum + Length( s ) - 1), coproduct );
     
 end );
 
 ##
 AddUniversalMorphismFromCoproductWithGivenCoproduct( SkeletalFinSets,
   function ( cat, L, test_object, tau, S )
-    local cmp;
+    local concat;
     
-    cmp = Concatenation( List( tau, AsList ) );
+    concat = Concatenation( List( tau, AsList ) );
     
-    return MapOfFinSets( cat, S, cmp, test_object );
+    return MapOfFinSets( cat, S, concat, test_object );
     
 end );
 
@@ -912,22 +910,24 @@ end );
 ##
 AddClassifyingMorphismOfSubobjectWithGivenSubobjectClassifier( SkeletalFinSets,
   function ( cat, monomorphism, Omega )
-    local range, images;
+    local range, images, chi;
     
     range = Range( monomorphism );
     
-    images = List( range,
-                    function ( x )
-                      
-                      if x ⥉ AsList( monomorphism )
-                          return 1;
-                      end;
-                      
-                      return 0;
-                      
-                  end );
+    images = AsList( monomorphism );
+    
+    chi = List( range,
+                 function ( x )
+                   
+                   if x ⥉ images
+                       return 1;
+                   end;
+                   
+                   return 0;
+                   
+               end );
       
-      return MapOfFinSets( cat, range, images, Omega );
+      return MapOfFinSets( cat, range, chi, Omega );
       
 end );
 
@@ -947,12 +947,20 @@ AddMorphismsOfExternalHom( SkeletalFinSets,
                          MapOfFinSets( cat, T, [ i ], hom_A_B ) ) );
     
 end );
+
+##
+AddExactCoverWithGlobalElements( SkeletalFinSets,
+  function ( cat, A )
+    
+    return MorphismsOfExternalHom( cat, TerminalObject( cat ), A );
+    
+end );
 # =#
 
 end );
 
 ##
-InstallMethod( ViewObj,
+InstallMethod( @__MODULE__,  ViewObj,
         "for a CAP skeletal finite set",
         [ IsSkeletalFiniteSet ],
         
@@ -961,7 +969,7 @@ InstallMethod( ViewObj,
 end );
 
 ##
-InstallMethod( ViewObj,
+InstallMethod( @__MODULE__,  ViewObj,
     "for a CAP map of skeletal finite sets",
         [ IsSkeletalFiniteSetMap ],
         
@@ -991,7 +999,7 @@ InstallMethod( ViewObj,
 end );
 
 ##
-InstallMethod( PrintString,
+InstallMethod( @__MODULE__,  PrintString,
         "for a CAP skeletal finite set",
         [ IsSkeletalFiniteSet ],
         
@@ -1015,7 +1023,7 @@ InstallMethod( PrintString,
 end );
 
 ##
-InstallMethod( Display,
+InstallMethod( @__MODULE__,  Display,
         "for a CAP skeletal finite set",
         [ IsSkeletalFiniteSet ],
         
@@ -1024,7 +1032,7 @@ InstallMethod( Display,
 end );
 
 ##
-InstallMethod( Display,
+InstallMethod( @__MODULE__,  Display,
     "for a CAP map of skeletal finite sets",
         [ IsSkeletalFiniteSetMap ],
         
@@ -1033,9 +1041,6 @@ InstallMethod( Display,
     Print( " ⱶ", AsList( phi ), "→ " );
     Print( PrintString( Range( phi ) ), "\n" );
 end );
-
-##
-BindGlobal( "SkeletalFinSets", CategoryOfSkeletalFinSets( ) );
 
 ##
 InstallOtherMethod( FinSet,

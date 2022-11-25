@@ -5,7 +5,7 @@
 #
 
 ## Sum( (0):(n - 1), i -> q^i );
-InstallMethod( GeometricSum,
+InstallMethod( @__MODULE__,  GeometricSum,
         [ IsInt, IsInt ],
   function ( q, n )
     
@@ -18,7 +18,7 @@ InstallMethod( GeometricSum,
 end );
 
 ## Sum( (1):(n - 1), i -> i * q^(i-1) )
-InstallMethod( GeometricSumDiff1,
+InstallMethod( @__MODULE__,  GeometricSumDiff1,
         [ IsInt, IsInt ],
   function ( q, n )
 

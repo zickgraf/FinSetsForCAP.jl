@@ -18,7 +18,7 @@ InstallOtherMethod( FinSet,
 end );
 
 ##
-InstallMethod( MapOfFinSets,
+InstallMethod( @__MODULE__,  MapOfFinSets,
         [ IsCapCategoryObject, IsJuliaObject, IsCapCategoryObject ],
         
   function ( source, graph, range )

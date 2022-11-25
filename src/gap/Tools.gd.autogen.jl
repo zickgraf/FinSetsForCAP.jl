@@ -13,7 +13,7 @@
 #!  taking the corner case <A>q</A> = 1  into account.
 #! @Arguments q, n
 #! @Returns an integer
-DeclareOperation( "GeometricSum",
+@DeclareOperation( "GeometricSum",
         [ IsRingElement, IsInt ] );
 
 CapJitAddTypeSignature( "GeometricSum", [ IsInt, IsInt ], IsInt );
@@ -23,7 +23,7 @@ CapJitAddTypeSignature( "GeometricSum", [ IsInt, IsInt ], IsInt );
 #!  taking the corner case <A>q</A> = 1  into account.
 #! @Arguments q, n
 #! @Returns an integer
-DeclareOperation( "GeometricSumDiff1",
+@DeclareOperation( "GeometricSumDiff1",
         [ IsRingElement, IsInt ] );
 
 CapJitAddTypeSignature( "GeometricSumDiff1", [ IsInt, IsInt ], IsInt );

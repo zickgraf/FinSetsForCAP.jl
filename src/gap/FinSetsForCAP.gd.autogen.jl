@@ -5,7 +5,7 @@
 #
 
 # Technical functions
-DeclareGlobalFunction( "INSTALL_FUNCTIONS_FOR_FIN_SETS" );
+@DeclareGlobalFunction( "INSTALL_FUNCTIONS_FOR_FIN_SETS" );
 
 #! @Chapter The category of finite sets
 
@@ -63,7 +63,12 @@ DeclareGlobalFunction( "INSTALL_FUNCTIONS_FOR_FIN_SETS" );
 #! @Description
 #!  Construct a category of finite sets.
 #! @Returns a &CAP; category
-DeclareOperation( "CategoryOfFinSets", [ ] );
+@DeclareOperation( "CategoryOfFinSets", [ ] );
+
+#! @Description
+#!  The default instance of the category of finite sets.
+#!  It is automatically created while loading this package.
+DeclareGlobalName( "FinSets" );
 
 #! @Description
 #!  Construct a finite set out of the list <A>L</A>, i.e.,
@@ -77,14 +82,14 @@ DeclareOperation( "CategoryOfFinSets", [ ] );
 #!  <C>FinSetNC( cat_of_fin_sets, L1 ) == FinSet( cat_of_fin_sets, L2 )</C> iff <C>IsEqualForElementsOfFinSets( Immutable( L1 ), Immutable( Set( L2 ) ) )</C>.
 #! @Arguments cat_of_fin_sets, L
 #! @Returns a &CAP; object
-DeclareOperation( "FinSet",
+@DeclareOperation( "FinSet",
         [ IsCategoryOfFinSets, IsList ] );
 
 #! @Description
 #!  Return <C>FinSet</C>( <C>FinSets</C>, <A>L</A> ).
 #! @Arguments L
 #! @Returns a &CAP; object
-DeclareOperation( "FinSet",
+@DeclareOperation( "FinSet",
         [ IsList ] );
 #! @InsertChunk FinSet
 
@@ -95,14 +100,14 @@ DeclareOperation( "FinSet",
 #!  iff <C>IsEqualForElementsOfFinSets( Immutable( L1 ), Immutable( L2 ) )</C>.
 #! @Arguments cat_of_fin_sets, L
 #! @Returns a &CAP; object
-DeclareOperation( "FinSetNC",
+@DeclareOperation( "FinSetNC",
         [ IsCategoryOfFinSets, IsList ] );
 
 #! @Description
 #!  Return <C>FinSetNC</C>( <C>FinSets</C>, <A>L</A> ).
 #! @Arguments L
 #! @Returns a &CAP; object
-DeclareOperation( "FinSetNC",
+@DeclareOperation( "FinSetNC",
         [ IsList ] );
 #! @InsertChunk FinSetNC
 
@@ -112,7 +117,7 @@ DeclareOperation( "FinSetNC",
 #!  is a list of pairs ⥉ <A>S</A> \times <A>T</A> describing the graph of  \phi .
 #! @Arguments S, G, T
 #! @Returns a &CAP; morphism
-DeclareOperation( "MapOfFinSets",
+@DeclareOperation( "MapOfFinSets",
         [ IsFiniteSet, IsList, IsFiniteSet ] );
 #! @InsertChunk MapOfFinSets
 
@@ -122,7 +127,7 @@ DeclareOperation( "MapOfFinSets",
 #!  is a duplicate-free && dense list of pairs ⥉ <A>S</A> \times <A>T</A> describing the graph of  \phi .
 #! @Arguments S, G, T
 #! @Returns a &CAP; morphism
-DeclareOperation( "MapOfFinSetsNC",
+@DeclareOperation( "MapOfFinSetsNC",
         [ IsFiniteSet, IsList, IsFiniteSet ] );
 #! @InsertChunk MapOfFinSetsNC
 
@@ -139,7 +144,7 @@ DeclareOperation( "MapOfFinSetsNC",
 #!  Note: if &CAP; category objects || &CAP; category morphisms are compared using <C>IsEqualForObjects</C> || <C>IsEqualForMorphismsOnMor</C>, respectively, the result must !be <C>fail</C>.
 #! @Arguments a, b
 #! @Returns a boolean
-DeclareOperation( "IsEqualForElementsOfFinSets",
+@DeclareOperation( "IsEqualForElementsOfFinSets",
         [ IsObject, IsObject ] );
 #! @InsertChunk IsEqualForElementsOfFinSets
 
@@ -155,7 +160,7 @@ DeclareOperation( "IsEqualForElementsOfFinSets",
 #!  <C>FinSet( <A>L</A> )[ i ] == Set( <A>L</A> )[ i ]</C>.
 #! @Arguments M, i
 #! @Returns an object
-DeclareOperation( "[]",
+@DeclareOperation( "[]",
         [ IsFiniteSet, IsInt ] );
 
 #! @Description
@@ -163,35 +168,35 @@ DeclareOperation( "[]",
 #!  <C>Iterator( FinSet( <A>L</A> ) ) == Iterator( Set( <A>L</A> ) )</C>.
 #! @Arguments M
 #! @Returns an iterator
-DeclareOperation( "Iterator",
+@DeclareOperation( "Iterator",
         [ IsFiniteSet ] );
 
 #! @Description
 #!  Compute the set-theoretic union of the elements of <A>L</A>, where <A>L</A> is a list of finite sets ⥉ the category <A>cat_of_fin_sets</A>.
 #! @Arguments cat_of_fin_sets, L
 #! @Returns a &CAP; object
-DeclareOperation( "UnionOfFinSets",
+@DeclareOperation( "UnionOfFinSets",
         [ IsCategoryOfFinSets, IsList ] );
 
 #! @Description
 #!  Returns <C>List( AsList( <A>M</A> ), <A>f</A> )</C>.
 #! @Arguments M, f
 #! @Returns a list
-DeclareOperation( "ListOp",
+@DeclareOperation( "ListOp",
         [ IsFiniteSet, IsFunction ] );
 
 #! @Description
 #!  Returns <C>FinSetNC( Filtered( AsList( <A>M</A> ), <A>f</A> ) )</C>.
 #! @Arguments M, f
 #! @Returns a list
-DeclareOperation( "FilteredOp",
+@DeclareOperation( "FilteredOp",
         [ IsFiniteSet, IsFunction ] );
 
 #! @Description
 #!  Returns <C>First( AsList( <A>M</A> ), <A>f</A> )</C>.
 #! @Arguments M, f
 #! @Returns a list
-DeclareOperation( "FirstOp",
+@DeclareOperation( "FirstOp",
         [ IsFiniteSet, IsFunction ] );
 
 #! @Description
@@ -199,7 +204,7 @@ DeclareOperation( "FirstOp",
 #!  where <A>S</A> must be subset of <A>T</A>.
 #! @Arguments S, T
 #! @Returns a &CAP; morphism
-DeclareOperation( "EmbeddingOfFinSets",
+@DeclareOperation( "EmbeddingOfFinSets",
         [ IsFiniteSet, IsFiniteSet ] );
 
 #! @Description
@@ -207,21 +212,21 @@ DeclareOperation( "EmbeddingOfFinSets",
 #!  where <A>T</A> is a partition of <A>S</A>.
 #! @Arguments S, T
 #! @Returns a &CAP; morphism
-DeclareOperation( "ProjectionOfFinSets",
+@DeclareOperation( "ProjectionOfFinSets",
         [ IsFiniteSet, IsFiniteSet ] );
 
 #! @Description
 #!  Compute the preimage of <A>T_</A> under the morphism <A>f</A>.
 #! @Arguments f, T_
 #! @Returns a &CAP; object
-DeclareOperation( "Preimage",
+@DeclareOperation( "Preimage",
         [ IsFiniteSetMap, IsFiniteSet ] );
 
 #! @Description
 #!  Compute the image of <A>S_</A> under the morphism <A>f</A>.
 #! @Arguments f, S_
 #! @Returns a &CAP; object
-DeclareOperation( "ImageObject",
+@DeclareOperation( "ImageObject",
         [ IsFiniteSetMap, IsFiniteSet ] );
 
 #! @Description
@@ -235,5 +240,5 @@ DeclareOperation( "ImageObject",
 #!  Returns <C>List( AsList( <A>F</A> ), <A>phi</A> )</C>.
 #! @Arguments F, phi
 #! @Returns a list
-DeclareOperation( "ListOp",
+@DeclareOperation( "ListOp",
         [ IsFiniteSet, IsFiniteSetMap ] );

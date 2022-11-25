@@ -20,3 +20,5 @@ if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then
     include( "gap/Julia.gi.autogen.jl" );
 fi;
 # =#
+
+include( "gap/init.gi.autogen.jl" );

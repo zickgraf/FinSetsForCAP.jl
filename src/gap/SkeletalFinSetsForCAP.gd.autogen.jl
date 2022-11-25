@@ -62,12 +62,12 @@ CapJitAddTypeSignature( "AsList", [ IsSkeletalFiniteSetMap ], rec( filter = IsLi
 #! @Description
 #!  Construct a category of skeletal finite sets.
 #! @Returns a &CAP; category
-DeclareOperation( "CategoryOfSkeletalFinSets", [ ] );
+@DeclareOperation( "CategoryOfSkeletalFinSets", [ ] );
 
 #! @Description
 #!  The default instance of the category of skeletal finite sets.
 #!  It is automatically created while loading this package.
-# DeclareGlobalVariable( "SkeletalFinSets" );
+DeclareGlobalName( "SkeletalFinSets" );
 
 #! @Description
 #!  Construct a skeletal finite set residing in
@@ -75,7 +75,7 @@ DeclareOperation( "CategoryOfSkeletalFinSets", [ ] );
 #!  of order given by the nonnegative integer <A>n</A>.
 #! @Arguments n
 #! @Returns a &CAP; object
-DeclareOperation( "FinSet",
+@DeclareOperation( "FinSet",
         [ IsInt ] );
 #! @InsertChunk SkeletalFinSet
 
@@ -85,7 +85,7 @@ DeclareOperation( "FinSet",
 #!  of order given by the nonnegative integer <A>n</A>.
 #! @Arguments C, n
 #! @Returns a &CAP; object
-KeyDependentOperation( "FinSet", IsCategoryOfSkeletalFinSets, IsInt, ReturnTrue );
+@KeyDependentOperation( "FinSet", IsCategoryOfSkeletalFinSets, IsInt, ReturnTrue );
 
 #! @Description
 #!  Construct a map  \phi: <A>s</A> \to <A>t</A> of the skeletal finite sets <A>s</A> && <A>t</A>,
@@ -93,7 +93,7 @@ KeyDependentOperation( "FinSet", IsCategoryOfSkeletalFinSets, IsInt, ReturnTrue 
 #!  is a list of integers ⥉ <A>t</A> describing the graph of  \phi .
 #! @Arguments s, G, t
 #! @Returns a &CAP; morphism
-DeclareOperation( "MapOfFinSets",
+@DeclareOperation( "MapOfFinSets",
         [ IsSkeletalFiniteSet, IsList, IsSkeletalFiniteSet ] );
 #! @InsertChunk  SkeletalMapOfFinSets
 
@@ -103,7 +103,7 @@ DeclareOperation( "MapOfFinSets",
 #!  Returns <C>List( AsList( <A>s</A> ), <A>f</A> )</C>.
 #! @Arguments s, f
 #! @Returns a list
-DeclareOperation( "ListOp",
+@DeclareOperation( "ListOp",
         [ IsSkeletalFiniteSet, IsFunction ] );
 
 #! @Description
@@ -111,21 +111,21 @@ DeclareOperation( "ListOp",
 #!  where <A>s</A> must be subset of <A>t</A>.
 #! @Arguments s, t
 #! @Returns a &CAP; morphism
-DeclareOperation( "EmbeddingOfFinSets",
+@DeclareOperation( "EmbeddingOfFinSets",
         [ IsSkeletalFiniteSet, IsSkeletalFiniteSet ] );
 
 #! @Description
 #!  Compute the Preimage of <A>t</A> under the morphism <A>phi</A>.
 #! @Arguments phi, t
 #! @Returns a &CAP; object
-DeclareOperation( "Preimage",
+@DeclareOperation( "Preimage",
         [ IsSkeletalFiniteSetMap, IsList ] );
 
 #! @Description
 #!  Compute the image of <A>s_</A> under the morphism <A>phi</A>.
 #! @Arguments phi, s_
 #! @Returns a &CAP; object
-DeclareOperation( "ImageObject",
+@DeclareOperation( "ImageObject",
         [ IsSkeletalFiniteSetMap, IsSkeletalFiniteSet ] );
 
 #! @Description
@@ -136,13 +136,13 @@ DeclareOperation( "ImageObject",
 #         [ IsSkeletalFiniteSetMap, IsList ] );
 
 # Technical functions
-DeclareGlobalFunction( "INSTALL_FUNCTIONS_FOR_SKELETAL_FIN_SETS" );
+@DeclareGlobalFunction( "INSTALL_FUNCTIONS_FOR_SKELETAL_FIN_SETS" );
 
-DeclareGlobalFunction( "SKELETAL_FIN_SETS_ExplicitCoequalizer" );
+@DeclareGlobalFunction( "SKELETAL_FIN_SETS_ExplicitCoequalizer" );
 CapJitAddTypeSignature( "SKELETAL_FIN_SETS_ExplicitCoequalizer", [ IsSkeletalFiniteSet, IsList ], rec( filter = IsList, element_type = rec( filter = IsList, element_type = rec( filter = IsInt ) ) ) );
 
-DeclareGlobalFunction( "SKELETAL_FIN_SETS_IsMonomorphism" );
+@DeclareGlobalFunction( "SKELETAL_FIN_SETS_IsMonomorphism" );
 CapJitAddTypeSignature( "SKELETAL_FIN_SETS_IsMonomorphism", [ IsList, IsInt ], IsBool );
 
-DeclareGlobalFunction( "SKELETAL_FIN_SETS_IsEpimorphism" );
+@DeclareGlobalFunction( "SKELETAL_FIN_SETS_IsEpimorphism" );
 CapJitAddTypeSignature( "SKELETAL_FIN_SETS_IsEpimorphism", [ IsList, IsInt ], rec( filter = IsList, element_type = rec( filter = IsBool ) ) );

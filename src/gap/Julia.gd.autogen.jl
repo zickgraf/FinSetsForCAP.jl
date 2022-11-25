@@ -4,6 +4,6 @@
 # Declarations
 #
 
-DeclareOperation( "FinSet", [ IsJuliaObject ] );
+@DeclareOperation( "FinSet", [ IsJuliaObject ] );
 
-DeclareOperation( "MapOfFinSets", [ IsCapCategoryObject, IsJuliaObject, IsCapCategoryObject ] );
+@DeclareOperation( "MapOfFinSets", [ IsCapCategoryObject, IsJuliaObject, IsCapCategoryObject ] );

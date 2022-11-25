@@ -5,7 +5,7 @@
 #
 
 ##
-InstallMethod( CategoryOfFinSets,
+InstallMethod( @__MODULE__,  CategoryOfFinSets,
                [ ],
                
   function ( )
@@ -42,31 +42,31 @@ end );
 
 
 ##
-InstallMethod( IsEqualForElementsOfFinSets,
+InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
         "for two integers",
         [ IsInt, IsInt ],
         
   ( int1, int2 ) -> int1 == int2 );
 
-InstallMethod( IsEqualForElementsOfFinSets,
+InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
         "for two chars",
         [ IsChar, IsChar ],
         
   ( char1, char2 ) -> char1 == char2 );
 
-InstallMethod( IsEqualForElementsOfFinSets,
+InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
         "for two strings",
         [ IsString, IsString ],
         
   ( string1, string2 ) -> string1 == string2 );
 
-InstallMethod( IsEqualForElementsOfFinSets,
+InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
         "for two objects",
         [ IsObject, IsObject ],
         
   IsIdenticalObj );
 
-InstallMethod( IsEqualForElementsOfFinSets,
+InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
         "for two lists",
         [ IsList, IsList ],
         
@@ -95,7 +95,7 @@ InstallMethod( IsEqualForElementsOfFinSets,
     
 end );
 
-InstallMethod( IsEqualForElementsOfFinSets,
+InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
         "for two records",
         [ IsRecord, IsRecord ],
         
@@ -118,7 +118,7 @@ InstallMethod( IsEqualForElementsOfFinSets,
     
 end );
 
-InstallMethod( IsEqualForElementsOfFinSets,
+InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
         "for two CAP category objects",
         [ IsCapCategoryObject, IsCapCategoryObject ],
         
@@ -134,7 +134,7 @@ InstallMethod( IsEqualForElementsOfFinSets,
     
 end );
 
-InstallMethod( IsEqualForElementsOfFinSets,
+InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
         "for two CAP category morphisms",
         [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
         
@@ -151,16 +151,14 @@ InstallMethod( IsEqualForElementsOfFinSets,
 end );
 
 ##
-InstallMethod( FinSetNC,
+InstallMethod( @__MODULE__,  FinSetNC,
         "for a category of finite sets && a list",
         [ IsCategoryOfFinSets, IsList ],
         
   function ( category_of_finite_sets, L )
     local set, i;
     
-    set = rec( );
-    
-    ObjectifyObjectForCAPWithAttributes( set, category_of_finite_sets,
+    set = CreateCapCategoryObjectWithAttributes( category_of_finite_sets,
             AsList, L,
             Length, Length( L )
             );
@@ -192,7 +190,7 @@ InstallOtherMethod( FinSet,
 end );
 
 ##
-InstallMethod( in,
+InstallMethod( @__MODULE__,  in,
         "for an object && a CAP finite set",
         [ IsObject, IsFiniteSet ],
         
@@ -203,7 +201,7 @@ InstallMethod( in,
 end );
 
 ##
-InstallMethod( getindex,
+InstallMethod( @__MODULE__,  getindex,
         "for CAP finite sets",
         [ IsFiniteSet, IsInt ],
 
@@ -214,7 +212,7 @@ InstallMethod( getindex,
 end );
 
 ##
-InstallMethod( Iterator,
+InstallMethod( @__MODULE__,  Iterator,
         "for CAP finite sets",
         [ IsFiniteSet ],
 
@@ -225,7 +223,7 @@ InstallMethod( Iterator,
 end );
 
 ##
-InstallMethod( UnionOfFinSets,
+InstallMethod( @__MODULE__,  UnionOfFinSets,
         "for a category of finite sets && a list of CAP finite sets",
         [ IsCategoryOfFinSets, IsList ],
         
@@ -248,7 +246,7 @@ InstallMethod( UnionOfFinSets,
 end );
 
 ##
-InstallMethod( ListOp,
+InstallMethod( @__MODULE__,  ListOp,
         "for a CAP finite set && a function",
         [ IsFiniteSet, IsFunction ],
         
@@ -259,7 +257,7 @@ InstallMethod( ListOp,
 end );
 
 ##
-InstallMethod( FilteredOp,
+InstallMethod( @__MODULE__,  FilteredOp,
         "for a CAP finite set && a function",
         [ IsFiniteSet, IsFunction ],
         
@@ -270,7 +268,7 @@ InstallMethod( FilteredOp,
 end );
 
 ##
-InstallMethod( FirstOp,
+InstallMethod( @__MODULE__,  FirstOp,
         "for a CAP finite set && a function",
         [ IsFiniteSet, IsFunction ],
         
@@ -281,7 +279,7 @@ InstallMethod( FirstOp,
 end );
 
 ##
-InstallMethod( MapOfFinSets,
+InstallMethod( @__MODULE__,  MapOfFinSets,
         "for two CAP finite sets && a list",
         [ IsFiniteSet, IsList, IsFiniteSet ],
         
@@ -292,16 +290,14 @@ InstallMethod( MapOfFinSets,
 end );
 
 ##
-InstallMethod( MapOfFinSetsNC,
+InstallMethod( @__MODULE__,  MapOfFinSetsNC,
         "for a two CAP finite sets && a list",
         [ IsFiniteSet, IsList, IsFiniteSet ],
         
   function ( S, G, T )
     local map;
     
-    map = rec( );
-    
-    ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes( map, CapCategory( S ),
+    map = CreateCapCategoryMorphismWithAttributes( CapCategory( S ),
             S,
             T,
             AsList, G
@@ -314,7 +310,7 @@ InstallMethod( MapOfFinSetsNC,
 end );
 
 ##
-InstallMethod( EmbeddingOfFinSets,
+InstallMethod( @__MODULE__,  EmbeddingOfFinSets,
         "for a two CAP finite sets",
         [ IsFiniteSet, IsFiniteSet ],
         
@@ -331,7 +327,7 @@ InstallMethod( EmbeddingOfFinSets,
 end );
 
 ##
-InstallMethod( ProjectionOfFinSets,
+InstallMethod( @__MODULE__,  ProjectionOfFinSets,
         "for a two CAP finite sets",
         [ IsFiniteSet, IsFiniteSet ],
         
@@ -348,7 +344,7 @@ InstallMethod( ProjectionOfFinSets,
 end );
 
 ##
-InstallMethod( Preimage,
+InstallMethod( @__MODULE__,  Preimage,
         "for a CAP map of finite sets && a CAP finite set",
         [ IsFiniteSetMap, IsFiniteSet ],
         
@@ -359,7 +355,7 @@ InstallMethod( Preimage,
 end );
 
 ##
-InstallMethod( ImageObject,
+InstallMethod( @__MODULE__,  ImageObject,
         "for a CAP map of finite sets && a CAP finite set",
         [ IsFiniteSetMap, IsFiniteSet ],
         
@@ -370,7 +366,7 @@ InstallMethod( ImageObject,
 end );
 
 ##
-InstallMethod( CallFuncList,
+InstallMethod( @__MODULE__,  CallFuncList,
         "for a CAP map of finite sets && a list",
         [ IsFiniteSetMap, IsList ],
         
@@ -404,7 +400,7 @@ InstallMethod( CallFuncList,
 end );
 
 ##
-InstallMethod( ListOp,
+InstallMethod( @__MODULE__,  ListOp,
         "for a CAP finite set && a CAP map of finite sets",
         [ IsFiniteSet, IsFiniteSetMap ],
         
@@ -415,7 +411,7 @@ InstallMethod( ListOp,
 end );
 
 ##
-InstallGlobalFunction( INSTALL_FUNCTIONS_FOR_FIN_SETS,
+@InstallGlobalFunction( INSTALL_FUNCTIONS_FOR_FIN_SETS,
     function ( category_of_finite_sets )
 
 ##
@@ -1058,7 +1054,7 @@ end );
 end );
 
 ##
-InstallMethod( ViewObj,
+InstallMethod( @__MODULE__,  ViewObj,
         "for a CAP finite set",
         [ IsFiniteSet ],
         
@@ -1067,7 +1063,7 @@ InstallMethod( ViewObj,
 end );
 
 ##
-InstallMethod( Display,
+InstallMethod( @__MODULE__,  Display,
         "for a CAP finite set",
         [ IsFiniteSet ],
         
@@ -1076,7 +1072,7 @@ InstallMethod( Display,
 end );
 
 ##
-InstallMethod( Display,
+InstallMethod( @__MODULE__,  Display,
         "for a CAP map of finite sets",
         [ IsFiniteSetMap ],
         
@@ -1085,10 +1081,7 @@ InstallMethod( Display,
 end );
 
 ##
-BindGlobal( "FinSets", CategoryOfFinSets( ) );
-
-##
-InstallMethod( FinSetNC,
+InstallMethod( @__MODULE__,  FinSetNC,
         "for a list",
         [ IsList ],
         
