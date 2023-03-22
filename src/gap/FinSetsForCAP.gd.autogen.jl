@@ -36,7 +36,7 @@
 
 #! @Description
 #!  The &GAP; set of the list used to construct a finite set $S$, i.e.,
-#!  <C>AsList( FinSet( <A>L</A> ) ) == Set( <A>L</A> )</C>.
+#!  <C>AsList( FinSet( <A>L</A> ) ) == SetGAP( <A>L</A> )</C>.
 #! @Arguments M
 #! @Returns a &GAP; set
 @DeclareAttribute( "AsList",
@@ -44,7 +44,7 @@
 
 #! @Description
 #!  The length of the &GAP; set of the list used to construct a finite set $S$, i.e.,
-#!  <C>Length( FinSet( <A>L</A> ) ) == Length( Set( <A>L</A> ) )</C>.
+#!  <C>Length( FinSet( <A>L</A> ) ) == Length( SetGAP( <A>L</A> ) )</C>.
 #! @Arguments M
 #! @Returns an integer
 @DeclareAttribute( "Length",
@@ -73,13 +73,13 @@ DeclareGlobalName( "FinSets" );
 #! @Description
 #!  Construct a finite set out of the list <A>L</A>, i.e.,
 #!  an object ⥉ the &CAP; category <C>cat_of_fin_sets</C>.
-#!  The &GAP; operation <C>Set</C> must be applicable to <A>L</A> without throwing an error.
-#!  Equality is determined as follows: <C>FinSet( L1 ) == FinSet( L2 )</C> iff <C>IsEqualForElementsOfFinSets( Immutable( Set( L1 ) ), Immutable( Set( L2 ) ) )</C>.
+#!  The &GAP; operation <C>SetGAP</C> must be applicable to <A>L</A> without throwing an error.
+#!  Equality is determined as follows: <C>FinSet( L1 ) == FinSet( L2 )</C> iff <C>IsEqualForElementsOfFinSets( Immutable( SetGAP( L1 ) ), Immutable( SetGAP( L2 ) ) )</C>.
 #!  Warning: all internal operations use <C>FinSetNC</C> (see below) instead of <C>FinSet</C>.
 #!  Thus, this notion of equality is only valid for objects created by calling <C>FinSet</C> explicitly.
-#!  Internally, <C>FinSet( cat_of_fin_sets, L )</C> is an alias for <C>FinSetNC( cat_of_fin_sets, Set( L ) )</C> && equality is determined as for <C>FinSetNC</C>.
-#!  Thus, <C>FinSet( cat_of_fin_sets, L1 ) == FinSetNC( cat_of_fin_sets, L2 )</C> iff <C>IsEqualForElementsOfFinSets( Immutable( Set( L1 ) ), Immutable( L2 ) )</C> &&
-#!  <C>FinSetNC( cat_of_fin_sets, L1 ) == FinSet( cat_of_fin_sets, L2 )</C> iff <C>IsEqualForElementsOfFinSets( Immutable( L1 ), Immutable( Set( L2 ) ) )</C>.
+#!  Internally, <C>FinSet( cat_of_fin_sets, L )</C> is an alias for <C>FinSetNC( cat_of_fin_sets, SetGAP( L ) )</C> && equality is determined as for <C>FinSetNC</C>.
+#!  Thus, <C>FinSet( cat_of_fin_sets, L1 ) == FinSetNC( cat_of_fin_sets, L2 )</C> iff <C>IsEqualForElementsOfFinSets( Immutable( SetGAP( L1 ) ), Immutable( L2 ) )</C> &&
+#!  <C>FinSetNC( cat_of_fin_sets, L1 ) == FinSet( cat_of_fin_sets, L2 )</C> iff <C>IsEqualForElementsOfFinSets( Immutable( L1 ), Immutable( SetGAP( L2 ) ) )</C>.
 #! @Arguments cat_of_fin_sets, L
 #! @Returns a &CAP; object
 @DeclareOperation( "FinSet",
@@ -157,7 +157,7 @@ DeclareGlobalName( "FinSets" );
 
 #! @Description
 #!  Returns the <A>i</A>-th entry of the &GAP; set of the list used to construct a finite set $S$, i.e.,
-#!  <C>FinSet( <A>L</A> )[ i ] == Set( <A>L</A> )[ i ]</C>.
+#!  <C>FinSet( <A>L</A> )[ i ] == SetGAP( <A>L</A> )[ i ]</C>.
 #! @Arguments M, i
 #! @Returns an object
 @DeclareOperation( "[]",
@@ -165,7 +165,7 @@ DeclareGlobalName( "FinSets" );
 
 #! @Description
 #!  An iterator of the &GAP; set of the list used to construct a finite set $S$, i.e.,
-#!  <C>Iterator( FinSet( <A>L</A> ) ) == Iterator( Set( <A>L</A> ) )</C>.
+#!  <C>Iterator( FinSet( <A>L</A> ) ) == Iterator( SetGAP( <A>L</A> ) )</C>.
 #! @Arguments M
 #! @Returns an iterator
 @DeclareOperation( "Iterator",

@@ -182,7 +182,7 @@ InstallOtherMethod( FinSet,
         
   function ( category_of_finite_sets, L )
     
-    return FinSetNC( category_of_finite_sets, Set( L ) );
+    return FinSetNC( category_of_finite_sets, SetGAP( L ) );
     
 end );
 
@@ -282,7 +282,7 @@ InstallMethod( @__MODULE__,  MapOfFinSets,
         
   function ( S, G, T )
     
-    return MapOfFinSetsNC( S, Set( G ), T );
+    return MapOfFinSetsNC( S, SetGAP( G ), T );
     
 end );
 
@@ -480,7 +480,7 @@ AddIsWellDefinedForMorphisms( category_of_finite_sets,
         return false;
     end;
     
-    if !Length( S ) == Length( rel )
+    if Length( S ) != Length( rel )
         return false;
     end;
     
@@ -505,8 +505,11 @@ end );
 ##
 AddIsEqualForObjects( category_of_finite_sets,
   function ( category_of_finite_sets, set1, set2 )
-    if !Length( set1 ) == Length( set2 )
+    
+    if Length( set1 ) != Length( set2 )
+        
         return false;
+        
     end;
     
     return IsEqualForElementsOfFinSets( AsList( set1 ), AsList( set2 ) );
@@ -1051,30 +1054,21 @@ end );
 end );
 
 ##
-InstallMethod( @__MODULE__,  ViewObj,
+InstallMethod( @__MODULE__,  DisplayString,
         "for a CAP finite set",
         [ IsFiniteSet ],
         
   function ( S )
-    Print( "<An object ⥉ ", Name( CapCategory( S ) ), ">" );
+    Concatenation( StringGAP( AsList( S ) ), "\n" );
 end );
 
 ##
-InstallMethod( @__MODULE__,  Display,
-        "for a CAP finite set",
-        [ IsFiniteSet ],
-        
-  function ( S )
-    Print( AsList( S ), "\n" );
-end );
-
-##
-InstallMethod( @__MODULE__,  Display,
+InstallMethod( @__MODULE__,  DisplayString,
         "for a CAP map of finite sets",
         [ IsFiniteSetMap ],
         
   function ( phi )
-    Print( [ AsList( Source( phi ) ), AsList( phi ), AsList( Range( phi ) ) ], "\n" );
+    Concatenation( StringGAP( [ AsList( Source( phi ) ), AsList( phi ), AsList( Range( phi ) ) ] ), "\n" );
 end );
 
 ##
