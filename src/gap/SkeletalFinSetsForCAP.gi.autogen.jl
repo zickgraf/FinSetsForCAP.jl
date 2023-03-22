@@ -11,17 +11,15 @@ InstallMethod( @__MODULE__,  CategoryOfSkeletalFinSets,
   function ( )
     local cat;
     
-    cat = CreateCapCategory( "SkeletalFinSets", IsCategoryOfSkeletalFinSets, IsSkeletalFiniteSet, IsSkeletalFiniteSetMap, IsCapCategoryTwoCell );
+    cat = CreateCapCategoryWithDataTypes(
+        "SkeletalFinSets", IsCategoryOfSkeletalFinSets,
+        IsSkeletalFiniteSet, IsSkeletalFiniteSetMap, IsCapCategoryTwoCell,
+        IsInt, rec( filter = IsList, element_type = rec( filter = IsInt ) ), fail
+    );
     
     cat.category_as_first_argument = true;
     
     cat.supports_empty_limits = true;
-    
-    cat.compiler_hints = rec(
-        category_filter = IsCategoryOfSkeletalFinSets,
-        object_filter = IsSkeletalFiniteSet,
-        morphism_filter = IsSkeletalFiniteSetMap,
-    );
     
     # this is a workhorse category -> no logic && caching only via IsIdenticalObj
     CapCategorySwitchLogicOff( cat );
@@ -31,6 +29,9 @@ InstallMethod( @__MODULE__,  CategoryOfSkeletalFinSets,
     #= comment for Julia
     SetIsElementaryTopos( cat, true );
     # =#
+    
+    SetRangeCategoryOfHomomorphismStructure( cat, cat );
+    SetIsEquippedWithHomomorphismStructure( cat, true );
     
     INSTALL_FUNCTIONS_FOR_SKELETAL_FIN_SETS( cat );
     
@@ -192,7 +193,7 @@ end );
     
     while !IsEmpty( T )
         t = T[1];
-        t = Union( List( D, f_j -> List( Union( List( D, f_i -> Preimage( f_i, [ t ] ) ) ), f_j ) ) );
+        t = UnionGAP( List( D, f_j -> List( UnionGAP( List( D, f_i -> Preimage( f_i, [ t ] ) ) ), f_j ) ) );
         t = AsList( t );
         if IsEmpty( t )
             t = [ T[1] ];
@@ -749,7 +750,7 @@ AddProjectionOntoCoequalizerWithGivenCoequalizer( SkeletalFinSets,
     
     Cq = SKELETAL_FIN_SETS_ExplicitCoequalizer( s, D );
     
-    cmp = List( s, x -> -1 + SafePosition( Cq, SafeFirst( Cq, c -> x ⥉ c ) ) );
+    cmp = List( s, x -> -1 + SafeUniquePositionProperty( Cq, c -> x ⥉ c ) );
     
     return MapOfFinSets( cat, s, cmp, C );
     
@@ -856,12 +857,14 @@ AddExponentialOnMorphismsWithGivenExponentials( SkeletalFinSets,
                               MapOfFinSets(
                                       cat,
                                       M,
+                                      ## λ-elimination == InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism
                                       List( (0):(m - 1), j -> RemInt( QuoInt( i, n^j ), n ) ),
                                       N ),
                               beta ] );
                   
                   images = AsList( composition );
                   
+                  ## λ-introduction == InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure
                   return Sum( List( (0):(a - 1), k -> images[1 + k] * b^k ) );
                   
               end ),
@@ -960,17 +963,35 @@ end );
 end );
 
 ##
-InstallMethod( @__MODULE__,  ViewObj,
+InstallMethod( @__MODULE__,  StringGAP,
         "for a CAP skeletal finite set",
         [ IsSkeletalFiniteSet ],
         
   function ( s )
-    Print( "|", Length( s ), "|" );
+    return Concatenation( "FinSet( SkeletalFinSets, ", StringGAP( Length( s ) ), " )" );
 end );
 
 ##
-InstallMethod( @__MODULE__,  ViewObj,
-    "for a CAP map of skeletal finite sets",
+InstallMethod( @__MODULE__,  StringGAP,
+        "for a CAP map of skeletal finite sets",
+        [ IsSkeletalFiniteSetMap ],
+        
+  function ( phi )
+    return Concatenation( "MapOfFinSets( SkeletalFinSets, ", StringGAP( Source( phi ) ), ", ", StringGAP( AsList( phi ) ), ", ", StringGAP( Range( phi ) ), " )" );
+end );
+
+##
+InstallMethod( @__MODULE__,  ViewString,
+        "for a CAP skeletal finite set",
+        [ IsSkeletalFiniteSet ],
+        
+  function ( s )
+    return Concatenation( "|", StringGAP( Length( s ) ), "|" );
+end );
+
+##
+InstallMethod( @__MODULE__,  ViewString,
+        "for a CAP map of skeletal finite sets",
         [ IsSkeletalFiniteSetMap ],
         
   function ( phi )
@@ -994,12 +1015,12 @@ InstallMethod( @__MODULE__,  ViewObj,
         
     end;
     
-    Print( "|", Length( Source( phi ) ), "| ", arrow, " |", Length( Range( phi ) ), "|" );
+    return Concatenation( ViewString( Source( phi ) ), " ", arrow, " ", ViewString( Range( phi ) ) );
     
 end );
 
 ##
-InstallMethod( @__MODULE__,  PrintString,
+InstallMethod( @__MODULE__,  DisplayString,
         "for a CAP skeletal finite set",
         [ IsSkeletalFiniteSet ],
         
@@ -1009,37 +1030,29 @@ InstallMethod( @__MODULE__,  PrintString,
     l = Length( s );
     
     if l == 0
-        return "∅";
+        return "∅\n";
     elseif l == 1
-        return "[ 0 ]";
+        return "[ 0 ]\n";
     elseif l == 2
-        return "[ 0, 1 ]";
+        return "[ 0, 1 ]\n";
     elseif l == 3
-        return "[ 0, 1, 2 ]";
+        return "[ 0, 1, 2 ]\n";
     end;
     
-    return Concatenation( "[ 0,..., ", string( l - 1 ), " ]" );
+    return Concatenation( "[ 0,..., ", StringGAP( l - 1 ), " ]\n" );
     
 end );
 
 ##
-InstallMethod( @__MODULE__,  Display,
-        "for a CAP skeletal finite set",
-        [ IsSkeletalFiniteSet ],
-        
-  function ( s )
-    Print( PrintString( s ), "\n" );
-end );
-
-##
-InstallMethod( @__MODULE__,  Display,
-    "for a CAP map of skeletal finite sets",
+InstallMethod( @__MODULE__,  DisplayString,
+        "for a CAP map of skeletal finite sets",
         [ IsSkeletalFiniteSetMap ],
         
   function ( phi )
-    Print( PrintString( Source( phi ) ) );
-    Print( " ⱶ", AsList( phi ), "→ " );
-    Print( PrintString( Range( phi ) ), "\n" );
+    return Concatenation(
+                   DisplayString( Source( phi ) ),
+                   " ⱶ", DisplayString( AsList( phi ) ), "→ ",
+                   DisplayString( Range( phi ) ), "\n" );
 end );
 
 ##

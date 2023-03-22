@@ -35,7 +35,7 @@
 #! @Section Attributes
 
 #! @Description
-#!  The &GAP; set of the list used to construct a finite set  S , i.e.,
+#!  The &GAP; set of the list used to construct a finite set $S$, i.e.,
 #!  <C>AsList( FinSet( <A>L</A> ) ) == Set( <A>L</A> )</C>.
 #! @Arguments M
 #! @Returns a &GAP; set
@@ -43,7 +43,7 @@
         IsFiniteSet );
 
 #! @Description
-#!  The length of the &GAP; set of the list used to construct a finite set  S , i.e.,
+#!  The length of the &GAP; set of the list used to construct a finite set $S$, i.e.,
 #!  <C>Length( FinSet( <A>L</A> ) ) == Length( Set( <A>L</A> ) )</C>.
 #! @Arguments M
 #! @Returns an integer
@@ -112,9 +112,9 @@ DeclareGlobalName( "FinSets" );
 #! @InsertChunk FinSetNC
 
 #! @Description
-#!  Construct a map  \phi: <A>S</A> \to <A>T</A> of the finite sets <A>S</A> && <A>T</A>,
+#!  Construct a map $\phi:$<A>S</A>$\to$<A>T</A> of the finite sets <A>S</A> && <A>T</A>,
 #!  i.e., a morphism ⥉ the &CAP; category <C>FinSets</C>, where <A>G</A>
-#!  is a list of pairs ⥉ <A>S</A> \times <A>T</A> describing the graph of  \phi .
+#!  is a list of pairs ⥉ <A>S</A>$\times$<A>T</A> describing the graph of $\phi$.
 #! @Arguments S, G, T
 #! @Returns a &CAP; morphism
 @DeclareOperation( "MapOfFinSets",
@@ -122,9 +122,9 @@ DeclareGlobalName( "FinSets" );
 #! @InsertChunk MapOfFinSets
 
 #! @Description
-#!  Construct a map  \phi: <A>S</A> \to <A>T</A> of the finite sets <A>S</A> && <A>T</A>,
+#!  Construct a map $\phi:$<A>S</A>$\to$<A>T</A> of the finite sets <A>S</A> && <A>T</A>,
 #!  i.e., a morphism ⥉ the &CAP; category <C>FinSets</C>, where <A>G</A>
-#!  is a duplicate-free && dense list of pairs ⥉ <A>S</A> \times <A>T</A> describing the graph of  \phi .
+#!  is a duplicate-free && dense list of pairs ⥉ <A>S</A>$\times$<A>T</A> describing the graph of $\phi$.
 #! @Arguments S, G, T
 #! @Returns a &CAP; morphism
 @DeclareOperation( "MapOfFinSetsNC",
@@ -156,7 +156,7 @@ DeclareGlobalName( "FinSets" );
 #         [ IsObject, IsFiniteSet ] );
 
 #! @Description
-#!  Returns the <A>i</A>-th entry of the &GAP; set of the list used to construct a finite set  S , i.e.,
+#!  Returns the <A>i</A>-th entry of the &GAP; set of the list used to construct a finite set $S$, i.e.,
 #!  <C>FinSet( <A>L</A> )[ i ] == Set( <A>L</A> )[ i ]</C>.
 #! @Arguments M, i
 #! @Returns an object
@@ -164,7 +164,7 @@ DeclareGlobalName( "FinSets" );
         [ IsFiniteSet, IsInt ] );
 
 #! @Description
-#!  An iterator of the &GAP; set of the list used to construct a finite set  S , i.e.,
+#!  An iterator of the &GAP; set of the list used to construct a finite set $S$, i.e.,
 #!  <C>Iterator( FinSet( <A>L</A> ) ) == Iterator( Set( <A>L</A> ) )</C>.
 #! @Arguments M
 #! @Returns an iterator
@@ -200,7 +200,7 @@ DeclareGlobalName( "FinSets" );
         [ IsFiniteSet, IsFunction ] );
 
 #! @Description
-#!  Construct the embedding  \iota: <A>S</A> \to <A>T</A> of the finite sets <A>S</A> && <A>T</A>,
+#!  Construct the embedding $\iota:$<A>S</A>$\to$<A>T</A> of the finite sets <A>S</A> && <A>T</A>,
 #!  where <A>S</A> must be subset of <A>T</A>.
 #! @Arguments S, T
 #! @Returns a &CAP; morphism
@@ -208,7 +208,7 @@ DeclareGlobalName( "FinSets" );
         [ IsFiniteSet, IsFiniteSet ] );
 
 #! @Description
-#!  Construct the projection  \pi: <A>S</A> \to <A>T</A> of the finite sets <A>S</A> && <A>T</A>,
+#!  Construct the projection $\pi:$<A>S</A>$\to$<A>T</A> of the finite sets <A>S</A> && <A>T</A>,
 #!  where <A>T</A> is a partition of <A>S</A>.
 #! @Arguments S, T
 #! @Returns a &CAP; morphism

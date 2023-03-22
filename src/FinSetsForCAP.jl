@@ -2,14 +2,15 @@ module FinSetsForCAP
 
 import Base.in
 import Base.getindex
-import Base.show
 
 using CAP
 
 import CAP.ImageObjectOperation
 import CAP.CallFuncList
-import CAP.Display
+import CAP.DisplayString
+import CAP.ViewString
 import CAP.PrintString
+import CAP.StringGAPOperation
 
 include("init.jl")
 

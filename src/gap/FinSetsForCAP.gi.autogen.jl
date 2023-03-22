@@ -17,15 +17,12 @@ InstallMethod( @__MODULE__,  CategoryOfFinSets,
     
     FinSets.supports_empty_limits = true;
     
-    FinSets.compiler_hints = rec(
-        category_filter = IsCategoryOfFinSets,
-        object_filter = IsFiniteSet,
-        morphism_filter = IsFiniteSetMap,
-    );
-    
     #= comment for Julia
     SetIsElementaryTopos( FinSets, true );
     # =#
+    
+    SetRangeCategoryOfHomomorphismStructure( FinSets, FinSets );
+    SetIsEquippedWithHomomorphismStructure( FinSets, true );
     
     INSTALL_FUNCTIONS_FOR_FIN_SETS( FinSets );
     
