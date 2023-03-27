@@ -194,7 +194,6 @@ end );
     while !IsEmpty( T )
         t = T[1];
         t = UnionGAP( List( D, f_j -> List( UnionGAP( List( D, f_i -> Preimage( f_i, [ t ] ) ) ), f_j ) ) );
-        t = AsList( t );
         if IsEmpty( t )
             t = [ T[1] ];
         end;
@@ -214,12 +213,12 @@ end );
             end;
             if Length( L ) > 1
                 Cq = Difference( Cq, L );
-                Add( Cq, Set( Concatenation( L ) ) );
+                Add( Cq, SetGAP( Concatenation( L ) ) );
             end;
         end;
     end;
     
-    return Set( Cq );
+    return SetGAP( Cq );
 
 end );
 
@@ -373,7 +372,7 @@ end );
 AddImageObject( SkeletalFinSets,
   function ( cat, phi )
     
-    return FinSet( SkeletalFinSets, Length( Set( AsList( phi ) ) ) );
+    return FinSet( SkeletalFinSets, Length( SetGAP( AsList( phi ) ) ) );
     
 end );
 
@@ -431,7 +430,7 @@ AddIsLiftable( SkeletalFinSets,
     gg = AsList( g );
     
     if 100 * Length( ff ) < Length( gg )
-        fff = Set( ff );
+        fff = SetGAP( ff );
     else ## this is for CompilerForCAP
         fff = ff;
     end;
@@ -464,7 +463,7 @@ AddIsColiftable( SkeletalFinSets,
     ff = AsList( f );
     gg = AsList( g );
     
-    return ForAll( Set( ff ), i -> Length( Set( gg[Positions( ff, i )] ) ) == 1 );
+    return ForAll( SetGAP( ff ), i -> Length( SetGAP( gg[Positions( ff, i )] ) ) == 1 );
     
 end );
 
@@ -495,7 +494,7 @@ end );
 AddImageEmbeddingWithGivenImageObject( SkeletalFinSets,
   function ( cat, phi, image )
     
-    return MapOfFinSets( cat, image, Set( AsList( phi ) ), Range( phi ) );
+    return MapOfFinSets( cat, image, SetGAP( AsList( phi ) ), Range( phi ) );
 
 end );
 
@@ -506,7 +505,7 @@ AddCoastrictionToImageWithGivenImageObject( SkeletalFinSets,
     
     G = AsList( phi );
     
-    images = Set( G );
+    images = SetGAP( G );
     
     s = Source( phi );
     
@@ -1019,8 +1018,12 @@ InstallMethod( @__MODULE__,  ViewString,
     
 end );
 
+# We want lists of skeletal finite sets && maps to be displayed ⥉ a "fancy" way.
+# Since `Display` of list redirects to `Print`, we have to make `PrintString` "fancy",
+# even if the documentation of `PrintString` suggests that it should !be "fancy".
+
 ##
-InstallMethod( @__MODULE__,  DisplayString,
+InstallMethod( @__MODULE__,  PrintString,
         "for a CAP skeletal finite set",
         [ IsSkeletalFiniteSet ],
         
@@ -1030,16 +1033,41 @@ InstallMethod( @__MODULE__,  DisplayString,
     l = Length( s );
     
     if l == 0
-        return "∅\n";
+        return "∅";
     elseif l == 1
-        return "[ 0 ]\n";
+        return "[ 0 ]";
     elseif l == 2
-        return "[ 0, 1 ]\n";
+        return "[ 0, 1 ]";
     elseif l == 3
-        return "[ 0, 1, 2 ]\n";
+        return "[ 0, 1, 2 ]";
     end;
     
-    return Concatenation( "[ 0,..., ", StringGAP( l - 1 ), " ]\n" );
+    return Concatenation( "[ 0,..., ", StringGAP( l - 1 ), " ]" );
+    
+end );
+
+##
+InstallMethod( @__MODULE__,  PrintString,
+        "for a CAP map of skeletal finite sets",
+        [ IsSkeletalFiniteSetMap ],
+        
+  function ( phi )
+    
+    return Concatenation(
+                   PrintString( Source( phi ) ),
+                   " ⱶ", PrintString( AsList( phi ) ), "→ ",
+                   PrintString( Range( phi ) ) );
+    
+end );
+
+##
+InstallMethod( @__MODULE__,  DisplayString,
+        "for a CAP skeletal finite set",
+        [ IsSkeletalFiniteSet ],
+        
+  function ( s )
+    
+    return Concatenation( PrintString( s ), "\n" );
     
 end );
 
@@ -1049,10 +1077,9 @@ InstallMethod( @__MODULE__,  DisplayString,
         [ IsSkeletalFiniteSetMap ],
         
   function ( phi )
-    return Concatenation(
-                   DisplayString( Source( phi ) ),
-                   " ⱶ", DisplayString( AsList( phi ) ), "→ ",
-                   DisplayString( Range( phi ) ), "\n" );
+    
+    return Concatenation( PrintString( phi ), "\n" );
+    
 end );
 
 ##

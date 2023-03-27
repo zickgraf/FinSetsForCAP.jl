@@ -122,8 +122,20 @@ InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
   function ( a, b )
     # compare CAP category objects using IsEqualForObjects (if available)
     
-    if HasCapCategory( a ) && HasCapCategory( b ) && ApplicableMethod( IsEqualForObjects, [ a, b ] ) != fail
-        return IsIdenticalObj( CapCategory( a ), CapCategory( b ) ) && IsEqualForObjects( a, b );
+    if HasCapCategory( a ) && HasCapCategory( b )
+        
+        if !IsIdenticalObj( CapCategory( a ), CapCategory( b ) )
+            
+            return false;
+            
+        end;
+        
+        if CanCompute( CapCategory( a ), "IsEqualForObjects" )
+            
+            return IsEqualForObjects( CapCategory( a ), a, b );
+            
+        end;
+        
     end;
     
     # COVERAGE_IGNORE_NEXT_LINE
@@ -136,10 +148,22 @@ InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
         [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
         
   function ( a, b )
-    # compare CAP category objects using IsEqualForMorphisms (if available)
+    # compare CAP category objects using IsEqualForMorphismsOnMor (if available)
     
-    if HasCapCategory( a ) && HasCapCategory( b ) && ApplicableMethod( IsEqualForMorphismsOnMor, [ a, b ] ) != fail
-        return IsIdenticalObj( CapCategory( a ), CapCategory( b ) ) && IsEqualForMorphismsOnMor( a, b );
+    if HasCapCategory( a ) && HasCapCategory( b )
+        
+        if !IsIdenticalObj( CapCategory( a ), CapCategory( b ) )
+            
+            return false;
+            
+        end;
+        
+        if CanCompute( CapCategory( a ), "IsEqualForMorphismsOnMor" )
+            
+            return IsEqualForMorphismsOnMor( CapCategory( a ), a, b );
+            
+        end;
+        
     end;
     
     # COVERAGE_IGNORE_NEXT_LINE
@@ -213,9 +237,10 @@ InstallMethod( @__MODULE__,  Iterator,
         "for CAP finite sets",
         [ IsFiniteSet ],
 
-  function ( M )
+  # `args` is never used ⥉ GAP but needed for Julia
+  function ( M, args... )
     
-    return Iterator( AsList( M ) );
+    return CallFuncList( Iterator, Concatenation( [ AsList( M ) ], args ) );
     
 end );
 
@@ -265,7 +290,7 @@ InstallMethod( @__MODULE__,  FilteredOp,
 end );
 
 ##
-InstallMethod( @__MODULE__,  FirstOp,
+InstallMethod( @__MODULE__,  First,
         "for a CAP finite set && a function",
         [ IsFiniteSet, IsFunction ],
         
@@ -1059,7 +1084,7 @@ InstallMethod( @__MODULE__,  DisplayString,
         [ IsFiniteSet ],
         
   function ( S )
-    Concatenation( StringGAP( AsList( S ) ), "\n" );
+    return Concatenation( PrintString( AsList( S ) ), "\n" );
 end );
 
 ##
@@ -1068,7 +1093,7 @@ InstallMethod( @__MODULE__,  DisplayString,
         [ IsFiniteSetMap ],
         
   function ( phi )
-    Concatenation( StringGAP( [ AsList( Source( phi ) ), AsList( phi ), AsList( Range( phi ) ) ] ), "\n" );
+    return Concatenation( PrintString( [ AsList( Source( phi ) ), AsList( phi ), AsList( Range( phi ) ) ] ), "\n" );
 end );
 
 ##

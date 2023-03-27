@@ -9,6 +9,9 @@
 ```jldoctest
 julia> using CAP; using FinSetsForCAP
 
+julia> true
+true
+
 julia> L = FinSet( 0 )
 |0|
 
