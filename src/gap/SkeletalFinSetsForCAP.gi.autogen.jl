@@ -30,6 +30,9 @@ InstallMethod( @__MODULE__,  CategoryOfSkeletalFinSets,
     SetIsElementaryTopos( cat, true );
     # =#
     
+    # this is implied by `IsElementaryTopos`, but `IsElementaryTopos` is !available ⥉ Julia yet
+    SetIsBicartesianClosedCategory( cat, true );
+    
     SetRangeCategoryOfHomomorphismStructure( cat, cat );
     SetIsEquippedWithHomomorphismStructure( cat, true );
     
@@ -64,7 +67,7 @@ InstallMethod( @__MODULE__,  FinSetOp,
     int = CreateCapCategoryObjectWithAttributes( cat, Length, n );
     
     #% CAP_JIT_DROP_NEXT_STATEMENT
-    Assert( 4, IsWellDefined( int ) );
+    @Assert( 4, IsWellDefined( int ) );
     
     return int;
     
@@ -106,7 +109,7 @@ InstallMethod( @__MODULE__,  MapOfFinSets,
 end );
 
 ##
-InstallOtherMethodForCompilerForCAP( MapOfFinSets,
+InstallMethod( @__MODULE__,  MapOfFinSets,
         "for a category of skeletal finite sets, two CAP skeletal finite sets && a list",
         [ IsCategoryOfSkeletalFinSets, IsSkeletalFiniteSet, IsList, IsSkeletalFiniteSet ],
         
@@ -119,7 +122,7 @@ InstallOtherMethodForCompilerForCAP( MapOfFinSets,
             AsList, G );
     
     #% CAP_JIT_DROP_NEXT_STATEMENT
-    Assert( 4, IsWellDefined( map ) );
+    @Assert( 4, IsWellDefined( map ) );
     
     return map;
     
@@ -135,7 +138,7 @@ InstallMethod( @__MODULE__,  EmbeddingOfFinSets,
     
     iota = MapOfFinSets( s, AsList( s ), t );
     
-    Assert( 3, IsMonomorphism( iota ) );
+    @Assert( 3, IsMonomorphism( iota ) );
     SetIsMonomorphism( iota, true );
     
     return iota;
@@ -514,7 +517,7 @@ AddCoastrictionToImageWithGivenImageObject( SkeletalFinSets,
     pi = MapOfFinSets( cat, s, L, image_object );
     
     #% CAP_JIT_DROP_NEXT_STATEMENT
-    Assert( 3, IsEpimorphism( cat, pi ) );
+    @Assert( 3, IsEpimorphism( cat, pi ) );
     
     return pi;
     
@@ -767,7 +770,6 @@ AddUniversalMorphismFromCoequalizerWithGivenCoequalizer( SkeletalFinSets,
 end );
 
 ## The cartesian monoidal structure
-#= comment for Julia
 
 ##
 AddCartesianLeftUnitorWithGivenDirectProduct( SkeletalFinSets,
@@ -841,8 +843,7 @@ AddExponentialOnMorphismsWithGivenExponentials( SkeletalFinSets,
     B = Range( beta );
     b = Length( B );
     
-    return
-      MapOfFinSets(
+    return MapOfFinSets(
               cat,
               S,
               List( (0):(n ^ m - 1),
@@ -901,6 +902,7 @@ AddCartesianCoevaluationMorphismWithGivenRange( SkeletalFinSets,
     
 end );
 
+#= comment for Julia
 ##
 AddSubobjectClassifier( SkeletalFinSets,
   function ( cat )
@@ -1083,7 +1085,7 @@ InstallMethod( @__MODULE__,  DisplayString,
 end );
 
 ##
-InstallOtherMethod( FinSet,
+InstallMethod( @__MODULE__,  FinSet,
         "for a nonnegative integer",
         [ IsInt ],
         

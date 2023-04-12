@@ -6,7 +6,7 @@
 
 ##
 # we use other method to suppress a warning due to FinSet being a KeyDependentOperation
-InstallOtherMethod( FinSet,
+InstallMethod( @__MODULE__,  FinSet,
         [ IsJuliaObject ],
         
   function ( list )

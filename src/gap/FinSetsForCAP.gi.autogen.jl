@@ -21,6 +21,9 @@ InstallMethod( @__MODULE__,  CategoryOfFinSets,
     SetIsElementaryTopos( FinSets, true );
     # =#
     
+    # this is implied by `IsElementaryTopos`, but `IsElementaryTopos` is !available ⥉ Julia yet
+    SetIsBicartesianClosedCategory( FinSets, true );
+    
     SetRangeCategoryOfHomomorphismStructure( FinSets, FinSets );
     SetIsEquippedWithHomomorphismStructure( FinSets, true );
     
@@ -148,7 +151,7 @@ InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
         [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
         
   function ( a, b )
-    # compare CAP category objects using IsEqualForMorphismsOnMor (if available)
+    # compare CAP category morphisms using IsEqualForMorphismsOnMor (if available)
     
     if HasCapCategory( a ) && HasCapCategory( b )
         
@@ -184,7 +187,7 @@ InstallMethod( @__MODULE__,  FinSetNC,
             Length, Length( L )
             );
     
-    Assert( 4, IsWellDefined( set ) );
+    @Assert( 4, IsWellDefined( set ) );
 
     for i in (1):(Length( L ))
         if IsBound( L[i] ) && !IsEqualForElementsOfFinSets( L[i], AsList( set )[i] )
@@ -200,7 +203,7 @@ InstallMethod( @__MODULE__,  FinSetNC,
 end );
 
 ##
-InstallOtherMethod( FinSet,
+InstallMethod( @__MODULE__,  FinSet,
         "for a category of finite sets && a list",
         [ IsCategoryOfFinSets, IsList ],
         
@@ -325,7 +328,7 @@ InstallMethod( @__MODULE__,  MapOfFinSetsNC,
             AsList, G
             );
     
-    Assert( 4, IsWellDefined( map ) );
+    @Assert( 4, IsWellDefined( map ) );
     
     return map;
     
@@ -341,7 +344,7 @@ InstallMethod( @__MODULE__,  EmbeddingOfFinSets,
     
     iota = MapOfFinSetsNC( S, List( S, x -> [ x, x ] ), T );
     
-    Assert( 3, IsMonomorphism( iota ) );
+    @Assert( 3, IsMonomorphism( iota ) );
     SetIsMonomorphism( iota, true );
     
     return iota;
@@ -358,7 +361,7 @@ InstallMethod( @__MODULE__,  ProjectionOfFinSets,
     
     pi = MapOfFinSetsNC( S, List( S, x -> [ x, First( T, t -> x ⥉ t ) ] ), T );
     
-    Assert( 3, IsEpimorphism( pi ) );
+    @Assert( 3, IsEpimorphism( pi ) );
     SetIsEpimorphism( pi, true );
     
     return pi;
@@ -811,7 +814,7 @@ AddCoastrictionToImage( category_of_finite_sets,
     
     pi = MapOfFinSetsNC( Source( phi ), AsList( phi ), ImageObject( phi ) );
     
-    Assert( 3, IsEpimorphism( pi ) );
+    @Assert( 3, IsEpimorphism( pi ) );
     
     SetIsEpimorphism( pi, true );
     
@@ -891,7 +894,6 @@ AddUniversalMorphismFromCoequalizerWithGivenCoequalizer( category_of_finite_sets
 end );
 
 ## The cartesian monoidal structure
-#= comment for Julia
 
 ##
 AddCartesianLeftUnitorWithGivenDirectProduct( category_of_finite_sets,
@@ -1045,6 +1047,7 @@ AddCartesianLambdaIntroduction( category_of_finite_sets,
     
 end );
 
+#= comment for Julia
 ##
 AddSubobjectClassifier( category_of_finite_sets,
   function ( category_of_finite_sets )
@@ -1106,7 +1109,7 @@ InstallMethod( @__MODULE__,  FinSetNC,
 end );
 
 ##
-InstallOtherMethod( FinSet,
+InstallMethod( @__MODULE__,  FinSet,
         "for a list",
         [ IsList ],
         
