@@ -10,9 +10,10 @@ version = "0.1.0"
 [deps]
 CAP = "d64df2ee-d2bb-46f4-8cbc-f03bb858f8cb"
 CartesianCategories = "c5961c08-7b59-43f4-a15e-02b3e7c87ab8"
+Toposes = "36a15fe6-6211-457f-8fdb-aa2e0d2f3052"
 
 [compat]
-julia = "1.8"
+julia = "1.9"
 
 [extras]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"

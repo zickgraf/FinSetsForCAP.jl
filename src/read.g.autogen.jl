@@ -6,9 +6,7 @@
 
 include( "gap/Tools.gi.autogen.jl" );
 
-#= comment for Julia
 include( "gap/precompiled_categories/CategoryOfSkeletalFinSetsPrecompiled.gi.autogen.jl" );
-# =#
 
 include( "gap/FinSetsForCAP.gi.autogen.jl" );
 

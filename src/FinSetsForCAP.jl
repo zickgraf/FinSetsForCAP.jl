@@ -1,3 +1,5 @@
+__precompile__(false)
+
 module FinSetsForCAP
 
 import Base.in
@@ -17,6 +19,8 @@ import CAP.FilteredOp
 import CAP.First
 
 using CartesianCategories
+
+using Toposes
 
 push!(ModulesForEvaluationStack, FinSetsForCAP)
 

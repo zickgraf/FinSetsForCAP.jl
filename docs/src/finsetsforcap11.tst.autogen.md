@@ -1,6 +1,6 @@
 
 ```jldoctest
-julia> using CAP; using CartesianCategories; using FinSetsForCAP
+julia> using CAP; using CartesianCategories; using Toposes; using FinSetsForCAP
 
 julia> true
 true
@@ -27,13 +27,13 @@ julia> iota = UniversalMorphismFromInitialObject( M )
 <A morphism in FinSets>
 
 julia> Display( I )
-[  ]
+[ ]
 
 julia> T = TerminalObject( FinSets )
 <An object in FinSets>
 
 julia> Display( T )
-[ [  ] ]
+[ [ ] ]
 
 julia> IsInitial( T )
 false

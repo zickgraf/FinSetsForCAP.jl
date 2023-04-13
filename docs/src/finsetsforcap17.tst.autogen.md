@@ -16,7 +16,7 @@ julia> phi = [ [ 1, "b" ], [ 2, "a" ], [ 3, "b" ] ];
 julia> phi = MapOfFinSets( S, phi, T )
 <A morphism in FinSets>
 
-julia> I = ImageObject( phi )
+julia> I = CoimageObject( phi )
 <An object in FinSets>
 
 julia> Length( I )
@@ -34,10 +34,10 @@ false
 julia> IsSplitEpimorphism( phi )
 false
 
-julia> iota = ImageEmbedding( phi )
+julia> iota = AstrictionToCoimage( phi )
 <A morphism in FinSets>
 
-julia> pi = CoastrictionToImage( phi )
+julia> pi = CoimageProjection( phi )
 <A morphism in FinSets>
 
 julia> PreCompose( pi, iota ) == phi

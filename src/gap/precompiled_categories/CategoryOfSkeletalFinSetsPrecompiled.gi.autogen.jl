@@ -459,7 +459,7 @@ end
         
 ########
 function ( cat_1, arg2_1, arg3_1 )
-    return Length( arg2_1 ) == 0 || !Length( arg3_1 ) == 0;
+    return Length( arg2_1 ) == 0 || Length( arg3_1 ) != 0;
 end
 ########
         
@@ -481,7 +481,7 @@ end
         
 ########
 function ( cat_1, arg2_1 )
-    return !Length( arg2_1 ) == 0;
+    return Length( arg2_1 ) != 0;
 end
 ########
         
@@ -550,7 +550,7 @@ end
 function ( cat_1, arg2_1 )
     local deduped_1_1;
     deduped_1_1 = Length( Range( arg2_1 ) );
-    return deduped_1_1 == 0 || !Length( Source( arg2_1 ) ) == 0 && SKELETAL_FIN_SETS_IsMonomorphism( AsList( arg2_1 ), deduped_1_1 );
+    return deduped_1_1 == 0 || Length( Source( arg2_1 ) ) != 0 && SKELETAL_FIN_SETS_IsMonomorphism( AsList( arg2_1 ), deduped_1_1 );
 end
 ########
         
