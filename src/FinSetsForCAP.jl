@@ -28,4 +28,24 @@ include("init.jl")
 
 pop!(ModulesForEvaluationStack)
 
+# convenience converting Int to BigInt
+
+##
+function FinSet(n::Int)
+    FinSet(BigInt(n));
+end
+
+##
+function MapOfFinSets(s::IsSkeletalFiniteSet.abstract_type, G::Vector{Int}, t::IsSkeletalFiniteSet.abstract_type)
+	MapOfFinSets( s, Vector{BigInt}(G), t );
+end
+
+function MapOfFinSets(s::IsSkeletalFiniteSet.abstract_type, G::UnitRange{Int}, t::IsSkeletalFiniteSet.abstract_type)
+	MapOfFinSets( s, UnitRange{BigInt}(G), t );
+end
+
+function MapOfFinSets(s::IsSkeletalFiniteSet.abstract_type, G::StepRange{Int}, t::IsSkeletalFiniteSet.abstract_type)
+	MapOfFinSets( s, StepRange{BigInt}(G), t );
+end
+
 end # module FinSetsForCAP

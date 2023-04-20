@@ -6,7 +6,7 @@
 
 ## Sum( (0):(n - 1), i -> q^i );
 InstallMethod( @__MODULE__,  GeometricSum,
-        [ IsInt, IsInt ],
+        [ IsBigInt, IsBigInt ],
   function ( q, n )
     
     if q == 1
@@ -19,11 +19,11 @@ end );
 
 ## Sum( (1):(n - 1), i -> i * q^(i-1) )
 InstallMethod( @__MODULE__,  GeometricSumDiff1,
-        [ IsInt, IsInt ],
+        [ IsBigInt, IsBigInt ],
   function ( q, n )
 
     if n == 0
-        return 0;
+        return BigInt( 0 );
     elseif q == 1
         return Binomial( n, 2 );
     end;

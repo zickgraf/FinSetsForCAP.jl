@@ -26,13 +26,13 @@ julia> Display( phi )
 julia> StringGAP( phi )
 "MapOfFinSets( SkeletalFinSets, FinSet( SkeletalFinSets, 3 ), [ 6, 4, 4 ], FinSet( SkeletalFinSets, 7 ) )"
 
-julia> s = ObjectConstructor( SkeletalFinSets, 3 )
+julia> s = ObjectConstructor( SkeletalFinSets, BigInt( 3 ) )
 |3|
 
-julia> t = ObjectConstructor( SkeletalFinSets, 7 )
+julia> t = ObjectConstructor( SkeletalFinSets, BigInt( 7 ) )
 |7|
 
-julia> phi = MorphismConstructor( s, [ 6, 4, 4 ], t )
+julia> phi = MorphismConstructor( s, [ BigInt( 6 ), BigInt( 4 ), BigInt( 4 ) ], t )
 |3| → |7|
 
 julia> Display( MorphismDatum( phi ) )

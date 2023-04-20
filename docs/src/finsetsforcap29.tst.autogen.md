@@ -23,7 +23,7 @@ julia> Display( List( m, x -> x^2 ) )
 julia> L = ObjectDatum( m )
 7
 
-julia> mm = ObjectConstructor( SkeletalFinSets, 7 )
+julia> mm = ObjectConstructor( SkeletalFinSets, BigInt( 7 ) )
 |7|
 
 julia> m == mm

@@ -12,24 +12,59 @@ CapJitAddLogicFunction( function ( tree )
     Info( InfoCapJit, 1, "Apply logic for global functions applied to literal integers" );
     
     pre_func = function ( tree, additional_arguments )
-        local args;
+      local args, is_big_int, values;
         
         if CapJitIsCallToGlobalFunction( tree, ReturnTrue )
             
             args = tree.args;
             
-            if ForAll( args, a -> a.type == "EXPR_INT" )
+            if ForAll( args, a -> a.type == "EXPR_INT" || (CapJitIsCallToGlobalFunction( a, "BigInt" ) && a.args.1.type == "EXPR_INT") )
+                
+                is_big_int = false;
+                
+                values = AsListMut( List( args, function ( a )
+                    
+                    if a.type == "EXPR_INT"
+                        
+                        return a.value;
+                        
+                    elseif CapJitIsCallToGlobalFunction( a, "BigInt" ) && a.args.1.type == "EXPR_INT"
+                        
+                        is_big_int = true;
+                        
+                        return a.args.1.value;
+                        
+                    else
+                        
+                        Error( "this should never happen" );
+                        
+                    end;
+                    
+                end ) );
                 
                 if tree.funcref.gvar ⥉ [ "+", "-", "*", "QUO_INT", "REM_INT" ]
                     
-                    return rec(
-                               type = "EXPR_INT",
-                               value = CallFuncList( ValueGlobal( tree.funcref.gvar ), AsListMut( List( args, a -> a.value ) ) ),
-                               );
+                    tree = rec(
+                        type = "EXPR_INT",
+                        value = CallFuncList( ValueGlobal( tree.funcref.gvar ), values ),
+                    );
+                    
+                    if is_big_int
+                        
+                        tree = rec(
+                            type = "EXPR_FUNCCALL",
+                            funcref = rec(
+                                type = "EXPR_REF_GVAR",
+                                gvar = "BigInt",
+                            ),
+                            args = AsSyntaxTreeList( [ tree ] ),
+                        );
+                        
+                    end;
                     
                 # elseif tree.funcref.gvar ⥉ [ "=" ]
                 #
-                # if CallFuncList( ValueGlobal( tree.funcref.gvar ), AsListMut( List( args, a -> a.value ) ) )
+                # if CallFuncList( ValueGlobal( tree.funcref.gvar ), AsListMut( values ) )
                 # return rec( type = "EXPR_TRUE" );
                 # else
                 # return rec( type = "EXPR_FALSE" );
@@ -56,7 +91,7 @@ CapJitAddTypeSignature( "List", [ IsSkeletalFiniteSet, IsFunction ], function ( 
     
     args = ShallowCopy( args );
     
-    args.2 = CAP_JIT_INTERNAL_INFERRED_DATA_TYPES_OF_FUNCTION_BY_ARGUMENTS_TYPES( args.2, [ rec( filter = IsInt ) ], func_stack );
+    args.2 = CAP_JIT_INTERNAL_INFERRED_DATA_TYPES_OF_FUNCTION_BY_ARGUMENTS_TYPES( args.2, [ rec( filter = IsBigInt ) ], func_stack );
     
     if args.2 == fail
         
@@ -83,25 +118,7 @@ CapJitAddLogicTemplate(
 CapJitAddLogicTemplate(
     rec(
         variable_names = [ ],
-        src_template = "Filtered( [ 0, 1, 2, 3 ], x -> [ 0, 0, 0, 1 ][1 + x] == [ 0, 1, 0, 1 ][1 + x] )",
-        dst_template = "[ 0, 2, 3 ]",
-    )
-);
-
-## for PushoutComplement
-CapJitAddLogicTemplate(
-    rec(
-        variable_names = [ ],
-        src_template = "0 ⥉ [ 0, 2, 3 ]",
-        dst_template = "true",
-    )
-);
-
-## for PushoutComplement
-CapJitAddLogicTemplate(
-    rec(
-        variable_names = [ ],
-        src_template = "1 ⥉ [ 0, 2, 3 ]",
+        src_template = "BigInt( 0 ) == BigInt( 3 )",
         dst_template = "false",
     )
 );
@@ -110,7 +127,34 @@ CapJitAddLogicTemplate(
 CapJitAddLogicTemplate(
     rec(
         variable_names = [ ],
-        src_template = "2 ⥉ [ 0, 2, 3 ]",
+        src_template = "BigInt( 1 ) == BigInt( 3 )",
+        dst_template = "false",
+    )
+);
+
+## for PushoutComplement
+CapJitAddLogicTemplate(
+    rec(
+        variable_names = [ ],
+        src_template = "BigInt( 2 ) == BigInt( 3 )",
+        dst_template = "false",
+    )
+);
+
+## for PushoutComplement
+CapJitAddLogicTemplate(
+    rec(
+        variable_names = [ ],
+        src_template = "Filtered( [ BigInt( 0 ), BigInt( 1 ), BigInt( 2 ), BigInt( 3 ) ], x -> [ BigInt( 0 ), BigInt( 0 ), BigInt( 0 ), BigInt( 1 ) ][1 + x] == [ BigInt( 0 ), BigInt( 1 ), BigInt( 0 ), BigInt( 1 ) ][1 + x] )",
+        dst_template = "[ BigInt( 0 ), BigInt( 2 ), BigInt( 3 ) ]",
+    )
+);
+
+## for PushoutComplement
+CapJitAddLogicTemplate(
+    rec(
+        variable_names = [ ],
+        src_template = "BigInt( 0 ) ⥉ [ BigInt( 0 ), BigInt( 2 ), BigInt( 3 ) ]",
         dst_template = "true",
     )
 );
@@ -119,7 +163,25 @@ CapJitAddLogicTemplate(
 CapJitAddLogicTemplate(
     rec(
         variable_names = [ ],
-        src_template = "3 ⥉ [ 0, 2, 3 ]",
+        src_template = "BigInt( 1 ) ⥉ [ BigInt( 0 ), BigInt( 2 ), BigInt( 3 ) ]",
+        dst_template = "false",
+    )
+);
+
+## for PushoutComplement
+CapJitAddLogicTemplate(
+    rec(
+        variable_names = [ ],
+        src_template = "BigInt( 2 ) ⥉ [ BigInt( 0 ), BigInt( 2 ), BigInt( 3 ) ]",
+        dst_template = "true",
+    )
+);
+
+## for PushoutComplement
+CapJitAddLogicTemplate(
+    rec(
+        variable_names = [ ],
+        src_template = "BigInt( 3 ) ⥉ [ BigInt( 0 ), BigInt( 2 ), BigInt( 3 ) ]",
         dst_template = "true",
     )
 );
@@ -146,8 +208,8 @@ CapJitAddLogicTemplate(
 CapJitAddLogicTemplate(
     rec(
         variable_names = [ "number" ],
-        variable_filters = [ IsInt ],
-        src_template = "0 + number",
+        variable_filters = [ IsBigInt ],
+        src_template = "BigInt( 0 ) + number",
         dst_template = "number",
     )
 );
@@ -155,8 +217,8 @@ CapJitAddLogicTemplate(
 CapJitAddLogicTemplate(
     rec(
         variable_names = [ "number" ],
-        variable_filters = [ IsInt ],
-        src_template = "number + 0",
+        variable_filters = [ IsBigInt ],
+        src_template = "number + BigInt( 0 )",
         dst_template = "number",
     )
 );
@@ -164,8 +226,8 @@ CapJitAddLogicTemplate(
 CapJitAddLogicTemplate(
     rec(
         variable_names = [ "number" ],
-        variable_filters = [ IsInt ],
-        src_template = "number * 1",
+        variable_filters = [ IsBigInt ],
+        src_template = "number * BigInt( 1 )",
         dst_template = "number",
     )
 );
@@ -173,8 +235,8 @@ CapJitAddLogicTemplate(
 CapJitAddLogicTemplate(
     rec(
         variable_names = [ "number" ],
-        variable_filters = [ IsInt ],
-        src_template = "1 * number",
+        variable_filters = [ IsBigInt ],
+        src_template = "BigInt( 1 ) * number",
         dst_template = "number",
     )
 );
@@ -182,17 +244,17 @@ CapJitAddLogicTemplate(
 CapJitAddLogicTemplate(
     rec(
         variable_names = [ "number" ],
-        variable_filters = [ IsInt ],
-        src_template = "0 * number",
-        dst_template = "0",
+        variable_filters = [ IsBigInt ],
+        src_template = "BigInt( 0 ) * number",
+        dst_template = "BigInt( 0 )",
     )
 );
 
 CapJitAddLogicTemplate(
     rec(
         variable_names = [ "number" ],
-        variable_filters = [ IsInt ],
-        src_template = "QUO_INT( number, 1 )",
+        variable_filters = [ IsBigInt ],
+        src_template = "QUO_INT( number, BigInt( 1 ) )",
         dst_template = "number",
     )
 );
@@ -225,7 +287,7 @@ CapJitAddLogicTemplate(
     rec(
         variable_names = [ ],
         src_template = "Product( [ ] )",
-        dst_template = "1",
+        dst_template = "BigInt( 1 )",
     )
 );
 
@@ -233,7 +295,7 @@ CapJitAddLogicTemplate(
     rec(
         variable_names = [ "func" ],
         src_template = "Product( [ ], func )",
-        dst_template = "1",
+        dst_template = "BigInt( 1 )",
     )
 );
 
@@ -288,7 +350,7 @@ CapJitAddLogicTemplate(
 CapJitAddLogicTemplate(
     rec(
         variable_names = [ "pos_end", "index" ],
-        variable_filters = [ IsInt, IsInt ],
+        variable_filters = [ IsBigInt, IsBigInt ],
         src_template = "(0):(pos_end)[index]",
         dst_template = "index - 1",
     )
@@ -296,8 +358,25 @@ CapJitAddLogicTemplate(
 
 CapJitAddLogicTemplate(
     rec(
+        variable_names = [ ],
+        src_template = "(0):(BigInt( 0 ))",
+        dst_template = "[ BigInt( 0 ) ]",
+    )
+);
+
+## for PushoutComplement
+CapJitAddLogicTemplate(
+    rec(
+        variable_names = [ ],
+        src_template = "(0):(BigInt( 3 ))",
+        dst_template = "[ BigInt( 0 ), BigInt( 1 ), BigInt( 2 ), BigInt( 3 ) ]",
+    )
+);
+
+CapJitAddLogicTemplate(
+    rec(
         variable_names = [ "number" ],
-        variable_filters = [ IsInt ],
+        variable_filters = [ IsBigInt ],
         src_template = "(1 + number) - 1",
         dst_template = "number",
     )
@@ -306,7 +385,7 @@ CapJitAddLogicTemplate(
 CapJitAddLogicTemplate(
     rec(
         variable_names = [ "number1", "number2" ],
-        variable_filters = [ IsInt, IsInt ],
+        variable_filters = [ IsBigInt, IsBigInt ],
         src_template = "number1 ⥉ [ number2 ]",
         dst_template = "number1 == number2",
     )
@@ -315,8 +394,8 @@ CapJitAddLogicTemplate(
 CapJitAddLogicTemplate(
     rec(
         variable_names = [ "number" ],
-        variable_filters = [ IsInt ],
-        src_template = "number ^ 1",
+        variable_filters = [ IsBigInt ],
+        src_template = "number ^ BigInt( 1 )",
         dst_template = "number",
     )
 );
