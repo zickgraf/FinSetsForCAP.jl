@@ -688,7 +688,7 @@ end
         
 ########
 function ( cat_1, arg2_1 )
-    return CreateCapCategoryObjectWithAttributes( cat_1, Length, BigInt( arg2_1 ) );
+    return CreateCapCategoryObjectWithAttributes( cat_1, Length, arg2_1 );
 end
 ########
         
@@ -835,7 +835,7 @@ function ( cat_1, l_1, m_1 )
 end
 ########
         
-    , 5320; IsPrecompiledDerivation = true );
+    , 5420; IsPrecompiledDerivation = true );
     
     ##
     AddSomeInjectiveObject( cat,

@@ -259,7 +259,7 @@ end );
 AddObjectConstructor( SkeletalFinSets,
   function ( SkeletalFinSets, n )
     
-    return FinSet( SkeletalFinSets, BigInt( n ) );
+    return FinSet( SkeletalFinSets, n );
     
 end );
 
