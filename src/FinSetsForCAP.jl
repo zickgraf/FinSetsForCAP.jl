@@ -2,6 +2,8 @@ __precompile__(false)
 
 module FinSetsForCAP
 
+@nospecialize
+
 import Base.in
 import Base.getindex
 import Base.iterate
