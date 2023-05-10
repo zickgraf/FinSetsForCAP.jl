@@ -893,7 +893,7 @@ end
         
 ########
 function ( cat_1, objects_1, T_1, tau_1, P_1 )
-    return CreateCapCategoryMorphismWithAttributes( cat_1, P_1, T_1, AsList, Concatenation( List( tau_1, AsList ) ) );
+    return CreateCapCategoryMorphismWithAttributes( cat_1, P_1, T_1, AsList, @Concatenation( List( tau_1, AsList ) ) );
 end
 ########
         

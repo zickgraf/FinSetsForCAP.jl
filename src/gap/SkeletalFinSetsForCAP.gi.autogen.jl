@@ -199,7 +199,7 @@ end );
     
     T = AsList( s );
     
-    if Concatenation( Cq ) != T
+    if @Concatenation( Cq ) != T
         for t in T
             L = [ ];
             for i in (1):(Length( Cq ))
@@ -209,7 +209,7 @@ end );
             end;
             if Length( L ) > 1
                 Cq = Difference( Cq, L );
-                Add( Cq, SetGAP( Concatenation( L ) ) );
+                Add( Cq, SetGAP( @Concatenation( L ) ) );
             end;
         end;
     end;
@@ -724,7 +724,7 @@ AddUniversalMorphismFromCoproductWithGivenCoproduct( SkeletalFinSets,
   function ( cat, L, test_object, tau, S )
     local concat;
     
-    concat = Concatenation( List( tau, AsList ) );
+    concat = @Concatenation( List( tau, AsList ) );
     
     return MapOfFinSets( cat, S, concat, test_object );
     
@@ -960,7 +960,7 @@ InstallMethod( @__MODULE__,  StringGAP,
         [ IsSkeletalFiniteSet ],
         
   function ( s )
-    return Concatenation( "FinSet( SkeletalFinSets, ", StringGAP( Length( s ) ), " )" );
+    return @Concatenation( "FinSet( SkeletalFinSets, ", StringGAP( Length( s ) ), " )" );
 end );
 
 ##
@@ -969,7 +969,7 @@ InstallMethod( @__MODULE__,  StringGAP,
         [ IsSkeletalFiniteSetMap ],
         
   function ( phi )
-    return Concatenation( "MapOfFinSets( SkeletalFinSets, ", StringGAP( Source( phi ) ), ", ", StringGAP( AsList( phi ) ), ", ", StringGAP( Range( phi ) ), " )" );
+    return @Concatenation( "MapOfFinSets( SkeletalFinSets, ", StringGAP( Source( phi ) ), ", ", StringGAP( AsList( phi ) ), ", ", StringGAP( Range( phi ) ), " )" );
 end );
 
 ##
@@ -978,7 +978,7 @@ InstallMethod( @__MODULE__,  ViewString,
         [ IsSkeletalFiniteSet ],
         
   function ( s )
-    return Concatenation( "|", StringGAP( Length( s ) ), "|" );
+    return @Concatenation( "|", StringGAP( Length( s ) ), "|" );
 end );
 
 ##
@@ -1007,7 +1007,7 @@ InstallMethod( @__MODULE__,  ViewString,
         
     end;
     
-    return Concatenation( ViewString( Source( phi ) ), " ", arrow, " ", ViewString( Range( phi ) ) );
+    return @Concatenation( ViewString( Source( phi ) ), " ", arrow, " ", ViewString( Range( phi ) ) );
     
 end );
 
@@ -1035,7 +1035,7 @@ InstallMethod( @__MODULE__,  PrintString,
         return "[ 0, 1, 2 ]";
     end;
     
-    return Concatenation( "[ 0,..., ", StringGAP( l - 1 ), " ]" );
+    return @Concatenation( "[ 0,..., ", StringGAP( l - 1 ), " ]" );
     
 end );
 
@@ -1046,7 +1046,7 @@ InstallMethod( @__MODULE__,  PrintString,
         
   function ( phi )
     
-    return Concatenation(
+    return @Concatenation(
                    PrintString( Source( phi ) ),
                    " ⱶ", PrintString( AsList( phi ) ), "→ ",
                    PrintString( Range( phi ) ) );
@@ -1060,7 +1060,7 @@ InstallMethod( @__MODULE__,  DisplayString,
         
   function ( s )
     
-    return Concatenation( PrintString( s ), "\n" );
+    return @Concatenation( PrintString( s ), "\n" );
     
 end );
 
@@ -1071,7 +1071,7 @@ InstallMethod( @__MODULE__,  DisplayString,
         
   function ( phi )
     
-    return Concatenation( PrintString( phi ), "\n" );
+    return @Concatenation( PrintString( phi ), "\n" );
     
 end );
 

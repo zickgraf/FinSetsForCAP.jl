@@ -1031,7 +1031,7 @@ julia> k = FinSet( (1):(100) )
 
 julia> h = ListWithIdenticalEntries( Length( k ) - 3, 3 );
 
-julia> h = Concatenation( h, [ 2, 1, 2 ] );
+julia> h = @Concatenation( h, [ 2, 1, 2 ] );
 
 julia> h = MapOfFinSets( k, List( k, i -> [ i, h[i] ] ), m )
 <A morphism in FinSets>
@@ -2385,7 +2385,7 @@ julia> k = FinSet( 100000 )
 
 julia> h = ListWithIdenticalEntries( Length( k ) - 3, 2 );
 
-julia> h = Concatenation( h, [ 1, 0, 1 ] );
+julia> h = @Concatenation( h, [ 1, 0, 1 ] );
 
 julia> h = MapOfFinSets( k, h, m )
 |100000| → |3|

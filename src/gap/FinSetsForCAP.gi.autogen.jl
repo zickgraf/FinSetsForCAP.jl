@@ -238,7 +238,7 @@ InstallMethod( @__MODULE__,  Iterator,
   # `args` is never used ⥉ GAP but needed for Julia
   function ( M, args... )
     
-    return CallFuncList( Iterator, Concatenation( [ AsList( M ) ], args ) );
+    return CallFuncList( Iterator, @Concatenation( [ AsList( M ) ], args ) );
     
 end );
 
@@ -701,7 +701,7 @@ AddCoproduct( category_of_finite_sets,
     
     L = List( (1):(Length( L )), i -> Cartesian( [i], AsList( L[i] ) ) );
     
-    return FinSetNC( category_of_finite_sets, Concatenation( L ) );
+    return FinSetNC( category_of_finite_sets, @Concatenation( L ) );
     
 end );
 
@@ -1080,7 +1080,7 @@ InstallMethod( @__MODULE__,  DisplayString,
         [ IsFiniteSet ],
         
   function ( S )
-    return Concatenation( PrintString( AsList( S ) ), "\n" );
+    return @Concatenation( PrintString( AsList( S ) ), "\n" );
 end );
 
 ##
@@ -1089,7 +1089,7 @@ InstallMethod( @__MODULE__,  DisplayString,
         [ IsFiniteSetMap ],
         
   function ( phi )
-    return Concatenation( PrintString( [ AsList( Source( phi ) ), AsList( phi ), AsList( Range( phi ) ) ] ), "\n" );
+    return @Concatenation( PrintString( [ AsList( Source( phi ) ), AsList( phi ), AsList( Range( phi ) ) ] ), "\n" );
 end );
 
 ##
