@@ -8,8 +8,8 @@
 CapJitAddLogicFunction( function ( tree )
   local pre_func;
     
-    Info( InfoCapJit, 1, "####" );
-    Info( InfoCapJit, 1, "Apply logic for global functions applied to literal integers" );
+    @Info( InfoCapJit, 1, "####" );
+    @Info( InfoCapJit, 1, "Apply logic for global functions applied to literal integers" );
     
     pre_func = function ( tree, additional_arguments )
       local args, is_big_int, values;
