@@ -14,7 +14,7 @@ InstallMethod( @__MODULE__,  CategoryOfSkeletalFinSets,
     cat = CreateCapCategoryWithDataTypes(
         "SkeletalFinSets", IsCategoryOfSkeletalFinSets,
         IsSkeletalFiniteSet, IsSkeletalFiniteSetMap, IsCapCategoryTwoCell,
-        IsBigInt, rec( filter = IsList, element_type = rec( filter = IsBigInt ) ), fail
+        IsBigInt, @rec( filter = IsList, element_type = @rec( filter = IsBigInt ) ), fail
     );
     
     cat.category_as_first_argument = true;

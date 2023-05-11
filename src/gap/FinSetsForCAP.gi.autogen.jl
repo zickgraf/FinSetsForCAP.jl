@@ -75,15 +75,20 @@ InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
     end;
 
     for i in (1):(Length( L1 ))
-        if IsBound( L1[i] ) != IsBound( L2[i] )
+        #= comment for Julia
+        # Julia does !have non-dense lists
+        if @IsBound( L1[i] ) != @IsBound( L2[i] )
             return false;
         end;
         
-        if IsBound( L1[i] )
+        if @IsBound( L1[i] )
+        # =#
             if !IsEqualForElementsOfFinSets( L1[i], L2[i] )
                 return false;
             end;
+        #= comment for Julia
         end;
+        # =#
     end;
     
     return true;
@@ -185,12 +190,19 @@ InstallMethod( @__MODULE__,  FinSetNC,
     @Assert( 4, IsWellDefined( set ) );
 
     for i in (1):(Length( L ))
-        if IsBound( L[i] ) && !IsEqualForElementsOfFinSets( L[i], AsList( set )[i] )
-            # COVERAGE_IGNORE_BLOCK_START
-            Display( "Warning: The elements of the list passed to the constructor are !equal (w.r.t. IsEqualForElementsOfFinSets) to the elements of the resulting FinSet. Either pass an immutable copy of the list || add an additional special case to IsEqualForElementsOfFinSets to avoid this warning." );
-            break;
-            # COVERAGE_IGNORE_BLOCK_END
+        #= comment for Julia
+        # Julia does !have non-dense lists
+        if @IsBound( L[i] )
+        # =#
+            if !IsEqualForElementsOfFinSets( L[i], AsList( set )[i] )
+                # COVERAGE_IGNORE_BLOCK_START
+                Display( "Warning: The elements of the list passed to the constructor are !equal (w.r.t. IsEqualForElementsOfFinSets) to the elements of the resulting FinSet. Either pass an immutable copy of the list || add an additional special case to IsEqualForElementsOfFinSets to avoid this warning." );
+                break;
+                # COVERAGE_IGNORE_BLOCK_END
+            end;
+        #= comment for Julia
         end;
+        # =#
     end;
 
     return set;

@@ -971,7 +971,7 @@ end
         
     , 100 );
     
-    if IsBound( cat.precompiled_functions_added )
+    if @IsBound( cat.precompiled_functions_added )
         
         # COVERAGE_IGNORE_NEXT_LINE
         Error( "precompiled functions have already been added before" );
