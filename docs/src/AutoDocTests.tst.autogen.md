@@ -5,6 +5,40 @@ julia> using CAP; using CartesianCategories; using Toposes; using FinSetsForCAP
 julia> true
 true
 
+julia> S = FinSet( [ 1, 3, 2, 2, 1 ] )
+<An object in FinSets>
+
+julia> Display( S )
+[ 1, 2, 3 ]
+
+julia> L = AsList( S );
+
+julia> Display( L )
+[ 1, 2, 3 ]
+
+julia> Q = FinSet( L )
+<An object in FinSets>
+
+julia> S == Q
+true
+
+julia> FinSet( [ 1, 2 ] ) == FinSet( [ 2, 1 ] )
+true
+
+julia> M = FinSetNC( [ 1, 2, 3, 3 ] )
+<An object in FinSets>
+
+julia> IsWellDefined( M )
+false
+
+```
+
+```jldoctest AutoDocTests
+julia> using CAP; using CartesianCategories; using Toposes; using FinSetsForCAP
+
+julia> true
+true
+
 julia> S = FinSetNC( [ 1, 3, 2 ] )
 <An object in FinSets>
 
@@ -40,6 +74,99 @@ julia> S == Q
 true
 
 julia> FinSetNC( [ 1, 2 ] ) == FinSetNC( [ 2, 1 ] )
+false
+
+```
+
+```jldoctest AutoDocTests
+julia> using CAP; using CartesianCategories; using Toposes; using FinSetsForCAP
+
+julia> true
+true
+
+julia> S = FinSet( [ 1, 3, 2, 2, 1 ] )
+<An object in FinSets>
+
+julia> T = FinSet( [ "a", "b", "c" ] )
+<An object in FinSets>
+
+julia> G = [ [ 1, "b" ], [ 3, "b" ], [ 2, "a" ] ];
+
+julia> phi = MapOfFinSets( S, G, T )
+<A morphism in FinSets>
+
+julia> IsWellDefined( phi )
+true
+
+julia> Display( AsList( phi ) )
+[ [ 1, "b" ], [ 2, "a" ], [ 3, "b" ] ]
+
+julia> phi2 = MorphismConstructor( S, G, T )
+<A morphism in FinSets>
+
+julia> Display( MorphismDatum( phi2 ) )
+[ [ 1, "b" ], [ 2, "a" ], [ 3, "b" ] ]
+
+julia> phi == phi2
+true
+
+julia> phi( 1 )
+"b"
+
+julia> phi( 2 )
+"a"
+
+julia> phi( 3 )
+"b"
+
+julia> Display( List( S, phi ) )
+[ "b", "a", "b" ]
+
+julia> psi = [ [ 1, "b" ], [ 2, "a" ], [ 3, "b" ] ];
+
+julia> psi = MapOfFinSets( S, psi, T )
+<A morphism in FinSets>
+
+julia> IsWellDefined( psi )
+true
+
+julia> phi == psi
+true
+
+julia> psi = MapOfFinSets( S, [ [ 1, "d" ], [ 3, "b" ] ], T )
+<A morphism in FinSets>
+
+julia> IsWellDefined( psi )
+false
+
+julia> psi = MapOfFinSets( S, [ 1, 2, 3 ], T )
+<A morphism in FinSets>
+
+julia> IsWellDefined( psi )
+false
+
+julia> psi = MapOfFinSets( S, [ [ 1, "b" ], [ 3, "b" ], [ 2, "a", "b" ] ], T )
+<A morphism in FinSets>
+
+julia> IsWellDefined( psi )
+false
+
+julia> psi = MapOfFinSets( S, [ [ 5, "b" ], [ 3, "b" ], [ 2, "a" ] ], T )
+<A morphism in FinSets>
+
+julia> IsWellDefined( psi )
+false
+
+julia> psi = MapOfFinSets( S, [ [ 1, "d" ], [ 3, "b" ], [ 2, "a" ] ], T )
+<A morphism in FinSets>
+
+julia> IsWellDefined( psi )
+false
+
+julia> psi = MapOfFinSets( S, [ [ 1, "b" ], [ 2, "b" ], [ 2, "a" ] ], T )
+<A morphism in FinSets>
+
+julia> IsWellDefined( psi )
 false
 
 ```
@@ -86,6 +213,74 @@ true
 
 julia> phi == psi
 true
+
+```
+
+```jldoctest AutoDocTests
+julia> using CAP; using CartesianCategories; using Toposes; using FinSetsForCAP
+
+julia> true
+true
+
+julia> IsEqualForElementsOfFinSets( 2, 2 )
+true
+
+julia> IsEqualForElementsOfFinSets( 2, "2" )
+false
+
+julia> IsEqualForElementsOfFinSets( 'a', 'a' )
+true
+
+julia> IsEqualForElementsOfFinSets( 'a', 'b' )
+false
+
+julia> IsEqualForElementsOfFinSets( [ 2 ], [ 2 ] )
+true
+
+julia> IsEqualForElementsOfFinSets( [ 2 ], [ 2, 3 ] )
+false
+
+julia> IsEqualForElementsOfFinSets( @rec( a = "a", b = "b" ),
+                                     @rec( b = "b", a = "a" )
+                                   )
+true
+
+julia> IsEqualForElementsOfFinSets( @rec( a = "a", b = "b" ),
+                                     @rec( a = "a" )
+                                   )
+false
+
+julia> IsEqualForElementsOfFinSets( @rec( a = "a", b = "b" ),
+                                     @rec( a = "a", b = "notb" )
+                                   )
+false
+
+julia> M = FinSet( [ ] );
+
+julia> N = FinSet( [ ] );
+
+julia> m = FinSet( 0 );
+
+julia> id_M = IdentityMorphism( M );
+
+julia> id_N = IdentityMorphism( N );
+
+julia> id_m = IdentityMorphism( m );
+
+julia> IsEqualForElementsOfFinSets( M, N )
+true
+
+julia> IsEqualForElementsOfFinSets( M, m )
+false
+
+julia> IsEqualForElementsOfFinSets( id_M, id_N )
+true
+
+julia> IsEqualForElementsOfFinSets( id_M, id_m )
+false
+
+julia> IsEqualForElementsOfFinSets( FinSets, SkeletalFinSets )
+false
 
 ```
 
