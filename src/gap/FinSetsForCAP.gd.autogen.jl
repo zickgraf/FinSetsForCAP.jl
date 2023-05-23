@@ -19,14 +19,14 @@
                   IsCapCategory );
 
 #! @Description
-#! The GAP category of objects ⥉ the category
+#! The GAP category of objects in the category
 #! of finite sets.
 #! @Arguments object
 @DeclareFilter( "IsFiniteSet",
                  IsCapCategoryObject );
 
 #! @Description
-#! The GAP category of morphisms ⥉ the category
+#! The GAP category of morphisms in the category
 #! of finite sets.
 #! @Arguments object
 @DeclareFilter( "IsFiniteSetMap",
@@ -72,13 +72,13 @@ DeclareGlobalName( "FinSets" );
 
 #! @Description
 #!  Construct a finite set out of the dense list <A>L</A>, i.e.,
-#!  an object ⥉ the &CAP; category <C>cat_of_fin_sets</C>.
+#!  an object in the &CAP; category <C>cat_of_fin_sets</C>.
 #!  The &GAP; operation <C>SetGAP</C> must be applicable to <A>L</A> without throwing an error.
 #!  Equality is determined as follows: <C>FinSet( L1 ) == FinSet( L2 )</C> iff <C>IsEqualForElementsOfFinSets( Immutable( SetGAP( L1 ) ), Immutable( SetGAP( L2 ) ) )</C>.
 #!  Warning: all internal operations use <C>FinSetNC</C> (see below) instead of <C>FinSet</C>.
 #!  Thus, this notion of equality is only valid for objects created by calling <C>FinSet</C> explicitly.
-#!  Internally, <C>FinSet( cat_of_fin_sets, L )</C> is an alias for <C>FinSetNC( cat_of_fin_sets, SetGAP( L ) )</C> && equality is determined as for <C>FinSetNC</C>.
-#!  Thus, <C>FinSet( cat_of_fin_sets, L1 ) == FinSetNC( cat_of_fin_sets, L2 )</C> iff <C>IsEqualForElementsOfFinSets( Immutable( SetGAP( L1 ) ), Immutable( L2 ) )</C> &&
+#!  Internally, <C>FinSet( cat_of_fin_sets, L )</C> is an alias for <C>FinSetNC( cat_of_fin_sets, SetGAP( L ) )</C> and equality is determined as for <C>FinSetNC</C>.
+#!  Thus, <C>FinSet( cat_of_fin_sets, L1 ) == FinSetNC( cat_of_fin_sets, L2 )</C> iff <C>IsEqualForElementsOfFinSets( Immutable( SetGAP( L1 ) ), Immutable( L2 ) )</C> and
 #!  <C>FinSetNC( cat_of_fin_sets, L1 ) == FinSet( cat_of_fin_sets, L2 )</C> iff <C>IsEqualForElementsOfFinSets( Immutable( L1 ), Immutable( SetGAP( L2 ) ) )</C>.
 #! @Arguments cat_of_fin_sets, L
 #! @Returns a &CAP; object
@@ -94,8 +94,8 @@ DeclareGlobalName( "FinSets" );
 #! @InsertChunk FinSet
 
 #! @Description
-#!  Construct a finite set out of the duplicate-free (w.r.t. <C>IsEqualForElementsOfFinSets</C>) && dense list <A>L</A>, i.e.,
-#!  an object ⥉ the &CAP; category <C>cat_of_fin_sets,</C>.
+#!  Construct a finite set out of the duplicate-free (w.r.t. <C>IsEqualForElementsOfFinSets</C>) and dense list <A>L</A>, i.e.,
+#!  an object in the &CAP; category <C>cat_of_fin_sets,</C>.
 #!  Equality is determined as follows: <C>FinSetNC( cat_of_fin_sets, L1 ) == FinSetNC( cat_of_fin_sets, L2 )</C>
 #!  iff <C>IsEqualForElementsOfFinSets( Immutable( L1 ), Immutable( L2 ) )</C>.
 #! @Arguments cat_of_fin_sets, L
@@ -112,9 +112,9 @@ DeclareGlobalName( "FinSets" );
 #! @InsertChunk FinSetNC
 
 #! @Description
-#!  Construct a map $\phi:$<A>S</A>$\to$<A>T</A> of the finite sets <A>S</A> && <A>T</A>,
-#!  i.e., a morphism ⥉ the &CAP; category <C>FinSets</C>, where <A>G</A>
-#!  is a dense list of pairs ⥉ <A>S</A>$\times$<A>T</A> describing the graph of $\phi$.
+#!  Construct a map $\phi:$<A>S</A>$\to$<A>T</A> of the finite sets <A>S</A> and <A>T</A>,
+#!  i.e., a morphism in the &CAP; category <C>FinSets</C>, where <A>G</A>
+#!  is a dense list of pairs in <A>S</A>$\times$<A>T</A> describing the graph of $\phi$.
 #! @Arguments S, G, T
 #! @Returns a &CAP; morphism
 @DeclareOperation( "MapOfFinSets",
@@ -122,9 +122,9 @@ DeclareGlobalName( "FinSets" );
 #! @InsertChunk MapOfFinSets
 
 #! @Description
-#!  Construct a map $\phi:$<A>S</A>$\to$<A>T</A> of the finite sets <A>S</A> && <A>T</A>,
-#!  i.e., a morphism ⥉ the &CAP; category <C>FinSets</C>, where <A>G</A>
-#!  is a duplicate-free && dense list of pairs ⥉ <A>S</A>$\times$<A>T</A> describing the graph of $\phi$.
+#!  Construct a map $\phi:$<A>S</A>$\to$<A>T</A> of the finite sets <A>S</A> and <A>T</A>,
+#!  i.e., a morphism in the &CAP; category <C>FinSets</C>, where <A>G</A>
+#!  is a duplicate-free and dense list of pairs in <A>S</A>$\times$<A>T</A> describing the graph of $\phi$.
 #! @Arguments S, G, T
 #! @Returns a &CAP; morphism
 @DeclareOperation( "MapOfFinSetsNC",
@@ -135,13 +135,13 @@ DeclareGlobalName( "FinSets" );
 
 #! @Description
 #!  Compares two arbitrary objects using the following rules:
-#!  * integers, strings && chars are compared using the operation <C>=</C>
-#!  * dense lists && records are compared recursively
+#!  * integers, strings and chars are compared using the operation <C>=</C>
+#!  * dense lists and records are compared recursively
 #!  * &CAP; category objects are compared using <C>IsEqualForObjects</C> (if available)
 #!  * &CAP; category morphisms are compared using <C>IsEqualForMorphismsOnMor</C> (if available)
 #!  * other objects are compared using <C>IsIdenticalObj</C>
 #!
-#!  Note: if &CAP; category objects || &CAP; category morphisms are compared using <C>IsEqualForObjects</C> || <C>IsEqualForMorphismsOnMor</C>, respectively, the result must !be <C>fail</C>.
+#!  Note: if &CAP; category objects or &CAP; category morphisms are compared using <C>IsEqualForObjects</C> or <C>IsEqualForMorphismsOnMor</C>, respectively, the result must not be <C>fail</C>.
 #! @Arguments a, b
 #! @Returns a boolean
 @DeclareOperation( "IsEqualForElementsOfFinSets",
@@ -149,7 +149,7 @@ DeclareGlobalName( "FinSets" );
 #! @InsertChunk IsEqualForElementsOfFinSets
 
 #! @Description
-#!  Returns <C>true</C> if there exists an element ⥉ <C>AsList( <A>M</A> )</C> which is equal to <A>obj</A> w.r.t. <C>IsEqualForElementsOfFinSets</C> && <C>false</C> if not.
+#!  Returns <C>true</C> if there exists an element in <C>AsList( <A>M</A> )</C> which is equal to <A>obj</A> w.r.t. <C>IsEqualForElementsOfFinSets</C> and <C>false</C> if not.
 #! @Arguments obj, M
 #! @Returns a boolean
 # DeclareOperation( "\in",
@@ -172,7 +172,7 @@ DeclareGlobalName( "FinSets" );
         [ IsFiniteSet ] );
 
 #! @Description
-#!  Compute the set-theoretic union of the elements of <A>L</A>, where <A>L</A> is a dense list of finite sets ⥉ the category <A>cat_of_fin_sets</A>.
+#!  Compute the set-theoretic union of the elements of <A>L</A>, where <A>L</A> is a dense list of finite sets in the category <A>cat_of_fin_sets</A>.
 #! @Arguments cat_of_fin_sets, L
 #! @Returns a &CAP; object
 @DeclareOperation( "UnionOfFinSets",
@@ -200,7 +200,7 @@ DeclareGlobalName( "FinSets" );
         [ IsFiniteSet, IsFunction ] );
 
 #! @Description
-#!  Construct the embedding $\iota:$<A>S</A>$\to$<A>T</A> of the finite sets <A>S</A> && <A>T</A>,
+#!  Construct the embedding $\iota:$<A>S</A>$\to$<A>T</A> of the finite sets <A>S</A> and <A>T</A>,
 #!  where <A>S</A> must be subset of <A>T</A>.
 #! @Arguments S, T
 #! @Returns a &CAP; morphism
@@ -208,7 +208,7 @@ DeclareGlobalName( "FinSets" );
         [ IsFiniteSet, IsFiniteSet ] );
 
 #! @Description
-#!  Construct the projection $\pi:$<A>S</A>$\to$<A>T</A> of the finite sets <A>S</A> && <A>T</A>,
+#!  Construct the projection $\pi:$<A>S</A>$\to$<A>T</A> of the finite sets <A>S</A> and <A>T</A>,
 #!  where <A>T</A> is a partition of <A>S</A>.
 #! @Arguments S, T
 #! @Returns a &CAP; morphism

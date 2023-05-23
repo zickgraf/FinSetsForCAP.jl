@@ -167,7 +167,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  FinSetNC,
-        "for a category of finite sets && a dense list",
+        "for a category of finite sets and a dense list",
         [ IsCategoryOfFinSets, IsDenseList ],
         
   function ( category_of_finite_sets, L )
@@ -183,7 +183,7 @@ InstallMethod( @__MODULE__,  FinSetNC,
     for i in (1):(Length( L ))
         if !IsEqualForElementsOfFinSets( L[i], AsList( set )[i] )
             # COVERAGE_IGNORE_BLOCK_START
-            Display( "Warning: The elements of the list passed to the constructor are !equal (w.r.t. IsEqualForElementsOfFinSets) to the elements of the resulting FinSet. Either pass an immutable copy of the list || add an additional special case to IsEqualForElementsOfFinSets to avoid this warning." );
+            Display( "Warning: The elements of the list passed to the constructor are not equal (w.r.t. IsEqualForElementsOfFinSets) to the elements of the resulting FinSet. Either pass an immutable copy of the list or add an additional special case to IsEqualForElementsOfFinSets to avoid this warning." );
             break;
             # COVERAGE_IGNORE_BLOCK_END
         end;
@@ -195,7 +195,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  FinSet,
-        "for a category of finite sets && a dense list",
+        "for a category of finite sets and a dense list",
         [ IsCategoryOfFinSets, IsDenseList ],
         
   function ( category_of_finite_sets, L )
@@ -206,7 +206,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  in,
-        "for an object && a CAP finite set",
+        "for an object and a CAP finite set",
         [ IsObject, IsFiniteSet ],
         
   function ( y, M )
@@ -231,7 +231,7 @@ InstallMethod( @__MODULE__,  Iterator,
         "for CAP finite sets",
         [ IsFiniteSet ],
 
-  # `args` is never used ⥉ GAP but needed for Julia
+  # `args` is never used in GAP but needed for Julia
   function ( M, args... )
     
     return CallFuncList( Iterator, @Concatenation( [ AsList( M ) ], args ) );
@@ -240,7 +240,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  UnionOfFinSets,
-        "for a category of finite sets && a dense list of CAP finite sets",
+        "for a category of finite sets and a dense list of CAP finite sets",
         [ IsCategoryOfFinSets, IsDenseList ],
         
   function ( category_of_finite_sets, L )
@@ -263,7 +263,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  ListOp,
-        "for a CAP finite set && a function",
+        "for a CAP finite set and a function",
         [ IsFiniteSet, IsFunction ],
         
   function ( M, f )
@@ -274,7 +274,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  FilteredOp,
-        "for a CAP finite set && a function",
+        "for a CAP finite set and a function",
         [ IsFiniteSet, IsFunction ],
         
   function ( M, f )
@@ -285,7 +285,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  First,
-        "for a CAP finite set && a function",
+        "for a CAP finite set and a function",
         [ IsFiniteSet, IsFunction ],
         
   function ( M, f )
@@ -296,7 +296,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  MapOfFinSets,
-        "for two CAP finite sets && a dense list",
+        "for two CAP finite sets and a dense list",
         [ IsFiniteSet, IsDenseList, IsFiniteSet ],
         
   function ( S, G, T )
@@ -307,7 +307,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  MapOfFinSetsNC,
-        "for a two CAP finite sets && a dense list",
+        "for a two CAP finite sets and a dense list",
         [ IsFiniteSet, IsDenseList, IsFiniteSet ],
         
   function ( S, G, T )
@@ -361,7 +361,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  Preimage,
-        "for a CAP map of finite sets && a CAP finite set",
+        "for a CAP map of finite sets and a CAP finite set",
         [ IsFiniteSetMap, IsFiniteSet ],
         
   function ( f, T_ )
@@ -372,7 +372,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  ImageObject,
-        "for a CAP map of finite sets && a CAP finite set",
+        "for a CAP map of finite sets and a CAP finite set",
         [ IsFiniteSetMap, IsFiniteSet ],
         
   function ( f, S_ )
@@ -383,7 +383,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  CallFuncList,
-        "for a CAP map of finite sets && a singleton list",
+        "for a CAP map of finite sets and a singleton list",
         [ IsFiniteSetMap, IsDenseList ],
         
   function ( phi, L )
@@ -399,16 +399,16 @@ InstallMethod( @__MODULE__,  CallFuncList,
         # COVERAGE_IGNORE_BLOCK_START
         if HasIsWellDefined( phi )
             if IsWellDefined( phi )
-                Error( "the element ", x, " is !in the source of the map\n" );
+                Error( "the element ", x, " is not in the source of the map\n" );
             else
                 if !x ⥉ Source( phi )
-                    Error( "the element ", x, " is !in the source of the map\n" );
+                    Error( "the element ", x, " is not in the source of the map\n" );
                 else
-                    Error( "the element ", x, " is ⥉ the source of the map, however, the map is !well-defined\n" );
+                    Error( "the element ", x, " is in the source of the map, however, the map is not well-defined\n" );
                 end;
             end;
         else
-            Error( "the element ", x, " may !be ⥉ the source of the map, please check if the map is well-defined\n" );
+            Error( "the element ", x, " may not be in the source of the map, please check if the map is well-defined\n" );
         end;
         # COVERAGE_IGNORE_BLOCK_END
     end;
@@ -419,7 +419,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  ListOp,
-        "for a CAP finite set && a CAP map of finite sets",
+        "for a CAP finite set and a CAP map of finite sets",
         [ IsFiniteSet, IsFiniteSetMap ],
         
   function ( F, phi )
@@ -509,7 +509,7 @@ AddIsWellDefinedForMorphisms( category_of_finite_sets,
         end;
     end;
 
-    # since Length( S ) == Length( rel ) && the list of first components of rel is duplicate free, any element ⥉ S has to appear as a first component ⥉ rel
+    # since Length( S ) == Length( rel ) and the list of first components of rel is duplicate free, any element in S has to appear as a first component in rel
     
     return true;
     
@@ -536,7 +536,7 @@ AddIsEqualForMorphisms( category_of_finite_sets,
     
     S = Source( map1 );
     
-    # if map1 && map2 are well-defined, then Length( AsList( map1 ) ) == Length( AsList( S ) ) == Length( AsList( map2 ) )
+    # if map1 and map2 are well-defined, then Length( AsList( map1 ) ) == Length( AsList( S ) ) == Length( AsList( map2 ) )
     
     return ForAll( AsList( S ), s -> IsEqualForElementsOfFinSets( map1( s ), map2( s ) ) );
     

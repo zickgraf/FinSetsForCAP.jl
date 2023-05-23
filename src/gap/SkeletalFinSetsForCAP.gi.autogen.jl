@@ -21,7 +21,7 @@ InstallMethod( @__MODULE__,  CategoryOfSkeletalFinSets,
     
     cat.supports_empty_limits = true;
     
-    # this is a workhorse category -> no logic && caching only via IsIdenticalObj
+    # this is a workhorse category -> no logic and caching only via IsIdenticalObj
     CapCategorySwitchLogicOff( cat );
     
     SetIsSkeletalCategory( cat, true );
@@ -79,7 +79,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  ListOp,
-        "for a CAP skeletal finite set && a function",
+        "for a CAP skeletal finite set and a function",
         [ IsSkeletalFiniteSet, IsFunction ],
         
   function ( s, f )
@@ -92,7 +92,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  MapOfFinSets,
-        "for two CAP skeletal finite sets && a list",
+        "for two CAP skeletal finite sets and a list",
         [ IsSkeletalFiniteSet, IsList, IsSkeletalFiniteSet ],
         
   function ( s, G, t )
@@ -103,7 +103,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  MapOfFinSets,
-        "for a category of skeletal finite sets, two CAP skeletal finite sets && a list",
+        "for a category of skeletal finite sets, two CAP skeletal finite sets and a list",
         [ IsCategoryOfSkeletalFinSets, IsSkeletalFiniteSet, IsList, IsSkeletalFiniteSet ],
         
   function ( cat, s, G, t )
@@ -140,7 +140,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  Preimage,
-        "for a CAP map of skeletal finite sets && a CAP skeletal finite set",
+        "for a CAP map of skeletal finite sets and a CAP skeletal finite set",
         [ IsSkeletalFiniteSetMap, IsList ],
         
   function ( phi, t )
@@ -156,7 +156,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  ImageObject,
-     "for a CAP map of skeletal finite sets && a CAP skeletal finite set",
+     "for a CAP map of skeletal finite sets and a CAP skeletal finite set",
      [ IsSkeletalFiniteSetMap, IsSkeletalFiniteSet ],
       function ( phi, s_ )
 
@@ -166,7 +166,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  CallFuncList,
-        "for a CAP map of skeletal finite sets && a list",
+        "for a CAP map of skeletal finite sets and a list",
     [ IsSkeletalFiniteSetMap, IsList ],
         
   function ( phi, L )
@@ -382,7 +382,7 @@ AddIsEpimorphism( SkeletalFinSets,
     
     t = Length( Range( phi ) );
     
-    ## we do !have a linear purely functional test (yet),
+    ## we do not have a linear purely functional test (yet),
     ## the following linear runtime function works with side effects,
     ## so we hide it from the compiler
     
@@ -403,7 +403,7 @@ AddIsMonomorphism( SkeletalFinSets,
     
     t = Length( Range( phi ) );
     
-    ## we do !have a linear purely functional test (yet),
+    ## we do not have a linear purely functional test (yet),
     ## the following linear runtime function works with side effects,
     ## so we hide it from the compiler
     
@@ -1047,9 +1047,9 @@ InstallMethod( @__MODULE__,  ViewString,
     
 end );
 
-# We want lists of skeletal finite sets && maps to be displayed ⥉ a "fancy" way.
+# We want lists of skeletal finite sets and maps to be displayed in a "fancy" way.
 # Since `Display` of list redirects to `Print`, we have to make `PrintString` "fancy",
-# even if the documentation of `PrintString` suggests that it should !be "fancy".
+# even if the documentation of `PrintString` suggests that it should not be "fancy".
 
 ##
 InstallMethod( @__MODULE__,  PrintString,

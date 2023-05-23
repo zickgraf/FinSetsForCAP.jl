@@ -63,7 +63,7 @@ CapJitAddLogicFunction( function ( tree )
                         
                     end;
                     
-                # elseif tree.funcref.gvar ⥉ [ "=" ]
+                # elseif tree.funcref.gvar in [ "=" ]
                 #
                 # if CallFuncList( ValueGlobal( tree.funcref.gvar ), AsListMut( values ) )
                 # return @rec( type = "EXPR_TRUE" );
@@ -96,7 +96,7 @@ CapJitAddTypeSignature( "List", [ IsSkeletalFiniteSet, IsFunction ], function ( 
     
     if args.2 == fail
         
-        #Error( "could !determine output type" );
+        #Error( "could not determine output type" );
         return fail;
         
     end;
@@ -155,7 +155,7 @@ CapJitAddLogicTemplate(
 CapJitAddLogicTemplate(
     @rec(
         variable_names = [ ],
-        src_template = "BigInt( 0 ) ⥉ [ BigInt( 0 ), BigInt( 2 ), BigInt( 3 ) ]",
+        src_template = "BigInt( 0 ) in [ BigInt( 0 ), BigInt( 2 ), BigInt( 3 ) ]",
         dst_template = "true",
     )
 );
@@ -164,7 +164,7 @@ CapJitAddLogicTemplate(
 CapJitAddLogicTemplate(
     @rec(
         variable_names = [ ],
-        src_template = "BigInt( 1 ) ⥉ [ BigInt( 0 ), BigInt( 2 ), BigInt( 3 ) ]",
+        src_template = "BigInt( 1 ) in [ BigInt( 0 ), BigInt( 2 ), BigInt( 3 ) ]",
         dst_template = "false",
     )
 );
@@ -173,7 +173,7 @@ CapJitAddLogicTemplate(
 CapJitAddLogicTemplate(
     @rec(
         variable_names = [ ],
-        src_template = "BigInt( 2 ) ⥉ [ BigInt( 0 ), BigInt( 2 ), BigInt( 3 ) ]",
+        src_template = "BigInt( 2 ) in [ BigInt( 0 ), BigInt( 2 ), BigInt( 3 ) ]",
         dst_template = "true",
     )
 );
@@ -182,7 +182,7 @@ CapJitAddLogicTemplate(
 CapJitAddLogicTemplate(
     @rec(
         variable_names = [ ],
-        src_template = "BigInt( 3 ) ⥉ [ BigInt( 0 ), BigInt( 2 ), BigInt( 3 ) ]",
+        src_template = "BigInt( 3 ) in [ BigInt( 0 ), BigInt( 2 ), BigInt( 3 ) ]",
         dst_template = "true",
     )
 );
@@ -387,7 +387,7 @@ CapJitAddLogicTemplate(
     @rec(
         variable_names = [ "number1", "number2" ],
         variable_filters = [ IsBigInt, IsBigInt ],
-        src_template = "number1 ⥉ [ number2 ]",
+        src_template = "number1 in [ number2 ]",
         dst_template = "number1 == number2",
     )
 );
@@ -421,7 +421,7 @@ CapJitAddLogicTemplate(
 CapJitAddLogicTemplate(
     @rec(
         variable_names = [ "entry", "list" ],
-        src_template = "entry ⥉ SSortedList( list )",
-        dst_template = "entry ⥉ list",
+        src_template = "entry in SSortedList( list )",
+        dst_template = "entry in list",
     )
 );

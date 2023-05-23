@@ -16,14 +16,14 @@
                   IsCapCategory );
 
 #! @Description
-#! The GAP category of objects ⥉ the category
+#! The GAP category of objects in the category
 #! of skeletal finite sets.
 #! @Arguments object
 @DeclareFilter( "IsSkeletalFiniteSet",
                  IsCapCategoryObject );
 
 #! @Description
-#! The GAP category of morphisms ⥉ the category
+#! The GAP category of morphisms in the category
 #! of skeletal finite sets.
 #! @Arguments object
 @DeclareFilter( "IsSkeletalFiniteSetMap",
@@ -88,9 +88,9 @@ DeclareGlobalName( "SkeletalFinSets" );
 @KeyDependentOperation( "FinSet", IsCategoryOfSkeletalFinSets, IsBigInt, ReturnTrue );
 
 #! @Description
-#!  Construct a map $\phi:$<A>s</A>$\to$<A>t</A> of the skeletal finite sets <A>s</A> && <A>t</A>,
-#!  i.e., a morphism ⥉ the &CAP; category of <A>s</A>, where <A>G</A>
-#!  is a list of integers ⥉ <A>t</A> describing the graph of $\phi$.
+#!  Construct a map $\phi:$<A>s</A>$\to$<A>t</A> of the skeletal finite sets <A>s</A> and <A>t</A>,
+#!  i.e., a morphism in the &CAP; category of <A>s</A>, where <A>G</A>
+#!  is a list of integers in <A>t</A> describing the graph of $\phi$.
 #! @Arguments s, G, t
 #! @Returns a &CAP; morphism
 @DeclareOperation( "MapOfFinSets",
@@ -107,7 +107,7 @@ DeclareGlobalName( "SkeletalFinSets" );
         [ IsSkeletalFiniteSet, IsFunction ] );
 
 #! @Description
-#!  Construct the embedding $\iota:$<A>s</A>$\to$<A>t</A> of the finite sets <A>s</A> && <A>t</A>,
+#!  Construct the embedding $\iota:$<A>s</A>$\to$<A>t</A> of the finite sets <A>s</A> and <A>t</A>,
 #!  where <A>s</A> must be subset of <A>t</A>.
 #! @Arguments s, t
 #! @Returns a &CAP; morphism
