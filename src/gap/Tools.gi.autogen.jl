@@ -9,7 +9,7 @@ InstallMethod( @__MODULE__,  GeometricSum,
         [ IsBigInt, IsBigInt ],
   function ( q, n )
     
-    if q == 1
+    if (q == 1)
         return n;
     end;
     
@@ -22,9 +22,9 @@ InstallMethod( @__MODULE__,  GeometricSumDiff1,
         [ IsBigInt, IsBigInt ],
   function ( q, n )
 
-    if n == 0
+    if (n == 0)
         return BigInt( 0 );
-    elseif q == 1
+    elseif (q == 1)
         return Binomial( n, 2 );
     end;
     

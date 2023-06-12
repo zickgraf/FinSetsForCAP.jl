@@ -70,13 +70,13 @@ InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
     
     # compare lists recursively
     
-    if Length( L1 ) != Length( L2 )
+    if (Length( L1 ) != Length( L2 ))
         return false;
     end;
     
     for i in (1):(Length( L1 ))
         
-        if !IsEqualForElementsOfFinSets( L1[i], L2[i] )
+        if (@not IsEqualForElementsOfFinSets( L1[i], L2[i] ))
             return false;
         end;
         
@@ -95,12 +95,12 @@ InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
     
     # compare records recursively
 
-    if RecNames( a ) != RecNames( b )
+    if (RecNames( a ) != RecNames( b ))
         return false;
     end;
     
     for i in RecNames( a )
-        if !IsEqualForElementsOfFinSets( a[i], b[i] )
+        if (@not IsEqualForElementsOfFinSets( a[i], b[i] ))
             return false;
         end;
     end;
@@ -116,15 +116,15 @@ InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
   function ( a, b )
     # compare CAP category objects using IsEqualForObjects (if available)
     
-    if HasCapCategory( a ) && HasCapCategory( b )
+    if (HasCapCategory( a ) && HasCapCategory( b ))
         
-        if !IsIdenticalObj( CapCategory( a ), CapCategory( b ) )
+        if (@not IsIdenticalObj( CapCategory( a ), CapCategory( b ) ))
             
             return false;
             
         end;
         
-        if CanCompute( CapCategory( a ), "IsEqualForObjects" )
+        if (CanCompute( CapCategory( a ), "IsEqualForObjects" ))
             
             return IsEqualForObjects( CapCategory( a ), a, b );
             
@@ -144,15 +144,15 @@ InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
   function ( a, b )
     # compare CAP category morphisms using IsEqualForMorphismsOnMor (if available)
     
-    if HasCapCategory( a ) && HasCapCategory( b )
+    if (HasCapCategory( a ) && HasCapCategory( b ))
         
-        if !IsIdenticalObj( CapCategory( a ), CapCategory( b ) )
+        if (@not IsIdenticalObj( CapCategory( a ), CapCategory( b ) ))
             
             return false;
             
         end;
         
-        if CanCompute( CapCategory( a ), "IsEqualForMorphismsOnMor" )
+        if (CanCompute( CapCategory( a ), "IsEqualForMorphismsOnMor" ))
             
             return IsEqualForMorphismsOnMor( CapCategory( a ), a, b );
             
@@ -181,7 +181,7 @@ InstallMethod( @__MODULE__,  FinSetNC,
     @Assert( 4, IsWellDefined( set ) );
 
     for i in (1):(Length( L ))
-        if !IsEqualForElementsOfFinSets( L[i], AsList( set )[i] )
+        if (@not IsEqualForElementsOfFinSets( L[i], AsList( set )[i] ))
             # COVERAGE_IGNORE_BLOCK_START
             Display( "Warning: The elements of the list passed to the constructor are not equal (w.r.t. IsEqualForElementsOfFinSets) to the elements of the resulting FinSet. Either pass an immutable copy of the list or add an additional special case to IsEqualForElementsOfFinSets to avoid this warning." );
             break;
@@ -249,7 +249,7 @@ InstallMethod( @__MODULE__,  UnionOfFinSets,
     union = FinSet( category_of_finite_sets, [ ] );
     for M in L
         for m in M
-            if !m ⥉ union
+            if (@not m in union)
                 union = ShallowCopy( AsList( union ) );
                 Add( union, m );
                 union = FinSetNC( category_of_finite_sets, union );
@@ -350,7 +350,7 @@ InstallMethod( @__MODULE__,  ProjectionOfFinSets,
   function ( S, T )
     local pi;
     
-    pi = MapOfFinSetsNC( S, List( S, x -> [ x, First( T, t -> x ⥉ t ) ] ), T );
+    pi = MapOfFinSetsNC( S, List( S, x -> [ x, First( T, t -> x in t ) ] ), T );
     
     @Assert( 3, IsEpimorphism( pi ) );
     SetIsEpimorphism( pi, true );
@@ -366,7 +366,7 @@ InstallMethod( @__MODULE__,  Preimage,
         
   function ( f, T_ )
     
-    return Filtered( Source( f ), x -> f(x) ⥉ T_ );
+    return Filtered( Source( f ), x -> f(x) in T_ );
     
 end );
 
@@ -395,13 +395,13 @@ InstallMethod( @__MODULE__,  CallFuncList,
     
     y = First( AsList( phi ), pair -> IsEqualForElementsOfFinSets( pair[1], x ) );
     
-    if y == fail
+    if (y == fail)
         # COVERAGE_IGNORE_BLOCK_START
-        if HasIsWellDefined( phi )
-            if IsWellDefined( phi )
+        if (HasIsWellDefined( phi ))
+            if (IsWellDefined( phi ))
                 Error( "the element ", x, " is not in the source of the map\n" );
             else
-                if !x ⥉ Source( phi )
+                if (@not x in Source( phi ))
                     Error( "the element ", x, " is not in the source of the map\n" );
                 else
                     Error( "the element ", x, " is in the source of the map, however, the map is not well-defined\n" );
@@ -473,7 +473,7 @@ AddIsWellDefinedForObjects( category_of_finite_sets,
     
     for i in (1):(Length( L ))
         for j in (1):(( i - 1 ))
-            if IsEqualForElementsOfFinSets( L[i], L[j] )
+            if (IsEqualForElementsOfFinSets( L[i], L[j] ))
                 return false;
             end;
         end;
@@ -493,17 +493,17 @@ AddIsWellDefinedForMorphisms( category_of_finite_sets,
     
     rel = AsList( mor );
     
-    if Length( S ) != Length( rel )
+    if (Length( S ) != Length( rel ))
         return false;
     end;
     
-    if !ForAll( rel, a -> IsList( a ) && Length( a ) == 2 && a[1] ⥉ S && a[ 2 ] ⥉ T )
+    if (@not ForAll( rel, a -> IsList( a ) && Length( a ) == 2 && a[1] in S && a[ 2 ] in T ))
         return false;
     end;
     
     for i in (1):(Length( rel ))
         for j in (1):(( i - 1 ))
-            if IsEqualForElementsOfFinSets( rel[i][1], rel[j][1] )
+            if (IsEqualForElementsOfFinSets( rel[i][1], rel[j][1] ))
                 return false;
             end;
         end;
@@ -519,7 +519,7 @@ end );
 AddIsEqualForObjects( category_of_finite_sets,
   function ( category_of_finite_sets, set1, set2 )
     
-    if Length( set1 ) != Length( set2 )
+    if (Length( set1 ) != Length( set2 ))
         
         return false;
         
@@ -546,7 +546,7 @@ end );
 AddIsHomSetInhabited( category_of_finite_sets,
   function ( category_of_finite_sets, A, B )
     
-    return IsInitial( A ) || !IsInitial( B );
+    return IsInitial( A ) || @not IsInitial( B );
     
 end );
 
@@ -669,7 +669,7 @@ AddEpimorphismFromSomeProjectiveObject( category_of_finite_sets,
 AddIsInjective( category_of_finite_sets,
   function ( category_of_finite_sets, M )
     
-    return !IsInitial( M );
+    return @not IsInitial( M );
     
 end );
 
@@ -677,7 +677,7 @@ end );
 AddMonomorphismIntoSomeInjectiveObject( category_of_finite_sets,
   function ( category_of_finite_sets, M )
     
-    if IsInitial( M )
+    if (IsInitial( M ))
         return UniversalMorphismIntoTerminalObject( M );
     end;
     
@@ -724,7 +724,7 @@ AddImageObject( category_of_finite_sets,
 
     I = FinSetNC( category_of_finite_sets, [ ] );
     for s in S
-        if !phi( s ) ⥉ I
+        if (@not phi( s ) in I)
             I = ShallowCopy( AsList( I ) );
             Add( I, phi( s ) );
             I = FinSetNC( category_of_finite_sets, I );
@@ -758,7 +758,7 @@ end );
 ##
 AddIsSplitMonomorphism( category_of_finite_sets,
   function ( category_of_finite_sets, phi )
-    return IsInitial( Range( phi ) ) || ( !IsInitial( Source( phi ) ) && IsMonomorphism( phi ) );
+    return IsInitial( Range( phi ) ) || ( @not IsInitial( Source( phi ) ) && IsMonomorphism( phi ) );
 end );
 
 ##
@@ -840,19 +840,19 @@ AddCoequalizer( category_of_finite_sets,
     
     C = [ ];
     
-    while !IsEmpty( T )
+    while @not IsEmpty( T )
         images = FinSetNC( category_of_finite_sets, [ T[1] ] );
         previousImages = FinSetNC( category_of_finite_sets, [ ] );
         while previousImages != images
             previousImages = images;
             preimages = UnionOfFinSets( category_of_finite_sets, List( D, f_i -> Preimage( f_i, images ) ) );
-            if Length( preimages ) > 0
+            if (Length( preimages ) > 0)
                 images = UnionOfFinSets( category_of_finite_sets, List( D, f_j -> ImageObject( f_j, preimages ) ) );
             end;
         end;
         
         Add( C, AsList( images ) );
-        T = Filtered( T, t -> !t ⥉ images );
+        T = Filtered( T, t -> @not t in images );
     end;
 
     return FinSetNC( category_of_finite_sets, C );
@@ -1050,7 +1050,7 @@ AddClassifyingMorphismOfSubobjectWithGivenSubobjectClassifier( category_of_finit
     images = List( range,
                     function ( x )
                       
-                      if x ⥉ ImageObject( monomorphism )
+                      if (x in ImageObject( monomorphism ))
                           return [ x, "true" ];
                       end;
                       

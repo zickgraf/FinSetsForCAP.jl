@@ -6,9 +6,9 @@
 
 include( "gap/Tools.gd.autogen.jl" );
 
-include( "gap/FinSetsForCAP.gd.autogen.jl" );
+include( "gap/FinSets.gd.autogen.jl" );
 
-include( "gap/SkeletalFinSetsForCAP.gd.autogen.jl" );
+include( "gap/SkeletalFinSets.gd.autogen.jl" );
 
 #= comment for Julia
 if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then

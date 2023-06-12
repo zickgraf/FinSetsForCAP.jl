@@ -6,11 +6,11 @@
 
 include( "gap/Tools.gi.autogen.jl" );
 
-include( "gap/precompiled_categories/CategoryOfSkeletalFinSetsPrecompiled.gi.autogen.jl" );
+include( "gap/precompiled_categories/CategoryOfSkeletalFinSetsWithMorphismsGivenByListsPrecompiled.gi.autogen.jl" );
 
-include( "gap/FinSetsForCAP.gi.autogen.jl" );
+include( "gap/FinSets.gi.autogen.jl" );
 
-include( "gap/SkeletalFinSetsForCAP.gi.autogen.jl" );
+include( "gap/SkeletalFinSets.gi.autogen.jl" );
 
 #= comment for Julia
 if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then

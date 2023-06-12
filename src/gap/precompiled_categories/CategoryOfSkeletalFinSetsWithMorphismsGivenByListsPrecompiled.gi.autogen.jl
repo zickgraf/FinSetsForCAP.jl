@@ -3,7 +3,7 @@
 #
 # Implementations
 #
-@BindGlobal( "ADD_FUNCTIONS_FOR_CategoryOfSkeletalFinSetsPrecompiled", function ( cat )
+@BindGlobal( "ADD_FUNCTIONS_FOR_CategoryOfSkeletalFinSetsWithMorphismsGivenByListsPrecompiled", function ( cat )
     
     ##
     AddCartesianBraidingInverseWithGivenDirectProducts( cat,
@@ -144,7 +144,7 @@ function ( cat_1, alpha_1, Omega_1 )
     hoisted_2_1 = BigInt( 1 );
     hoisted_1_1 = AsList( alpha_1 );
     return CreateCapCategoryMorphismWithAttributes( cat_1, deduped_3_1, Omega_1, AsList, List( (0):(Length( deduped_3_1 ) - 1), function ( x_2 )
-              if x_2 ⥉ hoisted_1_1
+              if (x_2 in hoisted_1_1)
                   return hoisted_2_1;
               else
                   return BigInt( 0 );
@@ -195,7 +195,7 @@ function ( cat_1, alpha_1, beta_1 )
     hoisted_2_1 = BigInt( 0 );
     deduped_1_1 = AsList( alpha_1 );
     return CreateCapCategoryMorphismWithAttributes( cat_1, deduped_4_1, Range( beta_1 ), AsList, List( (0):(Length( deduped_4_1 ) - 1), function ( y_2 )
-              if !y_2 ⥉ deduped_1_1
+              if (@not y_2 in deduped_1_1)
                   return hoisted_2_1;
               else
                   return hoisted_3_1[SafePosition( deduped_1_1, y_2 )];
@@ -308,13 +308,13 @@ function ( cat_1, s_1, alpha_1, beta_1, r_1 )
     hoisted_4_1 = AsList( beta_1 );
     hoisted_3_1 = AsList( alpha_1 );
     hoisted_2_1 = (0):(deduped_8_1 - 1);
-    return CreateCapCategoryMorphismWithAttributes( cat_1, s_1, r_1, AsList, List( (0):(deduped_7_1 ^ deduped_8_1 - 1), function ( logic_new_func_x_2 )
+    return CreateCapCategoryMorphismWithAttributes( cat_1, s_1, r_1, AsList, List( (0):(deduped_7_1 ^ deduped_8_1 - 1), function ( i_2 )
               local hoisted_1_2;
               hoisted_1_2 = List( hoisted_2_1, function ( i_3 )
-                      return REM_INT( QUO_INT( logic_new_func_x_2, deduped_7_1 ^ i_3 ), deduped_7_1 );
+                      return REM_INT( QUO_INT( i_2, deduped_7_1 ^ i_3 ), deduped_7_1 );
                   end );
               return Sum( List( hoisted_6_1, function ( k_3 )
-                        return hoisted_4_1[(1 + hoisted_1_2[(1 + hoisted_3_1[(1 + CAP_JIT_INCOMPLETE_LOGIC( k_3 ))])])] * hoisted_5_1 ^ k_3;
+                        return CAP_JIT_INCOMPLETE_LOGIC( hoisted_4_1[(1 + hoisted_1_2[(1 + hoisted_3_1[(1 + CAP_JIT_INCOMPLETE_LOGIC( k_3 ))])])] ) * hoisted_5_1 ^ k_3;
                     end ) );
           end ) );
 end
@@ -412,7 +412,7 @@ end
         
 ########
 function ( cat_1, arg2_1 )
-    return !false ⥉ SKELETAL_FIN_SETS_IsEpimorphism( AsList( arg2_1 ), Length( Range( arg2_1 ) ) );
+    return @not false in SKELETAL_FIN_SETS_IsEpimorphism( AsList( arg2_1 ), Length( Range( arg2_1 ) ) );
 end
 ########
         
@@ -445,7 +445,7 @@ end
         
 ########
 function ( cat_1, arg2_1, arg3_1 )
-    return Length( arg2_1 ) == 0 || Length( arg3_1 ) != 0;
+    return Length( arg2_1 ) == 0 || @not Length( arg3_1 ) == 0;
 end
 ########
         
@@ -467,7 +467,7 @@ end
         
 ########
 function ( cat_1, arg2_1 )
-    return Length( arg2_1 ) != 0;
+    return @not Length( arg2_1 ) == 0;
 end
 ########
         
@@ -482,14 +482,14 @@ function ( cat_1, arg2_1, arg3_1 )
     deduped_3_1 = AsList( arg3_1 );
     deduped_2_1 = AsList( arg2_1 );
     return ForAll( IdFunc( function (  )
-                if 100 * Length( deduped_2_1 ) < Length( deduped_3_1 )
+                if (100 * Length( deduped_2_1 ) < Length( deduped_3_1 ))
                     return SSortedList( deduped_2_1 );
                 else
                     return deduped_2_1;
                 end;
                 return;
             end )(  ), function ( y_2 )
-            return y_2 ⥉ deduped_3_1;
+            return y_2 in deduped_3_1;
         end );
 end
 ########
@@ -523,7 +523,7 @@ end
         
 ########
 function ( cat_1, arg2_1 )
-    return !false ⥉ SKELETAL_FIN_SETS_IsEpimorphism( AsList( arg2_1 ), Length( Range( arg2_1 ) ) );
+    return @not false in SKELETAL_FIN_SETS_IsEpimorphism( AsList( arg2_1 ), Length( Range( arg2_1 ) ) );
 end
 ########
         
@@ -536,7 +536,7 @@ end
 function ( cat_1, arg2_1 )
     local deduped_1_1;
     deduped_1_1 = Length( Range( arg2_1 ) );
-    return deduped_1_1 == 0 || Length( Source( arg2_1 ) ) != 0 && SKELETAL_FIN_SETS_IsMonomorphism( AsList( arg2_1 ), deduped_1_1 );
+    return deduped_1_1 == 0 || @not Length( Source( arg2_1 ) ) == 0 && SKELETAL_FIN_SETS_IsMonomorphism( AsList( arg2_1 ), deduped_1_1 );
 end
 ########
         
@@ -561,15 +561,15 @@ function ( cat_1, arg2_1 )
     local hoisted_1_1, deduped_2_1;
     deduped_2_1 = AsList( arg2_1 );
     hoisted_1_1 = Length( Range( arg2_1 ) );
-    if !ForAll( deduped_2_1, function ( a_2 )
+    if (@not ForAll( deduped_2_1, function ( a_2 )
                  return (IsBigInt( a_2 ) && a_2 >= 0);
-             end )
+             end ))
         return false;
-    elseif Length( Source( arg2_1 ) ) != Length( deduped_2_1 )
+    elseif (Length( Source( arg2_1 ) ) != Length( deduped_2_1 ))
         return false;
-    elseif !ForAll( deduped_2_1, function ( a_2 )
+    elseif (@not ForAll( deduped_2_1, function ( a_2 )
                  return a_2 < hoisted_1_1;
-             end )
+             end ))
         return false;
     else
         return true;
@@ -650,9 +650,9 @@ function ( cat_1, arg2_1, arg3_1 )
     deduped_4_1 = Length( arg2_1 );
     deduped_3_1 = Length( arg3_1 );
     hoisted_2_1 = (0):(deduped_4_1 - 1);
-    return List( (0):(deduped_3_1 ^ deduped_4_1 - 1), function ( logic_new_func_x_2 )
+    return List( (0):(deduped_3_1 ^ deduped_4_1 - 1), function ( i_2 )
             return CreateCapCategoryMorphismWithAttributes( cat_1, arg2_1, arg3_1, AsList, List( hoisted_2_1, function ( i_3 )
-                      return REM_INT( QUO_INT( logic_new_func_x_2, deduped_3_1 ^ i_3 ), deduped_3_1 );
+                      return REM_INT( QUO_INT( i_2, deduped_3_1 ^ i_3 ), deduped_3_1 );
                   end ) );
         end );
 end
@@ -725,7 +725,7 @@ function ( cat_1, Y_1, morphisms_1, P_1 )
     hoisted_1_1 = SKELETAL_FIN_SETS_ExplicitCoequalizer( Y_1, morphisms_1 );
     return CreateCapCategoryMorphismWithAttributes( cat_1, Y_1, P_1, AsList, List( (0):(Length( Y_1 ) - 1), function ( x_2 )
               return -1 + BigInt( SafeUniquePositionProperty( hoisted_1_1, function ( c_3 )
-                          return (x_2 ⥉ c_3);
+                          return (x_2 in c_3);
                       end ) );
           end ) );
 end
@@ -738,77 +738,76 @@ end
         
 ########
 function ( cat_1, l_1, m_1 )
-    local deduped_3_1, deduped_5_1, hoisted_6_1, deduped_8_1, hoisted_10_1, hoisted_13_1, hoisted_15_1, hoisted_16_1, hoisted_17_1, hoisted_18_1, deduped_20_1, deduped_21_1, deduped_22_1, deduped_23_1, deduped_24_1, deduped_25_1, deduped_26_1, deduped_27_1, deduped_28_1, deduped_29_1, deduped_30_1, deduped_31_1, deduped_32_1, deduped_33_1, deduped_34_1, deduped_35_1, deduped_36_1;
-    deduped_36_1 = BigInt( 1 );
-    deduped_35_1 = BigInt( 0 );
-    deduped_34_1 = Range( m_1 );
-    deduped_33_1 = Length( Source( l_1 ) );
-    deduped_32_1 = Length( Source( m_1 ) );
-    deduped_31_1 = Length( deduped_34_1 );
-    deduped_30_1 = (0):(deduped_31_1 - 1);
-    deduped_29_1 = (0):(deduped_32_1 * deduped_33_1 - 1);
-    deduped_28_1 = (0):(deduped_32_1 * deduped_32_1 - 1);
-    deduped_3_1 = List( deduped_28_1, function ( logic_new_func_x_2 )
-            return REM_INT( logic_new_func_x_2, deduped_32_1 );
+    local deduped_3_1, deduped_5_1, hoisted_6_1, deduped_8_1, hoisted_10_1, hoisted_13_1, hoisted_15_1, hoisted_16_1, hoisted_17_1, deduped_19_1, deduped_20_1, deduped_21_1, deduped_22_1, deduped_23_1, deduped_24_1, deduped_25_1, deduped_26_1, deduped_27_1, deduped_28_1, deduped_29_1, deduped_30_1, deduped_31_1, deduped_32_1;
+    deduped_32_1 = BigInt( 1 );
+    deduped_31_1 = BigInt( 0 );
+    deduped_30_1 = Range( m_1 );
+    deduped_29_1 = Length( Source( l_1 ) );
+    deduped_28_1 = Length( Source( m_1 ) );
+    deduped_27_1 = Length( deduped_30_1 );
+    deduped_26_1 = (0):(deduped_28_1 * deduped_29_1 - 1);
+    deduped_25_1 = (0):(deduped_28_1 * deduped_28_1 - 1);
+    deduped_3_1 = List( deduped_25_1, function ( i_2 )
+            return REM_INT( i_2, deduped_28_1 );
         end );
-    deduped_27_1 = Filtered( deduped_28_1, function ( x_2 )
-            return deduped_3_1[1 + x_2] == REM_INT( QUO_INT( CAP_JIT_INCOMPLETE_LOGIC( x_2 ), deduped_32_1 ), deduped_32_1 );
+    deduped_24_1 = Filtered( deduped_25_1, function ( x_2 )
+            return deduped_3_1[1 + x_2] == CAP_JIT_INCOMPLETE_LOGIC( REM_INT( QUO_INT( CAP_JIT_INCOMPLETE_LOGIC( x_2 ), deduped_28_1 ), deduped_28_1 ) );
         end );
     hoisted_10_1 = AsList( l_1 );
-    deduped_8_1 = List( deduped_29_1, function ( logic_new_func_x_2 )
-            return REM_INT( logic_new_func_x_2, deduped_32_1 );
+    deduped_8_1 = List( deduped_26_1, function ( i_2 )
+            return REM_INT( i_2, deduped_28_1 );
         end );
-    deduped_26_1 = Filtered( deduped_29_1, function ( x_2 )
-            return deduped_8_1[1 + x_2] == hoisted_10_1[1 + REM_INT( QUO_INT( CAP_JIT_INCOMPLETE_LOGIC( x_2 ), deduped_32_1 ), deduped_33_1 )];
+    deduped_23_1 = Filtered( deduped_26_1, function ( x_2 )
+            return deduped_8_1[1 + x_2] == CAP_JIT_INCOMPLETE_LOGIC( hoisted_10_1[1 + REM_INT( QUO_INT( CAP_JIT_INCOMPLETE_LOGIC( x_2 ), deduped_28_1 ), deduped_29_1 )] );
         end );
-    deduped_25_1 = Length( deduped_26_1 );
-    deduped_24_1 = (0):(deduped_25_1 - 1);
-    hoisted_13_1 = List( deduped_24_1, function ( i_2 )
-            return REM_INT( QUO_INT( CAP_JIT_INCOMPLETE_LOGIC( deduped_26_1[1 + i_2] ), deduped_32_1 ), deduped_33_1 );
+    deduped_22_1 = Length( deduped_23_1 );
+    deduped_21_1 = (0):(deduped_22_1 - 1);
+    hoisted_13_1 = List( deduped_21_1, function ( i_2 )
+            return CAP_JIT_INCOMPLETE_LOGIC( REM_INT( QUO_INT( CAP_JIT_INCOMPLETE_LOGIC( deduped_23_1[1 + i_2] ), deduped_28_1 ), deduped_29_1 ) );
         end );
-    deduped_23_1 = Filtered( (0):(deduped_25_1 * deduped_33_1 - 1), function ( x_2 )
+    deduped_20_1 = Filtered( (0):(deduped_22_1 * deduped_29_1 - 1), function ( x_2 )
             local deduped_1_2;
             deduped_1_2 = CAP_JIT_INCOMPLETE_LOGIC( x_2 );
-            return hoisted_13_1[1 + REM_INT( deduped_1_2, deduped_25_1 )] == REM_INT( QUO_INT( deduped_1_2, deduped_25_1 ), deduped_33_1 );
+            return CAP_JIT_INCOMPLETE_LOGIC( hoisted_13_1[1 + REM_INT( deduped_1_2, deduped_22_1 )] ) == CAP_JIT_INCOMPLETE_LOGIC( REM_INT( QUO_INT( deduped_1_2, deduped_22_1 ), deduped_29_1 ) );
         end );
-    hoisted_18_1 = [ deduped_36_1, deduped_35_1, deduped_36_1, deduped_36_1 ];
     hoisted_17_1 = BigInt( 2 );
     deduped_5_1 = AsList( m_1 );
-    hoisted_15_1 = List( deduped_24_1, function ( logic_new_func_x_2 )
-            return deduped_5_1[1 + deduped_8_1[(1 + deduped_26_1[(1 + logic_new_func_x_2)])]];
+    hoisted_15_1 = List( deduped_21_1, function ( i_2 )
+            return deduped_5_1[1 + deduped_8_1[(1 + deduped_23_1[(1 + i_2)])]];
         end );
-    hoisted_16_1 = List( (0):(Length( deduped_23_1 ) - 1), function ( logic_new_func_x_2 )
-            return hoisted_15_1[1 + REM_INT( CAP_JIT_INCOMPLETE_LOGIC( deduped_23_1[(1 + logic_new_func_x_2)] ), deduped_25_1 )];
+    hoisted_16_1 = List( (0):(Length( deduped_20_1 ) - 1), function ( i_2 )
+            return hoisted_15_1[1 + CAP_JIT_INCOMPLETE_LOGIC( REM_INT( CAP_JIT_INCOMPLETE_LOGIC( deduped_20_1[(1 + i_2)] ), deduped_22_1 ) )];
         end );
-    hoisted_6_1 = List( (0):(Length( deduped_27_1 ) - 1), function ( logic_new_func_x_2 )
-            return deduped_5_1[1 + deduped_3_1[(1 + deduped_27_1[(1 + logic_new_func_x_2)])]];
+    hoisted_6_1 = List( (0):(Length( deduped_24_1 ) - 1), function ( i_2 )
+            return deduped_5_1[1 + deduped_3_1[(1 + deduped_24_1[(1 + i_2)])]];
         end );
-    deduped_22_1 = Filtered( deduped_30_1, function ( x_2 )
-            local deduped_1_2;
-            deduped_1_2 = CAP_JIT_INCOMPLETE_LOGIC( REM_INT( CAP_JIT_INCOMPLETE_LOGIC( x_2 ), deduped_31_1 ) );
-            return hoisted_18_1[1 + (IdFunc( function (  )
-                             if (deduped_1_2 ⥉ hoisted_6_1)
-                                 return deduped_36_1;
-                             else
-                                 return deduped_35_1;
-                             end;
-                             return;
-                         end )(  ) + IdFunc( function (  )
-                               if (deduped_1_2 ⥉ hoisted_16_1)
-                                   return deduped_36_1;
-                               else
-                                   return deduped_35_1;
-                               end;
-                               return;
-                           end )(  ) * hoisted_17_1)] == deduped_36_1;
-        end );
-    deduped_20_1 = List( deduped_30_1, function ( i_2 )
-            return REM_INT( i_2, deduped_31_1 );
-        end );
-    deduped_21_1 = SSortedList( List( (0):(Length( deduped_22_1 ) - 1), function ( logic_new_func_x_2 )
-              return deduped_20_1[1 + deduped_20_1[(1 + deduped_22_1[(1 + logic_new_func_x_2)])]];
+    deduped_19_1 = SSortedList( Filtered( (0):(deduped_27_1 - 1), function ( x_2 )
+              local deduped_1_2;
+              deduped_1_2 = CAP_JIT_INCOMPLETE_LOGIC( REM_INT( CAP_JIT_INCOMPLETE_LOGIC( x_2 ), deduped_27_1 ) );
+              return CAP_JIT_INCOMPLETE_LOGIC( IdFunc( function (  )
+                            if ((CAP_JIT_INCOMPLETE_LOGIC( IdFunc( function (  )
+                                              if ((deduped_1_2 in hoisted_6_1))
+                                                  return deduped_32_1;
+                                              else
+                                                  return deduped_31_1;
+                                              end;
+                                              return;
+                                          end )(  ) ) + CAP_JIT_INCOMPLETE_LOGIC( IdFunc( function (  )
+                                                if ((deduped_1_2 in hoisted_16_1))
+                                                    return deduped_32_1;
+                                                else
+                                                    return deduped_31_1;
+                                                end;
+                                                return;
+                                            end )(  ) ) * hoisted_17_1 == deduped_32_1))
+                                return deduped_31_1;
+                            else
+                                return deduped_32_1;
+                            end;
+                            return;
+                        end )(  ) ) == deduped_32_1;
           end ) );
-    return CreateCapCategoryMorphismWithAttributes( cat_1, CreateCapCategoryObjectWithAttributes( cat_1, Length, BigInt( Length( deduped_21_1 ) ) ), deduped_34_1, AsList, deduped_21_1 );
+    return CreateCapCategoryMorphismWithAttributes( cat_1, CreateCapCategoryObjectWithAttributes( cat_1, Length, BigInt( Length( deduped_19_1 ) ) ), deduped_30_1, AsList, deduped_19_1 );
 end
 ########
         
@@ -819,7 +818,7 @@ end
         
 ########
 function ( cat_1, arg2_1 )
-    if Length( arg2_1 ) == 0
+    if (Length( arg2_1 ) == 0)
         return CreateCapCategoryObjectWithAttributes( cat_1, Length, BigInt( 1 ) );
     else
         return arg2_1;
@@ -851,6 +850,19 @@ end
 ########
         
     , 100 );
+    
+    ##
+    AddTruthMorphismOfImplies( cat,
+        
+########
+function ( cat_1 )
+    local deduped_1_1;
+    deduped_1_1 = BigInt( 1 );
+    return CreateCapCategoryMorphismWithAttributes( cat_1, CreateCapCategoryObjectWithAttributes( cat_1, Length, BigInt( 4 ) ), CreateCapCategoryObjectWithAttributes( cat_1, Length, BigInt( 2 ) ), AsList, [ deduped_1_1, BigInt( 0 ), deduped_1_1, deduped_1_1 ] );
+end
+########
+        
+    , 1206; IsPrecompiledDerivation = true );
     
     ##
     AddUniversalMorphismFromCoequalizerWithGivenCoequalizer( cat,
@@ -948,7 +960,7 @@ end
         
     , 100 );
     
-    if @IsBound( cat.precompiled_functions_added )
+    if (@IsBound( cat.precompiled_functions_added ))
         
         # COVERAGE_IGNORE_NEXT_LINE
         Error( "precompiled functions have already been added before" );
@@ -959,7 +971,7 @@ end
     
 end );
 
-@BindGlobal( "CategoryOfSkeletalFinSetsPrecompiled", function (  )
+@BindGlobal( "CategoryOfSkeletalFinSetsWithMorphismsGivenByListsPrecompiled", function (  )
   local category_constructor, cat;
     
     category_constructor =
@@ -973,7 +985,7 @@ end;
     
     cat = category_constructor( ; FinalizeCategory = false, no_precompiled_code = true );
     
-    ADD_FUNCTIONS_FOR_CategoryOfSkeletalFinSetsPrecompiled( cat );
+    ADD_FUNCTIONS_FOR_CategoryOfSkeletalFinSetsWithMorphismsGivenByListsPrecompiled( cat );
     
     Finalize( cat );
     

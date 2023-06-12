@@ -6,7 +6,7 @@
 
 #! @Chapter The category of skeletal finite sets
 
-#! @Section Skeletal GAP Categories
+#! @Section GAP Categories
 
 #! @Description
 #! The GAP category of categories
@@ -29,7 +29,7 @@
 @DeclareFilter( "IsSkeletalFiniteSetMap",
                  IsCapCategoryMorphism );
 
-#! @Section Skeletal Attributes
+#! @Section Attributes
 
 #! @Description
 #!  The integer defining the skeletal finite set <A>M</A>, i.e.,
@@ -38,6 +38,7 @@
 #! @Returns an integer
 @DeclareAttribute( "Length",
         IsSkeletalFiniteSet );
+
 CapJitAddTypeSignature( "Length", [ IsSkeletalFiniteSet ], IsBigInt );
 
 #! @Description
@@ -47,6 +48,7 @@ CapJitAddTypeSignature( "Length", [ IsSkeletalFiniteSet ], IsBigInt );
 #! @Returns a list
 @DeclareAttribute( "AsList",
         IsSkeletalFiniteSet );
+
 CapJitAddTypeSignature( "AsList", [ IsSkeletalFiniteSet ], @rec( filter = IsList, element_type = @rec( filter = IsBigInt ) ) );
 
 #! @Description
@@ -55,9 +57,10 @@ CapJitAddTypeSignature( "AsList", [ IsSkeletalFiniteSet ], @rec( filter = IsList
 #! @Returns a list
 @DeclareAttribute( "AsList",
         IsSkeletalFiniteSetMap );
+
 CapJitAddTypeSignature( "AsList", [ IsSkeletalFiniteSetMap ], @rec( filter = IsList, element_type = @rec( filter = IsBigInt ) ) );
 
-#! @Section Skeletal Constructors
+#! @Section Constructors
 
 #! @Description
 #!  Construct a category of skeletal finite sets.
@@ -97,7 +100,7 @@ DeclareGlobalName( "SkeletalFinSets" );
         [ IsSkeletalFiniteSet, IsList, IsSkeletalFiniteSet ] );
 #! @InsertChunk  SkeletalMapOfFinSets
 
-#! @Section Skeletal Tools
+#! @Section Tools
 
 #! @Description
 #!  Returns <C>List( AsList( <A>s</A> ), <A>f</A> )</C>.
