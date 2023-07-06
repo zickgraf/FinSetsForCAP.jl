@@ -101,7 +101,7 @@ CapJitAddTypeSignature( "List", [ IsSkeletalFiniteSet, IsFunction ], function ( 
         
     end;
     
-    return @rec( args = args, output_type = @rec( filter = IsList, element_type = args.2.data_type.signature[2] ) );
+    return @rec( args = args, output_type = CapJitDataTypeOfListOf( args.2.data_type.signature[2] ) );
     
 end );
 
@@ -428,6 +428,15 @@ CapJitAddLogicTemplate(
         variable_filters = [ IsBigInt ],
         src_template = "number ^ BigInt( 1 )",
         dst_template = "number",
+    )
+);
+
+CapJitAddLogicTemplate(
+    @rec(
+        variable_names = [ "number1", "number2" ],
+        variable_filters = [ IsBigInt, IsBigInt ],
+        src_template = "not number2 ^ number1 == 0",
+        dst_template = "number1 == 0 or not number2 == 0",
     )
 );
 

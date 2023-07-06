@@ -14,7 +14,7 @@ InstallMethod( @__MODULE__,  CategoryOfSkeletalFinSets,
     cat = CreateCapCategoryWithDataTypes(
         "SkeletalFinSets", IsCategoryOfSkeletalFinSets,
         IsSkeletalFiniteSet, IsSkeletalFiniteSetMap, IsCapCategoryTwoCell,
-        IsBigInt, @rec( filter = IsList, element_type = @rec( filter = IsBigInt ) ), fail
+        IsBigInt, CapJitDataTypeOfListOf( IsBigInt ), fail
     );
     
     cat.category_as_first_argument = true;
@@ -328,14 +328,6 @@ AddIsEqualForMorphisms( SkeletalFinSets,
   function ( cat, mor1, mor2 )
     
     return AsList( mor1 ) == AsList( mor2 );
-    
-end );
-
-##
-AddIsHomSetInhabited( SkeletalFinSets,
-  function ( cat, A, B )
-    
-    return IsInitial( cat, A ) || @not IsInitial( cat, B );
     
 end );
 
@@ -758,7 +750,7 @@ AddUniversalMorphismFromCoequalizerWithGivenCoequalizer( SkeletalFinSets,
     
     Cq = SKELETAL_FIN_SETS_ExplicitCoequalizer( s, D );
 
-    return MorphismConstructor( cat, C, List( Cq, x -> tau( x[1] ) ), Range( tau ) );
+    return MorphismConstructor( cat, C, List( Cq, x -> AsList( tau )[1 + x[1]] ), Range( tau ) );
     
 end );
 
@@ -983,6 +975,27 @@ end, 1 + Sum( [ [ "ExponentialOnObjects", 1 ],
                 [ "CartesianLambdaElimination", 2 ] ],
         e -> e[2] * CurrentOperationWeight( SkeletalFinSets.derivations_weight_list, e[1] ) ) );
 
+end );
+
+##
+AddDerivationToCAP( IsHomSetInhabited,
+        "IsHomSetInhabited using IsInitial when the range category of the homomorphism structure is the skeletal category of finite sets",
+        [ [ HomomorphismStructureOnObjects, 1 ],
+          [ IsInitial, 1, RangeCategoryOfHomomorphismStructure ] ],
+        
+  function ( cat, a, b )
+    local range_cat;
+    
+    range_cat = RangeCategoryOfHomomorphismStructure( cat );
+    
+    return @not IsInitial( range_cat,
+                   HomomorphismStructureOnObjects( cat, a, b ) );
+    
+end; CategoryGetters = @rec( range_cat = RangeCategoryOfHomomorphismStructure ),
+CategoryFilter =
+  function ( cat )
+    return HasRangeCategoryOfHomomorphismStructure( cat ) &&
+           IsCategoryOfSkeletalFinSets( RangeCategoryOfHomomorphismStructure( cat ) );
 end );
 
 ##
