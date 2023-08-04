@@ -10,12 +10,12 @@ import Base.iterate
 
 using CAP
 
-import CAP.ImageObjectOperation
+import CAP.ImageObject_OPERATION
 import CAP.CallFuncList
 import CAP.DisplayString
 import CAP.ViewString
 import CAP.PrintString
-import CAP.StringGAPOperation
+import CAP.StringGAP_OPERATION
 import CAP.ListOp
 import CAP.FilteredOp
 import CAP.First
