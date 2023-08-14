@@ -6,7 +6,7 @@
 
 include( "gap/Tools.gi.autogen.jl" );
 
-include( "gap/precompiled_categories/CategoryOfSkeletalFinSetsWithMorphismsGivenByListsPrecompiled.gi.autogen.jl" );
+include( "gap/precompiled_categories/SkeletalCategoryOfFiniteSetsWithMorphismsGivenByListsPrecompiled.gi.autogen.jl" );
 
 include( "gap/FinSets.gi.autogen.jl" );
 
