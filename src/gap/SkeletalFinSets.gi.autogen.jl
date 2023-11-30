@@ -26,6 +26,9 @@ InstallMethod( @__MODULE__,  SkeletalCategoryOfFiniteSets,
     
     SetIsSkeletalCategory( cat, true );
     
+    SetIsCategoryWithDecidableLifts( cat, true );
+    SetIsCategoryWithDecidableColifts( cat, true );
+    
     SetIsElementaryTopos( cat, true );
     
     SetRangeCategoryOfHomomorphismStructure( cat, cat );
@@ -356,14 +359,6 @@ AddPreCompose( SkeletalFinSets,
     
 end );
 
-##
-AddImageObject( SkeletalFinSets,
-  function ( cat, phi )
-    
-    return ObjectConstructor( cat, BigInt( Length( SetGAP( AsList( phi ) ) ) ) );
-    
-end );
-
 ## the function SKELETAL_FIN_SETS_IsEpimorphism
 ## has linear runtime complexity
 AddIsEpimorphism( SkeletalFinSets,
@@ -451,7 +446,12 @@ AddIsColiftable( SkeletalFinSets,
     ff = AsList( f );
     gg = AsList( g );
     
-    return ForAll( SetGAP( ff ), i -> Length( SetGAP( gg[Positions( ff, i )] ) ) == 1 );
+    ## Range( g ) initial implies Range( f ) initial
+    if (IsInitial( cat, Range( g ) ) && @not IsInitial( cat, Range( f ) ))
+        return false;
+    else
+        return ForAll( SetGAP( ff ), i -> Length( SetGAP( gg[Positions( ff, i )] ) ) == 1 );
+    end;
     
 end );
 
@@ -479,35 +479,31 @@ AddColift( SkeletalFinSets,
 end );
 
 ##
-AddImageEmbeddingWithGivenImageObject( SkeletalFinSets,
-  function ( cat, phi, image )
+AddImageEmbedding( SkeletalFinSets,
+  function ( cat, phi )
+    local map;
     
-    return MorphismConstructor( cat, image, SetGAP( AsList( phi ) ), Range( phi ) );
-
+    map = SetGAP( AsList( phi ) );
+    
+    return MorphismConstructor( cat, ObjectConstructor( cat, BigInt( Length( map ) ) ), map, Range( phi ) );
+    
 end );
 
 ##
-AddCoastrictionToImageWithGivenImageObject( SkeletalFinSets,
-  function ( cat, phi, image_object )
-    local G, images, s, L, l, pi;
+AddAstrictionToCoimage( SkeletalFinSets,
+  function ( cat, phi )
+    local L, map;
     
-    G = AsList( phi );
+    L = AsList( phi );
     
-    images = SetGAP( G );
+    ## unlike ImageObject which is a subobject of the range,
+    ## the CoimageObject is a factor object of the source,
+    ## and we want to retain the sorting of the source:
+    map = DuplicateFreeList( L );
     
-    s = Source( phi );
-    
-    L = List( s, i -> -1 + BigInt( SafePosition( images, G[1 + i] ) ) );
-    
-    pi = MorphismConstructor( cat, s, L, image_object );
-    
-    #% CAP_JIT_DROP_NEXT_STATEMENT
-    @Assert( 3, IsEpimorphism( cat, pi ) );
-    
-    return pi;
+    return MorphismConstructor( cat, ObjectConstructor( cat, BigInt( Length( map ) ) ), map, Range( phi ) );
     
 end );
-
 
 ## Limits
 
@@ -863,27 +859,31 @@ end );
 ##
 AddExponentialOnMorphismsWithGivenExponentials( SkeletalFinSets,
   function ( cat, S, alpha, beta, T )
-    local M, N, MN, mors;
+    local source_alpha, range_beta, M, N, MN, mors;
+    
+    source_alpha = Source( alpha );
+    range_beta = Range( beta );
     
     M = Range( alpha );
     N = Source( beta );
     
     MN = ExponentialOnObjects( cat, M, N );
-
+    
     mors = ExactCoverWithGlobalElements( cat, MN );
     
     return MorphismConstructor( cat,
                    S,
                    List( mors, mor ->
                          AsList( CartesianLambdaIntroduction( cat,
-                                 PreComposeList(
-                                         cat,
+                                 PreComposeList( cat,
+                                         source_alpha,
                                          [ alpha,
                                            CartesianLambdaElimination( cat,
                                                    M,
                                                    N,
                                                    mor ),
-                                           beta ] ) ) )[1 + 0] ),
+                                           beta ],
+                                         range_beta ) ) )[1 + 0] ),
                    T );
     
 end, 1 + Sum( [ [ "ExponentialOnObjects", 1 ],
