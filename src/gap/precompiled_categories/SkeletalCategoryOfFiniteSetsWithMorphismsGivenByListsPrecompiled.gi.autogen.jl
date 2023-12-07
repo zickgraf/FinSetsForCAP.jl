@@ -507,7 +507,7 @@ function ( cat_1, arg2_1, arg3_1 )
     local deduped_2_1, deduped_3_1;
     deduped_3_1 = AsList( arg3_1 );
     deduped_2_1 = AsList( arg2_1 );
-    return ForAll( IdFunc( function (  )
+    return ForAll( CAP_JIT_EXPR_CASE_WRAPPER( function (  )
                 if (100 * Length( deduped_2_1 ) < Length( deduped_3_1 ))
                     return SSortedList( deduped_2_1 );
                 else
@@ -583,15 +583,15 @@ end
     AddIsWellDefinedForMorphisms( cat,
         
 ########
-function ( cat_1, arg2_1 )
+function ( cat_1, alpha_1 )
     local hoisted_1_1, deduped_2_1;
-    deduped_2_1 = AsList( arg2_1 );
-    hoisted_1_1 = Length( Range( arg2_1 ) );
+    deduped_2_1 = AsList( alpha_1 );
+    hoisted_1_1 = Length( Range( alpha_1 ) );
     if (@not ForAll( deduped_2_1, function ( a_2 )
                  return (IsBigInt( a_2 ) && a_2 >= 0);
              end ))
         return false;
-    elseif (Length( Source( arg2_1 ) ) != Length( deduped_2_1 ))
+    elseif (Length( Source( alpha_1 ) ) != Length( deduped_2_1 ))
         return false;
     elseif (@not ForAll( deduped_2_1, function ( a_2 )
                  return a_2 < hoisted_1_1;
@@ -810,15 +810,15 @@ function ( cat_1, l_1, m_1 )
     deduped_19_1 = SSortedList( Filtered( (0):(deduped_27_1 - 1), function ( x_2 )
               local deduped_1_2;
               deduped_1_2 = CAP_JIT_INCOMPLETE_LOGIC( REM_INT( CAP_JIT_INCOMPLETE_LOGIC( x_2 ), deduped_27_1 ) );
-              return CAP_JIT_INCOMPLETE_LOGIC( IdFunc( function (  )
-                            if ((CAP_JIT_INCOMPLETE_LOGIC( IdFunc( function (  )
+              return CAP_JIT_INCOMPLETE_LOGIC( CAP_JIT_EXPR_CASE_WRAPPER( function (  )
+                            if ((CAP_JIT_INCOMPLETE_LOGIC( CAP_JIT_EXPR_CASE_WRAPPER( function (  )
                                               if ((deduped_1_2 in hoisted_6_1))
                                                   return deduped_32_1;
                                               else
                                                   return deduped_31_1;
                                               end;
                                               return;
-                                          end )(  ) ) + CAP_JIT_INCOMPLETE_LOGIC( IdFunc( function (  )
+                                          end )(  ) ) + CAP_JIT_INCOMPLETE_LOGIC( CAP_JIT_EXPR_CASE_WRAPPER( function (  )
                                                 if ((deduped_1_2 in hoisted_16_1))
                                                     return deduped_32_1;
                                                 else
