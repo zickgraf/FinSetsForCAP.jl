@@ -761,10 +761,10 @@ false
 julia> IsSplitEpimorphism( phi )
 false
 
-julia> iota = AstrictionToCoimage( phi )
+julia> pi = CoimageProjection( phi )
 <A morphism in FinSets>
 
-julia> pi = CoimageProjection( phi )
+julia> iota = AstrictionToCoimage( phi )
 <A morphism in FinSets>
 
 julia> PreCompose( pi, iota ) == phi
@@ -1293,15 +1293,27 @@ julia> ExponentialOnObjects( FinSet( [ 1 ] ), exp );
 
 julia> ExponentialOnMorphisms( f, g );
 
-julia> CartesianEvaluationMorphism( M, N );
+julia> CartesianRightEvaluationMorphism( M, N );
 
-julia> CartesianCoevaluationMorphism( M, N );
+julia> CartesianRightCoevaluationMorphism( N, M );
 
-julia> DirectProductToExponentialAdjunctionMap( M, N,
+julia> DirectProductToExponentialRightAdjunctMorphism( M, N,
             UniversalMorphismIntoTerminalObject( DirectProduct( M, N ) )
         );
 
-julia> ExponentialToDirectProductAdjunctionMap( M, N,
+julia> ExponentialToDirectProductRightAdjunctMorphism( M, N,
+            UniversalMorphismFromInitialObject( ExponentialOnObjects( M, N ) )
+        );
+
+julia> CartesianLeftEvaluationMorphism( M, N );
+
+julia> CartesianLeftCoevaluationMorphism( N, M );
+
+julia> DirectProductToExponentialLeftAdjunctMorphism( M, N,
+            UniversalMorphismIntoTerminalObject( DirectProduct( M, N ) )
+        );
+
+julia> ExponentialToDirectProductLeftAdjunctMorphism( M, N,
             UniversalMorphismFromInitialObject( ExponentialOnObjects( M, N ) )
         );
 
@@ -2126,6 +2138,53 @@ julia> using CAP; using CartesianCategories; using Toposes; using FinSetsForCAP
 julia> true
 true
 
+julia> m = FinSet( 3 )
+|3|
+
+julia> n = FinSet( 3 )
+|3|
+
+julia> phi = MapOfFinSets( m, [ 1, 0, 1 ], n )
+|3| → |3|
+
+julia> I = CoimageObject( phi )
+|2|
+
+julia> IsMonomorphism( phi )
+false
+
+julia> IsSplitMonomorphism( phi )
+false
+
+julia> IsEpimorphism( phi )
+false
+
+julia> IsSplitEpimorphism( phi )
+false
+
+julia> pi = CoimageProjection( phi )
+|3| → |2|
+
+julia> iota = AstrictionToCoimage( phi )
+|2| → |3|
+
+julia> PreCompose( pi, iota ) == phi
+true
+
+julia> Display( iota )
+[ 0, 1 ] ⱶ[ 1, 0 ]→ [ 0, 1, 2 ]
+
+julia> Display( ImageEmbedding( phi ) )
+[ 0, 1 ] ⱶ[ 0, 1 ]→ [ 0, 1, 2 ]
+
+```
+
+```jldoctest AutoDocTests
+julia> using CAP; using CartesianCategories; using Toposes; using FinSetsForCAP
+
+julia> true
+true
+
 julia> m = FinSet( 7 )
 |7|
 
@@ -2556,7 +2615,15 @@ julia> Li = List( L, phi -> CartesianLambdaIntroduction( phi ) );
 julia> Display( Li )
 [ [ 0 ] ⱶ[ 0 ]→ [ 0,..., 7 ], [ 0 ] ⱶ[ 1 ]→ [ 0,..., 7 ], [ 0 ] ⱶ[ 2 ]→ [ 0,..., 7 ], [ 0 ] ⱶ[ 3 ]→ [ 0,..., 7 ], [ 0 ] ⱶ[ 4 ]→ [ 0,..., 7 ], [ 0 ] ⱶ[ 5 ]→ [ 0,..., 7 ], [ 0 ] ⱶ[ 6 ]→ [ 0,..., 7 ], [ 0 ] ⱶ[ 7 ]→ [ 0,..., 7 ] ]
 
-julia> L == List( Li, psi -> CartesianLambdaElimination( S, R, psi ) )
+julia> List( L, phi ->
+              DirectProductToExponentialLeftAdjunctMorphism( T, S, phi ) ) == Li
+true
+
+julia> List( Li, psi -> CartesianLambdaElimination( S, R, psi ) ) == L
+true
+
+julia> List( Li, psi ->
+              ExponentialToDirectProductLeftAdjunctMorphism( S, R, psi ) ) == L
 true
 
 ```
@@ -2617,6 +2684,18 @@ julia> using CAP; using CartesianCategories; using Toposes; using FinSetsForCAP
 
 julia> true
 true
+
+julia> I = InitialObject( SkeletalFinSets )
+|0|
+
+julia> iota = UniversalMorphismIntoTerminalObject( I )
+|0| → |1|
+
+julia> id = IdentityMorphism( I )
+|0| → |0|
+
+julia> IsColiftable( iota, id )
+false
 
 julia> m = FinSet( 5 )
 |5|
@@ -2701,17 +2780,23 @@ julia> ExponentialOnObjects( M, N );
 
 julia> ExponentialOnMorphisms( f, g );
 
-julia> CartesianEvaluationMorphism( M, N );
+julia> CartesianRightEvaluationMorphism( M, N );
 
-julia> CartesianCoevaluationMorphism( M, N );
+julia> ExponentialToDirectProductRightAdjunctMorphism( M, N,
+            UniversalMorphismFromInitialObject( ExponentialOnObjects( M, N ) )
+        );
 
-julia> CartesianCoevaluationMorphism( T, T );
+julia> CartesianLeftEvaluationMorphism( M, N );
 
-julia> DirectProductToExponentialAdjunctionMap( M, N,
+julia> CartesianLeftCoevaluationMorphism( N, M );
+
+julia> CartesianLeftCoevaluationMorphism( T, T );
+
+julia> DirectProductToExponentialLeftAdjunctMorphism( M, N,
             UniversalMorphismIntoTerminalObject( DirectProduct( M, N ) )
         );
 
-julia> ExponentialToDirectProductAdjunctionMap( M, N,
+julia> ExponentialToDirectProductLeftAdjunctMorphism( M, N,
             UniversalMorphismFromInitialObject( ExponentialOnObjects( M, N ) )
         );
 
@@ -2846,11 +2931,11 @@ julia> K = FinSet( 3 )
 julia> L = FinSet( 6 )
 |6|
 
-julia> l = MapOfFinSets( K, [ 2, 3, 4 ], L );; IsMonomorphism( l );; l
+julia> l = MapOfFinSets( K, (2):(4), L );; IsMonomorphism( l );; l
 |3| ↪ |6|
 
 julia> Display( l )
-[ 0, 1, 2 ] ⱶ[ 2, 3, 4 ]→ [ 0,..., 5 ]
+[ 0, 1, 2 ] ⱶ[ 2 .. 4 ]→ [ 0,..., 5 ]
 
 julia> G = FinSet( 8 )
 |8|

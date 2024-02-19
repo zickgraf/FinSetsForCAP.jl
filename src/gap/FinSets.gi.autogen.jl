@@ -951,7 +951,7 @@ AddExponentialOnMorphismsWithGivenExponentials( category_of_finite_sets,
 end );
 
 ##
-AddCartesianEvaluationMorphismWithGivenSource( category_of_finite_sets,
+AddCartesianLeftEvaluationMorphismWithGivenSource( category_of_finite_sets,
   function ( category_of_finite_sets, M, N, HM_NxM )
     
     return MapOfFinSetsNC( HM_NxM, List( HM_NxM, fx -> [ fx, fx[1](fx[2]) ] ), N );
@@ -959,18 +959,18 @@ AddCartesianEvaluationMorphismWithGivenSource( category_of_finite_sets,
 end );
 
 ##
-AddCartesianCoevaluationMorphismWithGivenRange( category_of_finite_sets,
-  function ( category_of_finite_sets, M, N, HN_MxN )
-    local MN;
+AddCartesianLeftCoevaluationMorphismWithGivenRange( category_of_finite_sets,
+  function ( category_of_finite_sets, M, N, HM_NxM )
+    local NM;
     
-    MN = DirectProduct( M, N );
+    NM = DirectProduct( N, M );
     
-    return MapOfFinSetsNC( M, List( M, x -> [ x, MapOfFinSetsNC( N, List( N, y -> [ y, [ x, y ] ] ), MN ) ] ), HN_MxN );
+    return MapOfFinSetsNC( N, List( N, x -> [ x, MapOfFinSetsNC( M, List( M, y -> [ y, [ x, y ] ] ), NM ) ] ), HM_NxM );
     
 end );
 
 ##
-AddDirectProductToExponentialAdjunctionMap( category_of_finite_sets,
+AddDirectProductToExponentialLeftAdjunctMorphism( category_of_finite_sets,
   function ( category_of_finite_sets, M, N, f )
     local L;
     
@@ -981,7 +981,7 @@ AddDirectProductToExponentialAdjunctionMap( category_of_finite_sets,
 end );
 
 ##
-AddExponentialToDirectProductAdjunctionMap( category_of_finite_sets,
+AddExponentialToDirectProductLeftAdjunctMorphism( category_of_finite_sets,
   function ( category_of_finite_sets, N, L, g )
     local M, MN;
     
@@ -990,6 +990,49 @@ AddExponentialToDirectProductAdjunctionMap( category_of_finite_sets,
     MN = DirectProduct( M, N );
     
     return MapOfFinSetsNC( MN, List( MN, xy -> [ xy, g( xy[1] )( xy[2] ) ] ), L );
+    
+end );
+
+##
+AddCartesianRightEvaluationMorphismWithGivenSource( category_of_finite_sets,
+  function ( category_of_finite_sets, M, N, MxHM_N )
+    
+    return MapOfFinSetsNC( MxHM_N, List( MxHM_N, mf -> [ mf, mf[2](mf[1]) ] ), N );
+    
+end );
+
+##
+AddCartesianRightCoevaluationMorphismWithGivenRange( category_of_finite_sets,
+  function ( category_of_finite_sets, M, N, HM_MxN )
+    local MN;
+    
+    MN = DirectProduct( M, N );
+    
+    return MapOfFinSetsNC( N, List( N, n -> [ n, MapOfFinSetsNC( M, List( M, m -> [ m, [ m, n ] ] ), MN ) ] ), HM_MxN );
+    
+end );
+
+##
+AddDirectProductToExponentialRightAdjunctMorphism( category_of_finite_sets,
+  function ( category_of_finite_sets, M, N, f )
+    local L;
+    
+    L = Range( f );
+    
+    return MapOfFinSetsNC( N, List( N, n -> [ n, MapOfFinSetsNC( M, List( M, m -> [ m, f( [ m, n ] ) ] ), L ) ] ), ExponentialOnObjects( M, L ) );
+    
+end );
+
+##
+AddExponentialToDirectProductRightAdjunctMorphism( category_of_finite_sets,
+  function ( category_of_finite_sets, M, L, g )
+    local N, MN;
+    
+    N = Source( g );
+    
+    MN = DirectProduct( M, N );
+    
+    return MapOfFinSetsNC( MN, List( MN, mn -> [ mn, g( mn[2] )( mn[1] ) ] ), L );
     
 end );
 

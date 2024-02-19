@@ -40,24 +40,24 @@ julia> Display( List( AsList( ProjectionInFactorOfDirectProduct( [ M, N, K ], 3 
 julia> Display( AsList( ProjectionInFactorOfDirectProduct( [ m, n, k ], 3 ) ) )
 [ 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3 ]
 
-julia> Ev = List( AsList( CartesianEvaluationMorphism( N, K ) ), i -> i[2] );
+julia> Ev = List( AsList( CartesianLeftEvaluationMorphism( N, K ) ), i -> i[2] );
 
 julia> Display( Ev )
 [ 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ]
 
-julia> ev = AsList( CartesianEvaluationMorphism( n, k ) );
+julia> ev = AsList( CartesianLeftEvaluationMorphism( n, k ) );
 
 julia> ev == Ev
 true
 
-julia> Coev_set = CartesianCoevaluationMorphism( M, N );; ## M, K
+julia> Coev_set = CartesianLeftCoevaluationMorphism( N, M );; ## K, M
 
 julia> Coev = List( AsList( Coev_set ), i -> -1 + Position( AsList( Range( Coev_set ) ), i[2] ) );
 
 julia> Display( Coev )
 [ 156, 199 ]
 
-julia> coev = AsList( CartesianCoevaluationMorphism( m, n ) );; ## m, k
+julia> coev = AsList( CartesianLeftCoevaluationMorphism( n, m ) );; ## k, m
 
 julia> Display( coev )
 [ 156, 199 ]

@@ -43,7 +43,7 @@ CapJitAddLogicFunction( function ( tree )
                     
                 end ) );
                 
-                if (tree.funcref.gvar in [ "+", "-", "*", "QUO_INT", "REM_INT" ])
+                if (tree.funcref.gvar in [ "+", "-", "*", "QUO_INT", "REM_INT", "RemIntWithDomain", "QuoIntWithDomain" ])
                     
                     tree = @rec(
                         type = "EXPR_INT",
@@ -205,12 +205,20 @@ CapJitAddLogicTemplate(
     )
 );
 
+CapJitAddLogicTemplate(
+    @rec(
+        variable_names = [ "number", "a" ],
+        src_template = "RemIntWithDomain( number, a, a )",
+        dst_template = "number",
+    )
+);
+
 ## for PushoutComplement
 CapJitAddLogicTemplate(
     @rec(
-        variable_names = [ "last" ],
-        src_template = "List( (0):(last - 1), x -> REM_INT( x, last ) )",
-        dst_template = "(0):(last - 1)",
+        variable_names = [ "number", "q", "d", "qd" ],
+        src_template = "RemIntWithDomain( number, d, DivIntWithGivenQuotient( qd, q, d ) )",
+        dst_template = "number",
     )
 );
 
@@ -293,7 +301,7 @@ CapJitAddLogicTemplate(
     @rec(
         variable_names = [ "number" ],
         variable_filters = [ IsBigInt ],
-        src_template = "BigInt( 0 ) * number",
+        src_template = "number * BigInt( 0 )",
         dst_template = "BigInt( 0 )",
     )
 );
@@ -302,7 +310,25 @@ CapJitAddLogicTemplate(
     @rec(
         variable_names = [ "number" ],
         variable_filters = [ IsBigInt ],
-        src_template = "QUO_INT( number, BigInt( 1 ) )",
+        src_template = "BigInt( 0 ) * number",
+        dst_template = "BigInt( 0 )",
+    )
+);
+
+CapJitAddLogicTemplate(
+    @rec(
+        variable_names = [ "number", "domain" ],
+        variable_filters = [ IsBigInt, IsBigInt ],
+        src_template = "QuoIntWithDomain( number, BigInt( 1 ), domain )",
+        dst_template = "number",
+    )
+);
+
+CapJitAddLogicTemplate(
+    @rec(
+        variable_names = [ "number", "quotient" ],
+        variable_filters = [ IsBigInt, IsBigInt ],
+        src_template = "DivIntWithGivenQuotient( number, BigInt( 1 ), quotient )",
         dst_template = "number",
     )
 );
@@ -321,6 +347,14 @@ CapJitAddLogicTemplate(
         variable_names = [ "list" ],
         src_template = "list[[ 1 ]]",
         dst_template = "[ list[1] ]",
+    )
+);
+
+CapJitAddLogicTemplate(
+    @rec(
+        variable_names = [ "entry1", "entry2" ],
+        src_template = "[ entry1, entry2 ][[ 2 ]]",
+        dst_template = "[ entry2 ]",
     )
 );
 
@@ -454,5 +488,21 @@ CapJitAddLogicTemplate(
         variable_names = [ "entry", "list" ],
         src_template = "entry in SSortedList( list )",
         dst_template = "entry in list",
+    )
+);
+
+CapJitAddLogicTemplate(
+    @rec(
+        variable_names = [ "length", "a", "b" ],
+        src_template = "(0):(length - 1)[1 + a + b]",
+        dst_template = "a + b",
+    )
+);
+
+CapJitAddLogicTemplate(
+    @rec(
+        variable_names = [ "a", "q", "i" ],
+        src_template = "Sum( List( (0):(a - 1), k -> (k + a * i) * q^k ) )",
+        dst_template = "q * GeometricSumDiff1( q, a ) + a * i * GeometricSum( q, a )",
     )
 );

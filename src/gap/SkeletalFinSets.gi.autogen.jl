@@ -8,7 +8,11 @@
 InstallMethod( @__MODULE__,  SkeletalCategoryOfFiniteSets,
                [ ],
                
-  function ( )
+ @FunctionWithNamedArguments(
+  [
+    [ "no_precompiled_code", false ],
+  ],
+  function ( CAP_NAMED_ARGUMENTS )
     local cat;
     
     cat = CreateCapCategoryWithDataTypes(
@@ -41,7 +45,7 @@ InstallMethod( @__MODULE__,  SkeletalCategoryOfFiniteSets,
             Filename( DirectoriesPackageLibrary( "Toposes", "LogicForToposes" ), "PropositionsForToposes.tex" ) );
     # =#
     
-    if (ValueOption( "no_precompiled_code" ) != true)
+    if (@not no_precompiled_code)
         
         ADD_FUNCTIONS_FOR_SkeletalCategoryOfFiniteSetsWithMorphismsGivenByListsPrecompiled( cat );
         
@@ -51,7 +55,7 @@ InstallMethod( @__MODULE__,  SkeletalCategoryOfFiniteSets,
     
     return cat;
     
-end );
+end ) );
 
 ##
 InstallMethod( @__MODULE__,  FinSetOp,
@@ -132,13 +136,11 @@ InstallMethod( @__MODULE__,  Preimage,
         [ IsMorphismInSkeletalCategoryOfFiniteSets, IsList ],
         
   function ( phi, t )
-    local S;
+    local positions;
     
-    S = AsList( Source( phi ) );
+    positions = PositionsProperty( AsList( phi ), x -> x in t );
     
-    phi = AsList( phi );
-    
-    return Filtered( S, i -> phi[1 + i] in t );
+    return List( positions, i -> BigInt( i - 1 ) );
     
 end );
 
@@ -542,15 +544,18 @@ end );
 ##
 AddProjectionInFactorOfDirectProductWithGivenDirectProduct( SkeletalFinSets,
   function ( cat, D, k, P )
-    local T, l, a;
+    local T, d, a, b, p;
     
     T = D[k];
     
-    l = Length( T );
+    d = Length( T );
     
     a = Product( List( D[(1):(k - 1)], Length ) );
+    b = Product( List( D[(k + 1):(Length( D ))], Length ) );
     
-    return MorphismConstructor( cat, P, List( P, i -> RemInt( QuoInt( i, a ), l ) ), T );
+    p = Length( P );
+    
+    return MorphismConstructor( cat, P, List( P, i -> RemIntWithDomain( QuoIntWithDomain( i, a, p ), d, DivIntWithGivenQuotient( p, a, d * b ) ) ), T );
     
 end );
 
@@ -785,19 +790,6 @@ AddCartesianRightUnitorInverseWithGivenDirectProduct( SkeletalFinSets,
 end );
 
 ##
-AddCartesianBraidingInverseWithGivenDirectProducts( SkeletalFinSets,
-  function ( cat, MN, M, N, NM )
-    local m, n;
-    
-    m = Length( M );
-    
-    n = Length( N );
-    
-    return MorphismConstructor( cat, MN, List( MN , i -> RemInt( i, n ) * m + QuoInt( i, n ) ), NM );
-    
-end );
-
-##
 AddExponentialOnObjects( SkeletalFinSets,
   function ( cat, M, N )
     local m, n;
@@ -809,39 +801,68 @@ AddExponentialOnObjects( SkeletalFinSets,
     
 end );
 
+## A special case of ExponentialToDirectProductRightAdjunctMorphism for A == 𝟙 == TerminalObject
 ## InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism
+## (g: 𝟙 → Bᴸ) ↦ (f: L == L × 𝟙 → B)
 AddCartesianLambdaElimination( SkeletalFinSets,
-  function ( cat, M, N, intro )
-    local m, n, v;
+  function ( cat, L, B, g )
+    local l, b, v;
     
-    m = Length( M );
-    n = Length( N );
+    l = Length( L );
+    b = Length( B );
     
-    v = AsList( intro )[1];
+    v = AsList( g )[1];
     
     return MorphismConstructor( cat,
-                   M,
-                   List( (0):(m - 1), i -> RemInt( QuoInt( v, n^i ), n ) ),
-                   N );
+                   L,
+                   List( (0):(l - 1), i -> DigitInPositionalNotation( v, i, l, b ) ),
+                   B );
     
 end );
 
-## InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure
-AddCartesianLambdaIntroduction( SkeletalFinSets,
-  function ( cat, map )
-    local M, m, N, n, images;
+## base-change from b^l to b:
+## (g: A → Bᴸ) ↦ (f: L × A → B)
+AddExponentialToDirectProductRightAdjunctMorphismWithGivenDirectProduct( SkeletalFinSets,
+  function ( cat, L, B, g, LxA )
+    local l, b, g_map, la;
     
-    M = Source( map );
-    m = Length( M );
-    N = Range( map );
-    n = Length( N );
+    l = Length( L );
+    b = Length( B );
+    la = Length( LxA );
     
-    images = AsList( map );
+    g_map = AsList( g );
     
     return MorphismConstructor( cat,
-                   TerminalObject( cat ),
-                   [ Sum( List( (0):(m - 1), k -> images[1 + k] * n^k ) ) ],
-                   ExponentialOnObjects( cat, M, N ) );
+                   LxA,
+                   List( LxA, i ->
+                         DigitInPositionalNotation(
+                                 g_map[1 + QuoIntWithDomain( i, l, la )],
+                                 RemIntWithDomain( i, l, la ),
+                                 l,
+                                 b ) ),
+                   B );
+    
+end );
+
+## base-change from b to b^l:
+## (f: L × A → B) ↦ (g: A → Bᴸ)
+AddDirectProductToExponentialRightAdjunctMorphismWithGivenExponential( SkeletalFinSets,
+  function ( cat, L, A, f, expLB )
+    local B, l, b, f_map;
+    
+    B = Range( f );
+    
+    l = Length( L );
+    b = Length( B );
+    
+    f_map = AsList( f );
+    
+    return MorphismConstructor( cat,
+                   A,
+                   List( A, i ->
+                         Sum( List( L, k ->
+                                 f_map[1 + k + l * i] * b^k ) ) ),
+                   expLB );
     
 end );
 
@@ -890,36 +911,56 @@ end, 1 + Sum( [ [ "ExponentialOnObjects", 1 ],
                 [ "ExactCoverWithGlobalElements", 1 ],
                 [ "PreComposeList", 2 ],
                 [ "CartesianLambdaElimination", 2 ],
-                [ "CartesianLambdaIntroduction", 2 ] ],
+                [ "DirectProductToExponentialRightAdjunctMorphismWithGivenExponential", 2 ] ],
         e -> e[2] * CurrentOperationWeight( SkeletalFinSets.derivations_weight_list, e[1] ) ) );
 
-##
-AddCartesianEvaluationMorphismWithGivenSource( SkeletalFinSets,
-  function ( cat, M, N, HM_NxM )
-    local m, n, exp;
+## Bᴸ × L → B
+AddCartesianLeftEvaluationMorphismWithGivenSource( SkeletalFinSets,
+  function ( cat, L, B, HL_BxL )
+    local l, b, s, exp, eval;
     
-    m = Length( M );
-    n = Length( N );
+    l = Length( L );
+    b = Length( B );
     
-    exp = n ^ m;
+    s = Length( HL_BxL );
     
-    return MorphismConstructor( cat, HM_NxM, List( (0):(( n^m * m ) - 1), i -> RemInt( QuoInt( i, n^QuoInt( i, exp ) ), n ) ), N );
+    exp = b ^ l;
+    
+    ## (f,i) ↦ f(i)
+    eval =
+      function( f_i ) ## (f,i)
+        local i, f;
+        
+        ## lhs
+        f = RemIntWithDomain( f_i, exp, s ); ## ∈ [ 0, ..., exp - 1 ]
+        
+        ## rhs
+        i = QuoIntWithDomain( f_i, exp, s ); ## ∈ [ 0, ..., l - 1 ]
+        
+        return DigitInPositionalNotation( f, i, l, b ); ## f(i)
+    end;
+    
+    ## (i,f) ↦ f(i)
+    return MorphismConstructor( cat,
+                   HL_BxL,
+                   List( (0):(s - 1), eval ),
+                   B );
     
 end );
 
 ##
-AddCartesianCoevaluationMorphismWithGivenRange( SkeletalFinSets,
-  function ( cat, M, N, HN_MxN )
-    local m, n, mn;
+AddCartesianLeftCoevaluationMorphismWithGivenRange( SkeletalFinSets,
+  function ( cat, L, B, HL_BxL )
+    local l, b, bl;
     
-    m = Length( M );
-    n = Length( N );
+    l = Length( L );
+    b = Length( B );
     
-    mn = m * n;
+    bl = b * l;
     
-    #return MorphismConstructor( cat, M, List( (0):(m - 1), i -> Sum( (0):(n - 1), j -> ( i + m * j ) * (m*n)^j ) ), HN_MxN );
+    #return MorphismConstructor( cat, B, List( (0):(b - 1), i -> Sum( (0):(l - 1), j -> ( i + b * j ) * (b*l)^j ) ), HL_BxL );
     
-    return MorphismConstructor( cat, M, List( (0):(m - 1), i -> i * GeometricSum( mn, n ) + m * mn * GeometricSumDiff1( mn, n ) ), HN_MxN );
+    return MorphismConstructor( cat, B, List( (0):(b - 1), i -> i * GeometricSum( bl, l ) + b * bl * GeometricSumDiff1( bl, l ) ), HL_BxL );
     
 end );
 
