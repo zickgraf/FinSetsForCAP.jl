@@ -5,7 +5,7 @@
 #
 
 ## Sum( (0):(n - 1), i -> q^i );
-InstallMethod( @__MODULE__,  GeometricSum,
+@InstallMethod( GeometricSum,
         [ IsBigInt, IsBigInt ],
   function ( q, n )
     
@@ -18,7 +18,7 @@ InstallMethod( @__MODULE__,  GeometricSum,
 end );
 
 ## Sum( (1):(n - 1), i -> i * q^(i-1) )
-InstallMethod( @__MODULE__,  GeometricSumDiff1,
+@InstallMethod( GeometricSumDiff1,
         [ IsBigInt, IsBigInt ],
   function ( q, n )
 
@@ -33,7 +33,7 @@ InstallMethod( @__MODULE__,  GeometricSumDiff1,
 end );
 
 ## ProjectionInFactorOfDirectProduct( [ a, b ], 1 )
-InstallMethod( @__MODULE__,  RemIntWithDomain,
+@InstallMethod( RemIntWithDomain,
         [ IsBigInt, IsObject, IsBigInt ],
         ## FIXME: replace IsObject -> IsBigInt
         ## The line Product( List( D[(1):(k - 1)], Length ) ) in AddProjectionInFactorOfDirectProductWithGivenDirectProduct
@@ -48,7 +48,7 @@ InstallMethod( @__MODULE__,  RemIntWithDomain,
 end );
 
 ## ProjectionInFactorOfDirectProduct( [ a, b ], 2 )
-InstallMethod( @__MODULE__,  QuoIntWithDomain,
+@InstallMethod( QuoIntWithDomain,
         [ IsBigInt, IsObject, IsBigInt ],
         ## FIXME: replace IsObject -> IsBigInt
         ## The line Product( List( D[(1):(k - 1)], Length ) ) in AddProjectionInFactorOfDirectProductWithGivenDirectProduct
@@ -63,7 +63,7 @@ InstallMethod( @__MODULE__,  QuoIntWithDomain,
 end );
 
 ##
-InstallMethod( @__MODULE__,  DivIntWithGivenQuotient,
+@InstallMethod( DivIntWithGivenQuotient,
         [ IsBigInt, IsObject, IsBigInt ],
         ## FIXME: replace IsObject -> IsBigInt
         ## The line Product( List( D[(1):(k - 1)], Length ) ) in AddProjectionInFactorOfDirectProductWithGivenDirectProduct
@@ -78,7 +78,7 @@ InstallMethod( @__MODULE__,  DivIntWithGivenQuotient,
 end );
 
 ## CartesianLambdaElimination
-InstallMethod( @__MODULE__,  DigitInPositionalNotation,
+@InstallMethod( DigitInPositionalNotation,
         [ IsBigInt, IsBigInt, IsBigInt, IsBigInt ],
         
   function ( number, index, length, base )

@@ -5,7 +5,7 @@
 #
 
 ##
-InstallMethod( @__MODULE__,  CategoryOfFiniteSets,
+@InstallMethod( CategoryOfFiniteSets,
                [ ],
                
   function ( )
@@ -40,31 +40,31 @@ end );
 
 
 ##
-InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
+@InstallMethod( IsEqualForElementsOfFinSets,
         "for two integers",
         [ IsInt, IsInt ],
         
   ( int1, int2 ) -> int1 == int2 );
 
-InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
+@InstallMethod( IsEqualForElementsOfFinSets,
         "for two chars",
         [ IsChar, IsChar ],
         
   ( char1, char2 ) -> char1 == char2 );
 
-InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
+@InstallMethod( IsEqualForElementsOfFinSets,
         "for two strings",
         [ IsString, IsString ],
         
   ( string1, string2 ) -> string1 == string2 );
 
-InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
+@InstallMethod( IsEqualForElementsOfFinSets,
         "for two objects",
         [ IsObject, IsObject ],
         
   IsIdenticalObj );
 
-InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
+@InstallMethod( IsEqualForElementsOfFinSets,
         "for two dense lists",
         [ IsDenseList, IsDenseList ],
         
@@ -89,7 +89,7 @@ InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
     
 end );
 
-InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
+@InstallMethod( IsEqualForElementsOfFinSets,
         "for two records",
         [ IsRecord, IsRecord ],
         
@@ -112,7 +112,7 @@ InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
     
 end );
 
-InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
+@InstallMethod( IsEqualForElementsOfFinSets,
         "for two CAP category objects",
         [ IsCapCategoryObject, IsCapCategoryObject ],
         
@@ -140,7 +140,7 @@ InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
     
 end );
 
-InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
+@InstallMethod( IsEqualForElementsOfFinSets,
         "for two CAP category morphisms",
         [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
         
@@ -169,7 +169,7 @@ InstallMethod( @__MODULE__,  IsEqualForElementsOfFinSets,
 end );
 
 ##
-InstallMethod( @__MODULE__,  FinSetNC,
+@InstallMethod( FinSetNC,
         "for a category of finite sets and a dense list",
         [ IsCategoryOfFiniteSets, IsDenseList ],
         
@@ -197,7 +197,7 @@ InstallMethod( @__MODULE__,  FinSetNC,
 end );
 
 ##
-InstallMethod( @__MODULE__,  FinSet,
+@InstallMethod( FinSet,
         "for a category of finite sets and a dense list",
         [ IsCategoryOfFiniteSets, IsDenseList ],
         
@@ -208,7 +208,7 @@ InstallMethod( @__MODULE__,  FinSet,
 end );
 
 ##
-InstallMethod( @__MODULE__,  in,
+@InstallMethod( in,
         "for an object and a CAP finite set",
         [ IsObject, IsObjectInCategoryOfFiniteSets ],
         
@@ -219,7 +219,7 @@ InstallMethod( @__MODULE__,  in,
 end );
 
 ##
-InstallMethod( @__MODULE__,  getindex,
+@InstallMethod( getindex,
         "for CAP finite sets",
         [ IsObjectInCategoryOfFiniteSets, IsInt ],
 
@@ -229,20 +229,21 @@ InstallMethod( @__MODULE__,  getindex,
     
 end );
 
+#= comment for Julia
 ##
-InstallMethod( @__MODULE__,  Iterator,
+@InstallMethod( Iterator,
         "for CAP finite sets",
         [ IsObjectInCategoryOfFiniteSets ],
 
-  # `args` is never used in GAP but needed for Julia
-  function ( M, args... )
+  function ( M )
     
-    return CallFuncList( Iterator, @Concatenation( [ AsList( M ) ], args ) );
+    return Iterator( AsList( M ) );
     
 end );
+# =#
 
 ##
-InstallMethod( @__MODULE__,  UnionOfFinSets,
+@InstallMethod( UnionOfFinSets,
         "for a category of finite sets and a dense list of CAP finite sets",
         [ IsCategoryOfFiniteSets, IsDenseList ],
         
@@ -265,7 +266,7 @@ InstallMethod( @__MODULE__,  UnionOfFinSets,
 end );
 
 ##
-InstallMethod( @__MODULE__,  ListOp,
+@InstallMethod( ListOp,
         "for a CAP finite set and a function",
         [ IsObjectInCategoryOfFiniteSets, IsFunction ],
         
@@ -276,7 +277,7 @@ InstallMethod( @__MODULE__,  ListOp,
 end );
 
 ##
-InstallMethod( @__MODULE__,  FilteredOp,
+@InstallMethod( FilteredOp,
         "for a CAP finite set and a function",
         [ IsObjectInCategoryOfFiniteSets, IsFunction ],
         
@@ -287,7 +288,7 @@ InstallMethod( @__MODULE__,  FilteredOp,
 end );
 
 ##
-InstallMethod( @__MODULE__,  First,
+@InstallMethod( First,
         "for a CAP finite set and a function",
         [ IsObjectInCategoryOfFiniteSets, IsFunction ],
         
@@ -298,7 +299,7 @@ InstallMethod( @__MODULE__,  First,
 end );
 
 ##
-InstallMethod( @__MODULE__,  MapOfFinSets,
+@InstallMethod( MapOfFinSets,
         "for two CAP finite sets and a dense list",
         [ IsObjectInCategoryOfFiniteSets, IsDenseList, IsObjectInCategoryOfFiniteSets ],
         
@@ -309,7 +310,7 @@ InstallMethod( @__MODULE__,  MapOfFinSets,
 end );
 
 ##
-InstallMethod( @__MODULE__,  MapOfFinSetsNC,
+@InstallMethod( MapOfFinSetsNC,
         "for a two CAP finite sets and a dense list",
         [ IsObjectInCategoryOfFiniteSets, IsDenseList, IsObjectInCategoryOfFiniteSets ],
         
@@ -329,7 +330,7 @@ InstallMethod( @__MODULE__,  MapOfFinSetsNC,
 end );
 
 ##
-InstallMethod( @__MODULE__,  EmbeddingOfFinSets,
+@InstallMethod( EmbeddingOfFinSets,
         "for a two CAP finite sets",
         [ IsObjectInCategoryOfFiniteSets, IsObjectInCategoryOfFiniteSets ],
         
@@ -346,7 +347,7 @@ InstallMethod( @__MODULE__,  EmbeddingOfFinSets,
 end );
 
 ##
-InstallMethod( @__MODULE__,  ProjectionOfFinSets,
+@InstallMethod( ProjectionOfFinSets,
         "for a two CAP finite sets",
         [ IsObjectInCategoryOfFiniteSets, IsObjectInCategoryOfFiniteSets ],
         
@@ -363,7 +364,7 @@ InstallMethod( @__MODULE__,  ProjectionOfFinSets,
 end );
 
 ##
-InstallMethod( @__MODULE__,  Preimage,
+@InstallMethod( Preimage,
         "for a CAP map of finite sets and a CAP finite set",
         [ IsMorphismInCategoryOfFiniteSets, IsObjectInCategoryOfFiniteSets ],
         
@@ -374,7 +375,7 @@ InstallMethod( @__MODULE__,  Preimage,
 end );
 
 ##
-InstallMethod( @__MODULE__,  ImageObject,
+@InstallMethod( ImageObject,
         "for a CAP map of finite sets and a CAP finite set",
         [ IsMorphismInCategoryOfFiniteSets, IsObjectInCategoryOfFiniteSets ],
         
@@ -385,7 +386,7 @@ InstallMethod( @__MODULE__,  ImageObject,
 end );
 
 ##
-InstallMethod( @__MODULE__,  CallFuncList,
+@InstallMethod( CallFuncList,
         "for a CAP map of finite sets and a singleton list",
         [ IsMorphismInCategoryOfFiniteSets, IsDenseList ],
         
@@ -421,7 +422,7 @@ InstallMethod( @__MODULE__,  CallFuncList,
 end );
 
 ##
-InstallMethod( @__MODULE__,  ListOp,
+@InstallMethod( ListOp,
         "for a CAP finite set and a CAP map of finite sets",
         [ IsObjectInCategoryOfFiniteSets, IsMorphismInCategoryOfFiniteSets ],
         
@@ -1111,7 +1112,7 @@ end );
 end );
 
 ##
-InstallMethod( @__MODULE__,  DisplayString,
+@InstallMethod( DisplayString,
         "for a CAP finite set",
         [ IsObjectInCategoryOfFiniteSets ],
         
@@ -1120,7 +1121,7 @@ InstallMethod( @__MODULE__,  DisplayString,
 end );
 
 ##
-InstallMethod( @__MODULE__,  DisplayString,
+@InstallMethod( DisplayString,
         "for a CAP map of finite sets",
         [ IsMorphismInCategoryOfFiniteSets ],
         
@@ -1129,7 +1130,7 @@ InstallMethod( @__MODULE__,  DisplayString,
 end );
 
 ##
-InstallMethod( @__MODULE__,  FinSetNC,
+@InstallMethod( FinSetNC,
         "for a dense list",
         [ IsDenseList ],
         
@@ -1138,7 +1139,7 @@ InstallMethod( @__MODULE__,  FinSetNC,
 end );
 
 ##
-InstallMethod( @__MODULE__,  FinSet,
+@InstallMethod( FinSet,
         "for a dense list",
         [ IsDenseList ],
         

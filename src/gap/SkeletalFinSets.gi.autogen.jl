@@ -5,7 +5,7 @@
 #
 
 ##
-InstallMethod( @__MODULE__,  SkeletalCategoryOfFiniteSets,
+@InstallMethod( SkeletalCategoryOfFiniteSets,
                [ ],
                
  @FunctionWithNamedArguments(
@@ -58,7 +58,7 @@ InstallMethod( @__MODULE__,  SkeletalCategoryOfFiniteSets,
 end ) );
 
 ##
-InstallMethod( @__MODULE__,  FinSetOp,
+@InstallMethod( FinSetOp,
         [ IsSkeletalCategoryOfFiniteSets, IsBigInt ],
         
   function ( cat, n )
@@ -68,7 +68,7 @@ InstallMethod( @__MODULE__,  FinSetOp,
 end );
 
 ##
-InstallMethod( @__MODULE__,  AsList,
+@InstallMethod( AsList,
         "for a CAP skeletal finite set",
         [ IsObjectInSkeletalCategoryOfFiniteSets ],
         
@@ -79,7 +79,7 @@ InstallMethod( @__MODULE__,  AsList,
 end );
 
 ##
-InstallMethod( @__MODULE__,  ListOp,
+@InstallMethod( ListOp,
         "for a CAP skeletal finite set and a function",
         [ IsObjectInSkeletalCategoryOfFiniteSets, IsFunction ],
         
@@ -92,7 +92,7 @@ end );
 ## Morphisms
 
 ##
-InstallMethod( @__MODULE__,  MapOfFinSets,
+@InstallMethod( MapOfFinSets,
         "for two CAP skeletal finite sets and a list",
         [ IsObjectInSkeletalCategoryOfFiniteSets, IsList, IsObjectInSkeletalCategoryOfFiniteSets ],
         
@@ -103,7 +103,7 @@ InstallMethod( @__MODULE__,  MapOfFinSets,
 end );
 
 ##
-InstallMethod( @__MODULE__,  MapOfFinSets,
+@InstallMethod( MapOfFinSets,
         "for a category of skeletal finite sets, two CAP skeletal finite sets and a list",
         [ IsSkeletalCategoryOfFiniteSets, IsObjectInSkeletalCategoryOfFiniteSets, IsList, IsObjectInSkeletalCategoryOfFiniteSets ],
         
@@ -114,7 +114,7 @@ InstallMethod( @__MODULE__,  MapOfFinSets,
 end );
 
 ##
-InstallMethod( @__MODULE__,  EmbeddingOfFinSets,
+@InstallMethod( EmbeddingOfFinSets,
         "for two CAP skeletal finite sets",
         [ IsObjectInSkeletalCategoryOfFiniteSets, IsObjectInSkeletalCategoryOfFiniteSets ],
         
@@ -131,7 +131,7 @@ InstallMethod( @__MODULE__,  EmbeddingOfFinSets,
 end );
 
 ##
-InstallMethod( @__MODULE__,  Preimage,
+@InstallMethod( Preimage,
         "for a CAP map of skeletal finite sets and a CAP skeletal finite set",
         [ IsMorphismInSkeletalCategoryOfFiniteSets, IsList ],
         
@@ -145,7 +145,7 @@ InstallMethod( @__MODULE__,  Preimage,
 end );
 
 ##
-InstallMethod( @__MODULE__,  ImageObject,
+@InstallMethod( ImageObject,
      "for a CAP map of skeletal finite sets and a CAP skeletal finite set",
      [ IsMorphismInSkeletalCategoryOfFiniteSets, IsObjectInSkeletalCategoryOfFiniteSets ],
       function ( phi, s_ )
@@ -155,7 +155,7 @@ InstallMethod( @__MODULE__,  ImageObject,
 end );
 
 ##
-InstallMethod( @__MODULE__,  CallFuncList,
+@InstallMethod( CallFuncList,
         "for a CAP map of skeletal finite sets and a list",
     [ IsMorphismInSkeletalCategoryOfFiniteSets, IsList ],
         
@@ -1040,7 +1040,7 @@ CategoryFilter =
 end );
 
 ##
-InstallMethod( @__MODULE__,  StringGAP,
+@InstallMethod( StringGAP,
         "for a CAP skeletal finite set",
         [ IsObjectInSkeletalCategoryOfFiniteSets ],
         
@@ -1049,7 +1049,7 @@ InstallMethod( @__MODULE__,  StringGAP,
 end );
 
 ##
-InstallMethod( @__MODULE__,  StringGAP,
+@InstallMethod( StringGAP,
         "for a CAP map of skeletal finite sets",
         [ IsMorphismInSkeletalCategoryOfFiniteSets ],
         
@@ -1058,7 +1058,7 @@ InstallMethod( @__MODULE__,  StringGAP,
 end );
 
 ##
-InstallMethod( @__MODULE__,  ViewString,
+@InstallMethod( ViewString,
         "for a CAP skeletal finite set",
         [ IsObjectInSkeletalCategoryOfFiniteSets ],
         
@@ -1067,7 +1067,7 @@ InstallMethod( @__MODULE__,  ViewString,
 end );
 
 ##
-InstallMethod( @__MODULE__,  ViewString,
+@InstallMethod( ViewString,
         "for a CAP map of skeletal finite sets",
         [ IsMorphismInSkeletalCategoryOfFiniteSets ],
         
@@ -1101,7 +1101,7 @@ end );
 # even if the documentation of `PrintString` suggests that it should not be "fancy".
 
 ##
-InstallMethod( @__MODULE__,  PrintString,
+@InstallMethod( PrintString,
         "for a CAP skeletal finite set",
         [ IsObjectInSkeletalCategoryOfFiniteSets ],
         
@@ -1125,7 +1125,7 @@ InstallMethod( @__MODULE__,  PrintString,
 end );
 
 ##
-InstallMethod( @__MODULE__,  PrintString,
+@InstallMethod( PrintString,
         "for a CAP map of skeletal finite sets",
         [ IsMorphismInSkeletalCategoryOfFiniteSets ],
         
@@ -1139,7 +1139,7 @@ InstallMethod( @__MODULE__,  PrintString,
 end );
 
 ##
-InstallMethod( @__MODULE__,  DisplayString,
+@InstallMethod( DisplayString,
         "for a CAP skeletal finite set",
         [ IsObjectInSkeletalCategoryOfFiniteSets ],
         
@@ -1150,7 +1150,7 @@ InstallMethod( @__MODULE__,  DisplayString,
 end );
 
 ##
-InstallMethod( @__MODULE__,  DisplayString,
+@InstallMethod( DisplayString,
         "for a CAP map of skeletal finite sets",
         [ IsMorphismInSkeletalCategoryOfFiniteSets ],
         
@@ -1161,7 +1161,7 @@ InstallMethod( @__MODULE__,  DisplayString,
 end );
 
 ##
-InstallMethod( @__MODULE__,  FinSet,
+@InstallMethod( FinSet,
         "for a nonnegative integer",
         [ IsBigInt ],
         

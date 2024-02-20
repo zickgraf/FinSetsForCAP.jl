@@ -6,7 +6,7 @@
 
 ##
 # we use other method to suppress a warning due to FinSet being a KeyDependentOperation
-InstallMethod( @__MODULE__,  FinSet,
+@InstallMethod( FinSet,
         [ IsJuliaObject ],
         
   function ( list )
@@ -18,7 +18,7 @@ InstallMethod( @__MODULE__,  FinSet,
 end );
 
 ##
-InstallMethod( @__MODULE__,  MapOfFinSets,
+@InstallMethod( MapOfFinSets,
         [ IsObjectInCategoryOfFiniteSets, IsJuliaObject, IsObjectInCategoryOfFiniteSets ],
         
   function ( source, graph, range )
@@ -32,7 +32,7 @@ InstallMethod( @__MODULE__,  MapOfFinSets,
 end );
 
 ##
-InstallMethod( @__MODULE__,  MapOfFinSets,
+@InstallMethod( MapOfFinSets,
         [ IsObjectInSkeletalCategoryOfFiniteSets, IsJuliaObject, IsObjectInSkeletalCategoryOfFiniteSets ],
         
   function ( source, graph, range )
