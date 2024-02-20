@@ -28,8 +28,6 @@ push!(ModulesForEvaluationStack, FinSetsForCAP)
 
 include("init.jl")
 
-pop!(ModulesForEvaluationStack)
-
 # Iterator in FinSets
 function iterate(M::IsObjectInCategoryOfFiniteSets.abstract_type)
 	iterate( AsList( M ) )
