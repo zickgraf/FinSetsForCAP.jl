@@ -1,5 +1,3 @@
-__precompile__(false)
-
 module FinSetsForCAP
 
 @nospecialize
@@ -23,8 +21,6 @@ import CAP.First
 using CartesianCategories
 
 using Toposes
-
-push!(ModulesForEvaluationStack, FinSetsForCAP)
 
 include("init.jl")
 
