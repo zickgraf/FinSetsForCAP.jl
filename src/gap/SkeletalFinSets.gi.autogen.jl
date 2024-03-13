@@ -38,14 +38,16 @@
     SetRangeCategoryOfHomomorphismStructure( cat, cat );
     SetIsEquippedWithHomomorphismStructure( cat, true );
     
-    INSTALL_FUNCTIONS_FOR_SKELETAL_FIN_SETS( cat );
-    
     #= comment for Julia
     AddTheoremFileToCategory( cat,
             Filename( DirectoriesPackageLibrary( "Toposes", "LogicForToposes" ), "PropositionsForToposes.tex" ) );
     # =#
     
-    if (@not no_precompiled_code)
+    if (no_precompiled_code)
+        
+        INSTALL_FUNCTIONS_FOR_SKELETAL_FIN_SETS( cat );
+        
+    else
         
         ADD_FUNCTIONS_FOR_SkeletalCategoryOfFiniteSetsWithMorphismsGivenByListsPrecompiled( cat );
         
