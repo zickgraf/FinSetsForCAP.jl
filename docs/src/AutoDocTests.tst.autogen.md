@@ -329,13 +329,13 @@ julia> N = FinSet( 3 )
 |3|
 
 julia> Display( MorphismsOfExternalHom( L, L ) )
-[ ∅ ⱶ[ ]→ ∅ ]
+[ ∅ ⱶ[  ]→ ∅ ]
 
 julia> Display( MorphismsOfExternalHom( M, L ) )
 [  ]
 
 julia> Display( MorphismsOfExternalHom( L, M ) )
-[ ∅ ⱶ[ ]→ [ 0, 1 ] ]
+[ ∅ ⱶ[  ]→ [ 0, 1 ] ]
 
 julia> Display( MorphismsOfExternalHom( M, N ) )
 [ [ 0, 1 ] ⱶ[ 0, 0 ]→ [ 0, 1, 2 ], [ 0, 1 ] ⱶ[ 1, 0 ]→ [ 0, 1, 2 ], [ 0, 1 ] ⱶ[ 2, 0 ]→ [ 0, 1, 2 ], [ 0, 1 ] ⱶ[ 0, 1 ]→ [ 0, 1, 2 ], [ 0, 1 ] ⱶ[ 1, 1 ]→ [ 0, 1, 2 ], [ 0, 1 ] ⱶ[ 2, 1 ]→ [ 0, 1, 2 ], [ 0, 1 ] ⱶ[ 0, 2 ]→ [ 0, 1, 2 ], [ 0, 1 ] ⱶ[ 1, 2 ]→ [ 0, 1, 2 ], [ 0, 1 ] ⱶ[ 2, 2 ]→ [ 0, 1, 2 ] ]
@@ -474,13 +474,13 @@ julia> iota = UniversalMorphismFromInitialObject( M )
 <A morphism in FinSets>
 
 julia> Display( I )
-[ ]
+[  ]
 
 julia> T = TerminalObject( FinSets )
 <An object in FinSets>
 
 julia> Display( T )
-[ [ ] ]
+[ [  ] ]
 
 julia> IsInitial( T )
 false
@@ -1245,6 +1245,26 @@ julia> using CAP; using CartesianCategories; using Toposes; using FinSetsForCAP
 julia> true
 true
 
+julia> a = FinSet( [ 1, 2, 3 ] )
+<An object in FinSets>
+
+julia> sa = SingletonMorphism( a )
+<A morphism in FinSets>
+
+julia> sa == LowerSegmentOfRelation( a, a, CartesianDiagonal( a, 2 ) )
+true
+
+julia> sa == UpperSegmentOfRelation( a, a, CartesianDiagonal( a, 2 ) )
+true
+
+```
+
+```jldoctest AutoDocTests
+julia> using CAP; using CartesianCategories; using Toposes; using FinSetsForCAP
+
+julia> true
+true
+
 julia> M = FinSet( (1):(5) );
 
 julia> N = FinSet( [ 1, 2, 4 ] );
@@ -1343,10 +1363,10 @@ julia> Display( SubobjectClassifier( FinSets ) )
 [ "true", "false" ]
 
 julia> Display( TruthMorphismOfTrue( FinSets ) )
-[ [ [ ] ], [ [ [ ], "true" ] ], [ "true", "false" ] ]
+[ [ [  ] ], [ [ [  ], "true" ] ], [ "true", "false" ] ]
 
 julia> Display( TruthMorphismOfFalse( FinSets ) )
-[ [ [ ] ], [ [ [ ], "false" ] ], [ "true", "false" ] ]
+[ [ [  ] ], [ [ [  ], "false" ] ], [ "true", "false" ] ]
 
 julia> Display( TruthMorphismOfNot( FinSets ) )
 [ [ "true", "false" ], [ [ "false", "true" ], [ "true", "false" ] ], [ "true", "false" ] ]
@@ -1396,7 +1416,7 @@ julia> NC = PseudoComplementSubobject( iotaN )
 <An object in FinSets>
 
 julia> Display( NC )
-[ [ 1, [ ] ], [ 4, [ ] ], [ 6, [ ] ], [ 7, [ ] ] ]
+[ [ 1, [  ] ], [ 4, [  ] ], [ 6, [  ] ], [ 7, [  ] ] ]
 
 julia> tauN = EmbeddingOfPseudoComplementSubobject( iotaN )
 <A morphism in FinSets>
@@ -1447,7 +1467,7 @@ julia> NPL = RelativePseudoComplementSubobject( iotaN, iotaL )
 <An object in FinSets>
 
 julia> Display( NPL )
-[ [ 1, [ ] ], [ 2, [ ] ], [ 4, [ ] ], [ 5, [ ] ], [ 6, [ ] ], [ 7, [ ] ] ]
+[ [ 1, [  ] ], [ 2, [  ] ], [ 4, [  ] ], [ 5, [  ] ], [ 6, [  ] ], [ 7, [  ] ] ]
 
 julia> iotaNpL = EmbeddingOfRelativePseudoComplementSubobject( iotaN, iotaL )
 <A morphism in FinSets>
@@ -2723,6 +2743,28 @@ true
 
 julia> IsColiftable( g, f )
 false
+
+```
+
+```jldoctest AutoDocTests
+julia> using CAP; using CartesianCategories; using Toposes; using FinSetsForCAP
+
+julia> true
+true
+
+julia> a = FinSet( 3 )
+|3|
+
+julia> sa = SingletonMorphism( a );
+
+julia> Display( sa )
+[ 0, 1, 2 ] ⱶ[ 1, 2, 4 ]→ [ 0,..., 7 ]
+
+julia> sa == LowerSegmentOfRelation( a, a, CartesianDiagonal( a, 2 ) )
+true
+
+julia> sa == UpperSegmentOfRelation( a, a, CartesianDiagonal( a, 2 ) )
+true
 
 ```
 
