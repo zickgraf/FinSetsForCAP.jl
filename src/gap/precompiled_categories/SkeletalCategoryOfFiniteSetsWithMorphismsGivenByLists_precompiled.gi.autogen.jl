@@ -3,7 +3,7 @@
 #
 # Implementations
 #
-@BindGlobal( "ADD_FUNCTIONS_FOR_SkeletalCategoryOfFiniteSetsWithMorphismsGivenByListsPrecompiled", function ( cat )
+@BindGlobal( "ADD_FUNCTIONS_FOR_SkeletalCategoryOfFiniteSetsWithMorphismsGivenByLists_precompiled", function ( cat )
     
     ##
     AddAstrictionToCoimage( cat,
@@ -1040,7 +1040,12 @@ end
         
 ########
 function ( cat_1, T_1, P_1 )
-    return CreateCapCategoryMorphismWithAttributes( cat_1, P_1, T_1, AsList, [  ] );
+    return CreateCapCategoryMorphismWithAttributes( cat_1, P_1, T_1, AsList, CapJitTypedExpression( [  ], function (  )
+              return @rec(
+                  filter = IsList,
+                  element_type = @rec(
+                      filter = IsInt ) );
+          end ) );
 end
 ########
         
@@ -1118,7 +1123,7 @@ end
     
 end );
 
-@BindGlobal( "SkeletalCategoryOfFiniteSetsWithMorphismsGivenByListsPrecompiled", function (  )
+@BindGlobal( "SkeletalCategoryOfFiniteSetsWithMorphismsGivenByLists_precompiled", function (  )
   local category_constructor, cat;
     
     category_constructor =
@@ -1132,7 +1137,7 @@ end;
     
     cat = category_constructor( ; FinalizeCategory = false, no_precompiled_code = true );
     
-    ADD_FUNCTIONS_FOR_SkeletalCategoryOfFiniteSetsWithMorphismsGivenByListsPrecompiled( cat );
+    ADD_FUNCTIONS_FOR_SkeletalCategoryOfFiniteSetsWithMorphismsGivenByLists_precompiled( cat );
     
     Finalize( cat );
     

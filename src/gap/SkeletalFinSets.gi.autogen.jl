@@ -52,7 +52,7 @@
         
     else
         
-        ADD_FUNCTIONS_FOR_SkeletalCategoryOfFiniteSetsWithMorphismsGivenByListsPrecompiled( cat );
+        ADD_FUNCTIONS_FOR_SkeletalCategoryOfFiniteSetsWithMorphismsGivenByLists_precompiled( cat );
         
     end;
     
@@ -646,7 +646,7 @@ end );
 AddUniversalMorphismFromInitialObjectWithGivenInitialObject( SkeletalFinSets,
   function ( cat, m, I )
     
-    return MorphismConstructor( cat, I, CapJitTypedExpression( [ ], ( ) -> IsBigInt ), m );
+    return MorphismConstructor( cat, I, CapJitTypedExpression( [ ], ( ) -> CapJitDataTypeOfListOf( IsBigInt ) ), m );
     
 end );
 
